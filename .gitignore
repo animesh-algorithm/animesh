@@ -5,6 +5,7 @@
 .vercel/
 node_modules/
 .next/
+.turbo/
 coverage/
 *.log
 *.tsbuildinfo
