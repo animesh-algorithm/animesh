@@ -163,8 +163,9 @@ Ask for:
 - approximate budget
 - desired timing
 
-The completion message may confirm receipt but must not promise a response time
-until Animesh defines one.
+The completion message and acknowledgement email may confirm receipt but must
+not promise a response time until Animesh defines one. The acknowledgement may
+include a copy of the submitted brief for the sender's records.
 
 ## Pre-launch content checklist
 

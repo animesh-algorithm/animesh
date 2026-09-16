@@ -332,7 +332,8 @@ main > .hero, main > section { position: relative; isolation: isolate; }
 }
 @media (max-width: 38rem) {
   :root { --shell: min(100% - 1.25rem, 90rem); }
-  .wordmark { max-width: 7ch; line-height: 1; }
+  .wordmark { padding-right: 1.35rem; }
+  .wordmark__sun { top: .28rem; width: .68rem; }
   .eyebrow { align-items: flex-start; }
   .availability-ping--hero { margin-top: .25rem; }
   .hero { gap: var(--space-8); padding-block: var(--space-8); }

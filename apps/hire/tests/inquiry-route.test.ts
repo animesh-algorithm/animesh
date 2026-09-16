@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { POST } from "@/app/api/inquiries/route";
-import { formatInquiry } from "@/lib/inquiries/mail";
+import { formatAcknowledgement, formatInquiry } from "@/lib/inquiries/mail";
 
 const validPayload = () => ({
   name: "A Founder",
@@ -66,7 +66,16 @@ describe("POST /api/inquiries", () => {
     const response = await POST(request(validPayload()));
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toMatchObject({ ok: true, code: "sent" });
-    expect(fetchMock).toHaveBeenCalledOnce();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+
+    const inquiryBody = JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body)) as { to: string[]; reply_to: string };
+    expect(inquiryBody.to).toEqual(["hello@example.com"]);
+    expect(inquiryBody.reply_to).toBe("founder@example.com");
+
+    const acknowledgementBody = JSON.parse(String(fetchMock.mock.calls[1]?.[1]?.body)) as { to: string[]; subject: string; reply_to?: string };
+    expect(acknowledgementBody.to).toEqual(["founder@example.com"]);
+    expect(acknowledgementBody.subject).toBe("I received your brief");
+    expect(acknowledgementBody.reply_to).toBeUndefined();
     expect(String(fetchMock.mock.calls[0]?.[1]?.body)).not.toContain("test-key");
   });
 
@@ -83,6 +92,21 @@ describe("POST /api/inquiries", () => {
     expect(body).toMatchObject({ code: "delivery_failed" });
     expect(JSON.stringify(body)).not.toContain("provider details");
   });
+
+  it("keeps the inquiry accepted if only the acknowledgement fails", async () => {
+    vi.stubEnv("RESEND_API_KEY", "test-key");
+    vi.stubEnv("INQUIRY_FROM_EMAIL", "Website <inquiries@example.com>");
+    vi.stubEnv("INQUIRY_TO_EMAIL", "hello@example.com");
+    vi.stubGlobal("fetch", vi.fn()
+      .mockResolvedValueOnce(new Response("{}", { status: 200 }))
+      .mockResolvedValueOnce(new Response("provider details", { status: 500 })));
+    vi.spyOn(console, "error").mockImplementation(() => undefined);
+
+    const response = await POST(request(validPayload()));
+    expect(response.status).toBe(200);
+    await expect(response.json()).resolves.toMatchObject({ ok: true, code: "sent" });
+    expect(console.error).toHaveBeenCalledWith("Inquiry acknowledgement failed", expect.objectContaining({ providerStatus: 500 }));
+  });
 });
 
 describe("inquiry email formatting", () => {
@@ -90,5 +114,11 @@ describe("inquiry email formatting", () => {
     const message = formatInquiry({ ...validPayload(), name: "<script>alert(1)</script>" });
     expect(message.html).not.toContain("<script>");
     expect(message.html).toContain("&lt;script&gt;");
+  });
+
+  it("escapes browser input in acknowledgement HTML", () => {
+    const message = formatAcknowledgement({ ...validPayload(), summary: "<img src=x onerror=alert(1)>" });
+    expect(message.html).not.toContain("<img");
+    expect(message.html).toContain("&lt;img");
   });
 });

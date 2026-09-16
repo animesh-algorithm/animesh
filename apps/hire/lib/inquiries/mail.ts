@@ -8,6 +8,14 @@ export interface MailConfiguration {
 
 export type MailResult = { ok: true } | { ok: false; status?: number };
 
+interface EmailMessage {
+  to: readonly string[];
+  replyTo?: string;
+  subject: string;
+  text: string;
+  html: string;
+}
+
 export function readMailConfiguration(): MailConfiguration | null {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.INQUIRY_FROM_EMAIL;
@@ -41,12 +49,46 @@ export function formatInquiry(inquiry: Inquiry) {
   };
 }
 
-export async function sendInquiryEmail(
-  inquiry: Inquiry,
+export function formatAcknowledgement(inquiry: Inquiry) {
+  const text = [
+    `Hi ${inquiry.name},`,
+    "Thanks for sending the brief. I received it and will review what you shared.",
+    "Here is a copy of the details:",
+    `Company: ${inquiry.company}`,
+    `Budget: ${inquiry.budget}`,
+    `Timing: ${inquiry.timing}`,
+    "",
+    inquiry.summary,
+    "",
+    "Best,",
+    "Animesh",
+  ].join("\n\n");
+
+  const html = [
+    `<p>Hi ${escapeHtml(inquiry.name)},</p>`,
+    "<p>Thanks for sending the brief. I received it and will review what you shared.</p>",
+    "<p>Here is a copy of the details:</p>",
+    "<ul>",
+    `<li><strong>Company:</strong> ${escapeHtml(inquiry.company)}</li>`,
+    `<li><strong>Budget:</strong> ${escapeHtml(inquiry.budget)}</li>`,
+    `<li><strong>Timing:</strong> ${escapeHtml(inquiry.timing)}</li>`,
+    "</ul>",
+    `<p>${escapeHtml(inquiry.summary).replaceAll("\n", "<br>")}</p>`,
+    "<p>Best,<br>Animesh</p>",
+  ].join("");
+
+  return {
+    subject: "I received your brief",
+    text,
+    html,
+  };
+}
+
+async function sendEmail(
+  message: EmailMessage,
   configuration: MailConfiguration,
   fetcher: typeof fetch = fetch,
 ): Promise<MailResult> {
-  const message = formatInquiry(inquiry);
   const response = await fetcher("https://api.resend.com/emails", {
     method: "POST",
     headers: {
@@ -55,8 +97,8 @@ export async function sendInquiryEmail(
     },
     body: JSON.stringify({
       from: configuration.from,
-      to: [configuration.to],
-      reply_to: inquiry.email,
+      to: message.to,
+      reply_to: message.replyTo,
       subject: message.subject,
       text: message.text,
       html: message.html,
@@ -64,4 +106,33 @@ export async function sendInquiryEmail(
   });
 
   return response.ok ? { ok: true } : { ok: false, status: response.status };
+}
+
+export async function sendInquiryEmail(
+  inquiry: Inquiry,
+  configuration: MailConfiguration,
+  fetcher: typeof fetch = fetch,
+): Promise<MailResult> {
+  const message = formatInquiry(inquiry);
+  return sendEmail({
+    to: [configuration.to],
+    replyTo: inquiry.email,
+    subject: message.subject,
+    text: message.text,
+    html: message.html,
+  }, configuration, fetcher);
+}
+
+export async function sendAcknowledgementEmail(
+  inquiry: Inquiry,
+  configuration: MailConfiguration,
+  fetcher: typeof fetch = fetch,
+): Promise<MailResult> {
+  const message = formatAcknowledgement(inquiry);
+  return sendEmail({
+    to: [inquiry.email],
+    subject: message.subject,
+    text: message.text,
+    html: message.html,
+  }, configuration, fetcher);
 }

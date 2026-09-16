@@ -109,7 +109,8 @@ routes can reuse `Project` later.
    it again.
 3. Abuse checks reject a filled honeypot, implausibly fast submission, oversized
    fields, and invalid payloads.
-4. A server-only adapter sends the normalized message through Resend.
+4. A server-only adapter sends the normalized message through Resend and then
+   sends a brief acknowledgement copy to the submitter.
 5. The route returns a small structured result without provider internals.
 6. On configuration or delivery failure, the UI preserves the form state and
    offers `hello.animeshsharma@gmail.com` as the fallback.
@@ -136,6 +137,8 @@ Provide an `.env.example`; never commit real values.
   UI offers direct email.
 - Provider failure: log a server-side request identifier, return a generic
   delivery error, and keep the user's text in the form.
+- Acknowledgement-only failure: log a server-side request identifier and still
+  accept the inquiry so the submitter is not encouraged to duplicate the brief.
 - JavaScript unavailable: contact email and core content remain usable.
 - Missing project media: use an honest diagram grounded in the actual project
   flow or architecture, never a fabricated screenshot.
@@ -152,8 +155,8 @@ Provide an `.env.example`; never commit real values.
 ## Testing and delivery gates
 
 - Unit-test content schemas and inquiry normalization.
-- Route-test valid submission, each validation class, missing configuration,
-  and provider failure with the adapter mocked.
+- Route-test valid submission, acknowledgement delivery, each validation class,
+  missing configuration, and provider failure with the adapter mocked.
 - Browser-check keyboard use, live error announcements, reduced motion, and
   responsive behavior at 375, 768, 1024, and 1440 px.
 - Run lint, typecheck, tests, and production build.

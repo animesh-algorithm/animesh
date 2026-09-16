@@ -1,4 +1,4 @@
-import { readMailConfiguration, sendInquiryEmail } from "@/lib/inquiries/mail";
+import { readMailConfiguration, sendAcknowledgementEmail, sendInquiryEmail } from "@/lib/inquiries/mail";
 import { type InquiryResponse, validateInquiry } from "@/lib/inquiries/schema";
 
 const json = (body: InquiryResponse, status: number) => Response.json(body, { status });
@@ -39,6 +39,11 @@ export async function POST(request: Request) {
     if (!delivery.ok) {
       console.error("Inquiry delivery failed", { requestId, providerStatus: delivery.status });
       return json({ ok: false, code: "delivery_failed", message: "The message could not be delivered. Please use the direct email link." }, 502);
+    }
+
+    const acknowledgement = await sendAcknowledgementEmail(validation.data, configuration);
+    if (!acknowledgement.ok) {
+      console.error("Inquiry acknowledgement failed", { requestId, providerStatus: acknowledgement.status });
     }
   } catch {
     console.error("Inquiry delivery failed", { requestId });
