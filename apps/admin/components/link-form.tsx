@@ -2,10 +2,19 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { LinkRecord } from "../lib/types";
-export function LinkForm({ link }: { link?: LinkRecord }) {
+import { Dialog } from "./dialog";
+
+export function LinkForm({
+  link,
+  autofocus = false,
+}: {
+  link?: LinkRecord;
+  autofocus?: boolean;
+}) {
   const router = useRouter(),
     [busy, setBusy] = useState(false),
     [message, setMessage] = useState(""),
+    [messageTone, setMessageTone] = useState<"success" | "error">("success"),
     [confirm, setConfirm] = useState(false);
   async function send(method: string, body: unknown) {
     setBusy(true);
@@ -23,6 +32,7 @@ export function LinkForm({ link }: { link?: LinkRecord }) {
       if (!response.ok) throw new Error(data.error || "Request failed.");
       if (!link) router.push(`/links/${data.id}`);
       else {
+        setMessageTone("success");
         setMessage(
           method === "DELETE"
             ? "Link deleted. Its slug remains reserved."
@@ -32,6 +42,7 @@ export function LinkForm({ link }: { link?: LinkRecord }) {
         router.refresh();
       }
     } catch (error) {
+      setMessageTone("error");
       setMessage(error instanceof Error ? error.message : "Request failed.");
     } finally {
       setBusy(false);
@@ -68,6 +79,7 @@ export function LinkForm({ link }: { link?: LinkRecord }) {
             maxLength={8192}
             placeholder="https://example.com/your-page"
             defaultValue={link?.destination}
+            data-autofocus={autofocus ? "true" : undefined}
           />
         </div>
         <div className="form-grid">
@@ -119,35 +131,40 @@ export function LinkForm({ link }: { link?: LinkRecord }) {
           )}
         </div>
       </form>
-      {confirm && (
-        <section
-          role="alertdialog"
-          aria-modal="false"
-          aria-labelledby="delete-title"
-          className="delete-confirm"
-        >
-          <h3 id="delete-title">Delete this link?</h3>
+      <Dialog
+        open={confirm}
+        onClose={() => !busy && setConfirm(false)}
+        title="Delete this link?"
+        description="This action takes effect immediately."
+        tone="danger"
+      >
+        <div className="delete-confirm">
           <p>
             It will return 410 immediately. History is retained and the path
             cannot be reused.
           </p>
-          <button
-            className="danger-button"
-            disabled={busy}
-            onClick={() => void send("DELETE", { confirm: true })}
-          >
-            Confirm deletion
-          </button>{" "}
-          <button
-            className="secondary"
-            disabled={busy}
-            onClick={() => setConfirm(false)}
-          >
-            Cancel
-          </button>
-        </section>
-      )}
-      <p role="status" className="form-message">
+          <div className="modal-actions">
+            <button
+              className="secondary"
+              type="button"
+              disabled={busy}
+              data-autofocus
+              onClick={() => setConfirm(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="danger-button"
+              type="button"
+              disabled={busy}
+              onClick={() => void send("DELETE", { confirm: true })}
+            >
+              {busy ? "Deleting…" : "Delete link"}
+            </button>
+          </div>
+        </div>
+      </Dialog>
+      <p role="status" className={`form-message ${message ? messageTone : ""}`}>
         {message}
       </p>
     </>

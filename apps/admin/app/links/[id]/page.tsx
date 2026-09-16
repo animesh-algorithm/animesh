@@ -41,39 +41,17 @@ export default async function Page({
     url = shortUrl(link.slug);
   return (
     <>
-      <Link className="quiet breadcrumb" href="/links">
-        ← Link directory
-      </Link>
-      <div className="page-heading">
+      <Link className="breadcrumb" href="/links">← All links</Link>
+      <div className="page-heading detail-heading">
         <div>
-          <span className="eyebrow">
-            {link.source.toUpperCase()} LINK{" "}
-            {link.deleted_at ? " / DELETED" : ""}
-          </span>
+          <div className="detail-badges"><span className={`badge badge-${link.source}`}>{link.source}</span>{link.deleted_at && <span className="badge badge-deleted">Deleted</span>}</div>
           <h1 className="detail-title">{link.title || link.slug}</h1>
-          <a
-            className="short-url"
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {url}
-          </a>
-          <p className="fine">
-            Created {indiaTime(link.created_at)}
-            {link.migration_source_domain
-              ? ` · Migrated from ${link.migration_source_domain}`
-              : ""}
-            {link.deleted_at ? ` · Deleted ${indiaTime(link.deleted_at)}` : ""}
-          </p>
+          <div className="short-link-cluster"><a className="short-url" href={url} target="_blank" rel="noopener noreferrer">{url}</a><LinkActions url={url} id={link.id} prominent /></div>
+          <p className="fine">Created {indiaTime(link.created_at)}{link.migration_source_domain ? ` · Migrated from ${link.migration_source_domain}` : ""}{link.deleted_at ? ` · Deleted ${indiaTime(link.deleted_at)}` : ""}</p>
         </div>
-        <LinkActions url={url} id={link.id} />
       </div>
-      <section className="panel">
-        <h2>Link settings</h2>
-        <p className="fine">
-          The short path is permanent. Destination and title can be updated.
-        </p>
+      <section className="panel settings-card">
+        <div className="section-heading"><div><span className="eyebrow">LINK SETTINGS</span><h2>Destination and title</h2></div><span className="immutable-note">/{link.slug} · permanent</span></div>
         <LinkForm link={link} />
       </section>
       <AnalyticsView data={data} id={id} params={query} />

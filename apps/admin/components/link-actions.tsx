@@ -1,11 +1,22 @@
 "use client";
 import { useState } from "react";
-export function LinkActions({ url, id }: { url: string; id: string }) {
+import { CopyIcon, OpenIcon, QrIcon } from "./interface-icons";
+
+export function LinkActions({
+  url,
+  id,
+  prominent = false,
+}: {
+  url: string;
+  id: string;
+  prominent?: boolean;
+}) {
   const [message, setMessage] = useState("");
   return (
-    <div className="link-actions">
+    <div className={`link-actions${prominent ? " prominent-actions" : ""}`}>
       <button
-        className="secondary"
+        className="icon-button tooltip-control"
+        aria-label="Copy short link"
         onClick={async () => {
           try {
             await navigator.clipboard.writeText(url);
@@ -15,20 +26,28 @@ export function LinkActions({ url, id }: { url: string; id: string }) {
           }
         }}
       >
-        Copy link
+        <CopyIcon />
+        <span className="tooltip" role="tooltip">Copy link</span>
       </button>
       <a
-        className="button secondary"
+        className="icon-button tooltip-control"
+        aria-label="Open short link in a new tab"
         href={url}
         target="_blank"
         rel="noopener noreferrer"
       >
-        Open ↗
+        <OpenIcon />
+        <span className="tooltip" role="tooltip">Open link</span>
       </a>
-      <a className="button secondary" href={`/api/links/${id}/qr`}>
-        PNG QR ↓
+      <a
+        className="icon-button tooltip-control"
+        aria-label="Download QR code as PNG"
+        href={`/api/links/${id}/qr`}
+      >
+        <QrIcon />
+        <span className="tooltip" role="tooltip">Download QR</span>
       </a>
-      <span role="status" className="fine">
+      <span role="status" className="action-status">
         {message}
       </span>
     </div>

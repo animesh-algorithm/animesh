@@ -69,8 +69,12 @@ async function main() {
           errors.push(`${message.text()} ${message.location().url}`);
       });
       for (const path of [
+        "/",
         "/links",
+        "/links?state=empty",
+        "/error",
         "/links/fixture?tab=overview",
+        "/links/fixture?tab=overview&state=empty",
         "/links/fixture?tab=audience",
         "/links/fixture?tab=traffic",
         "/links/fixture?tab=events",
@@ -123,6 +127,67 @@ async function main() {
             .evaluate((el) => getComputedStyle(el).outlineStyle),
           "none",
         );
+        if (path === "/links") {
+          const create = page.getByRole("button", { name: "Create link" });
+          await create.click();
+          const createDialog = page.getByRole("dialog", {
+            name: "Create a short link",
+          });
+          await createDialog.waitFor();
+          await page.waitForFunction(
+            () => document.activeElement?.id === "destination",
+          );
+          assert.equal(
+            await page.evaluate(() => document.activeElement?.id),
+            "destination",
+            "Create dialog must focus Destination URL",
+          );
+          await page.keyboard.press("Shift+Tab");
+          assert.equal(
+            await createDialog.evaluate((dialog) =>
+              dialog.contains(document.activeElement),
+            ),
+            true,
+            "Create dialog must contain keyboard focus",
+          );
+          await page.keyboard.press("Escape");
+          await createDialog.waitFor({ state: "hidden" });
+          assert.equal(
+            await create.evaluate((element) => element === document.activeElement),
+            true,
+            "Create dialog must restore trigger focus",
+          );
+          const firstCopy = page.getByRole("button", { name: "Copy short link" }).first();
+          await firstCopy.click();
+          await page.locator("[role=status]").filter({ hasText: /Copied|unavailable/ }).waitFor();
+          if (width < 768) {
+            const filters = page.locator(".mobile-filters");
+            assert.equal(await filters.getAttribute("open"), null);
+            await filters.locator("summary").click();
+            assert.notEqual(await filters.getAttribute("open"), null);
+          }
+        }
+        if (path === "/links/fixture?tab=overview") {
+          const deleteTrigger = page.getByRole("button", { name: "Delete link" });
+          await deleteTrigger.click();
+          const deleteDialog = page.getByRole("dialog", { name: "Delete this link?" });
+          await deleteDialog.waitFor();
+          await page.waitForFunction(
+            () => document.activeElement?.textContent?.trim() === "Cancel",
+          );
+          assert.equal(
+            await page.evaluate(() => document.activeElement?.textContent?.trim()),
+            "Cancel",
+            "Delete dialog must initially focus Cancel",
+          );
+          await page.keyboard.press("Escape");
+          await deleteDialog.waitFor({ state: "hidden" });
+          assert.equal(
+            await deleteTrigger.evaluate((element) => element === document.activeElement),
+            true,
+            "Delete dialog must restore trigger focus",
+          );
+        }
         await page
           .locator(":focus")
           .evaluate((el) => (el as HTMLElement).blur());
@@ -130,12 +195,36 @@ async function main() {
           await page.screenshot({
             path: join(
               output,
-              `${width}-${path.split("tab=")[1] || "directory"}.png`,
+              `${width}-${
+                path === "/"
+                  ? "login"
+                  : path === "/links"
+                    ? "directory"
+                    : path === "/links?state=empty"
+                      ? "directory-empty"
+                      : path === "/error"
+                        ? "error"
+                        : path.split("tab=")[1]
+              }.png`,
             ),
             fullPage: true,
           });
         checks.push({ width, path, ...dimensions });
       }
+      await page.goto(`http://127.0.0.1:${address.port}/links`);
+      await page.evaluate(() => {
+        document.documentElement.style.fontSize = "200%";
+      });
+      const enlarged = await page.evaluate(() => ({
+        document: document.documentElement.scrollWidth,
+        body: document.body.scrollWidth,
+        viewport: innerWidth,
+      }));
+      assert(
+        enlarged.document <= width && enlarged.body <= width,
+        `200% text overflow at ${width}: ${JSON.stringify(enlarged)}`,
+      );
+      checks.push({ width, path: "/links (200% text)", ...enlarged });
       assert.deepEqual(errors, [], `Fixture console errors at ${width}`);
       await page.close();
     }

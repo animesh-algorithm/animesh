@@ -117,60 +117,64 @@ const router = {
   prefetch: async () => {},
   hmrRefresh: () => {},
 };
-const detail = location.pathname !== "/links";
+const login = location.pathname === "/";
+const error = location.pathname === "/error";
+const detail = !login && !error && location.pathname !== "/links";
+const empty = params.get("state") === "empty";
 createRoot(document.getElementById("root")!).render(
   <AppRouterContext.Provider value={router}>
     <a className="skip" href="#main">
       Skip to content
     </a>
-    <header className="shell-header">
-      <Link className="brand" href="/links">
-        a<span>.</span> <small>OPERATIONS</small>
-      </Link>
-      <nav aria-label="Main">
-        <Link href="/links">Link directory</Link>
-        <button className="text-button">Sign out</button>
-      </nav>
-    </header>
-    <main className="workspace" id="main">
-      {detail ? (
-        <>
-          <Link href="/links" className="quiet breadcrumb">
-            ← Link directory
-          </Link>
-          <div className="page-heading">
-            <div>
-              <span className="eyebrow">NATIVE LINK</span>
-              <h1>Product launch notes</h1>
-              <a
-                className="short-url"
-                href="https://link.animesh.cc/Launch/notes.v1"
-              >
-                https://link.animesh.cc/Launch/notes.v1
-              </a>
-            </div>
-            <LinkActions
-              id={link.id}
-              url="https://link.animesh.cc/Launch/notes.v1"
-            />
+    {login ? (
+      <main id="main" className="login-shell">
+        <section className="login-panel" aria-labelledby="login-title">
+          <div className="login-brand"><span className="brand-mark">a<span>.</span></span><span>Link operations</span></div>
+          <div className="login-copy"><span className="eyebrow">PRIVATE WORKSPACE</span><h1 id="login-title">Your links.<br />A clear view.</h1><p>A private workspace for short links and the journeys they start.</p></div>
+          <p className="notice notice-error" role="alert">Access denied. Only the configured Google owner can enter.</p>
+          <form><button className="login-button" type="button"><span className="google-mark" aria-hidden="true">G</span>Continue with Google</button></form>
+          <div className="login-footer"><Link className="quiet" href="/links">Open workspace</Link><span>Owner access only · No public link creation</span></div>
+        </section>
+      </main>
+    ) : (
+      <>
+        <header className="shell-header">
+          <div className="shell-left">
+            <Link className="brand" href="/links">a<span>.</span></Link>
+            <nav aria-label="Main"><Link href="/links" aria-current="page">Links</Link></nav>
+            <span className="workspace-context"><i aria-hidden="true">A</i> Animesh workspace</span>
           </div>
-          <section className="panel">
-            <h2>Link settings</h2>
+          <div className="owner-controls"><span className="owner-identity"><i aria-hidden="true">A</i><span>owner@example.com</span></span><button className="text-button">Sign out</button></div>
+        </header>
+        <main className="workspace" id="main">
+      {error ? (
+        <section className="panel error-state"><span className="error-glyph" aria-hidden="true">!</span><h1>Workspace unavailable</h1><p>The database may need configuration, or the session may have expired.</p><div className="state-actions"><button>Try again</button><Link className="button secondary" href="/">Sign in</Link></div></section>
+      ) : detail ? (
+        <>
+          <Link href="/links" className="breadcrumb">← All links</Link>
+          <div className="page-heading detail-heading">
+            <div>
+              <div className="detail-badges"><span className="badge badge-native">native</span></div>
+              <h1 className="detail-title">Product launch notes</h1>
+              <div className="short-link-cluster"><a className="short-url" href="https://link.animesh.cc/Launch/notes.v1">https://link.animesh.cc/Launch/notes.v1</a><LinkActions prominent id={link.id} url="https://link.animesh.cc/Launch/notes.v1" /></div>
+            </div>
+          </div>
+          <section className="panel settings-card">
+            <div className="section-heading"><div><span className="eyebrow">LINK SETTINGS</span><h2>Destination and title</h2></div><span className="immutable-note">/Launch/notes.v1 · permanent</span></div>
             <LinkForm link={link} />
           </section>
-          <AnalyticsView data={analytics} id={link.id} params={params} />
+          <AnalyticsView data={empty ? { ...analytics, clicks: 0, lifetime: 0, unique: 0, trends: [], dimensions: [], heatmap: [], geography: [], events: [], peak: null, lastClick: null } : analytics} id={link.id} params={params} />
         </>
       ) : (
         <DirectoryView
-          data={{ total: 1230, rows }}
-          totals={totals}
+          data={empty ? { total: 0, rows: [] } : { total: 1230, rows }}
+          totals={empty ? { ...totals, total: 0, active: 0, deleted: 0, native: 0, migrated: 0, clicks: 0, top: [], recent: [] } : totals}
           params={params}
         />
       )}
-    </main>
-    <footer className="shell-footer">
-      Isolated fixture · No production data
-      <span>Asia/Kolkata · Best-effort collection</span>
-    </footer>
+        </main>
+        <footer className="shell-footer"><span>Isolated fixture · No production data</span><span>Asia/Kolkata · Best-effort collection</span></footer>
+      </>
+    )}
   </AppRouterContext.Provider>,
 );

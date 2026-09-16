@@ -25,7 +25,7 @@ export function Trend({ rows }: { rows: Analytics["trends"] }) {
         role="img"
         aria-label={`Recorded click trend with ${sampled.length} intervals. Highest plotted interval: ${max} clicks.`}
       >
-        <line x1="0" x2={width} y1={height} y2={height} stroke="#ddd8e6" />
+        <line x1="0" x2={width} y1={height} y2={height} stroke="var(--chart-grid)" />
         {sampled.map((row, i) => (
           <rect
             key={row.interval}
@@ -33,7 +33,7 @@ export function Trend({ rows }: { rows: Analytics["trends"] }) {
             y={height - (row.clicks / max) * (height - 12)}
             width={Math.max(1, barWidth - 2)}
             height={(row.clicks / max) * (height - 12)}
-            fill="#7959b2"
+            fill="var(--chart-cobalt)"
           >
             <title>
               {row.interval} IST{step > 1 ? ` · ${step} buckets grouped` : ""}:{" "}
@@ -109,8 +109,8 @@ export function Heatmap({ rows }: { rows: Analytics["heatmap"] }) {
                     <td
                       key={h}
                       style={{
-                        background: `rgba(121,89,178,${count ? 0.15 + (0.85 * count) / max : 0.04})`,
-                        color: count / max > 0.5 ? "white" : "#42384e",
+                        background: `color-mix(in srgb, var(--chart-cobalt) ${count ? 12 + (82 * count) / max : 4}%, white)`,
+                        color: count / max > 0.5 ? "white" : "var(--ink)",
                       }}
                     >
                       <span>{count}</span>
@@ -149,13 +149,13 @@ export function WorldMap({ rows }: { rows: Analytics["geography"] }) {
         role="img"
         aria-label="Approximate recorded click locations on a world map"
       >
-        <path d={path({ type: "Sphere" }) || ""} fill="#f7f5fa" />
+        <path d={path({ type: "Sphere" }) || ""} fill="var(--map-ocean)" />
         {countries.features.map((country, i) => (
           <path
             key={i}
             d={path(country) || ""}
-            fill="#e3ddeb"
-            stroke="#fff"
+            fill="var(--map-land)"
+            stroke="var(--surface)"
             strokeWidth="0.5"
           />
         ))}
@@ -170,7 +170,7 @@ export function WorldMap({ rows }: { rows: Analytics["geography"] }) {
                   cx={point[0]}
                   cy={point[1]}
                   r={Math.min(18, 4 + Math.sqrt(row.clicks))}
-                  fill="#7959b2"
+                  fill="var(--chart-cobalt)"
                   fillOpacity="0.65"
                 >
                   <title>

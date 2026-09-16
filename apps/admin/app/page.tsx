@@ -8,36 +8,30 @@ export default async function Page({
 }) {
   const params = await searchParams;
   return (
-    <main id="main" className="login">
-      <span className="eyebrow">ANIMESH / OPERATIONS</span>
-      <div className="login-mark" aria-hidden="true">
-        ↗
-      </div>
-      <h1>
-        Your links.
-        <br />A clear view.
-      </h1>
-      <p>A private workspace for short links and the journeys they start.</p>
-      {params.error && (
-        <p className="notice" role="alert">
-          Access denied. Only the configured Google owner can enter.
-        </p>
-      )}
-      {!authConfigured() && (
-        <p className="notice">
-          Setup required: configure Supabase and the private owner settings to
-          enable sign-in.
-        </p>
-      )}
-      <form action="/auth/login" method="post">
-        <button disabled={!authConfigured()}>
-          Continue with Google <span aria-hidden="true">↗</span>
-        </button>
-      </form>
-      <Link className="quiet" href="/links">
-        Open workspace
-      </Link>
-      <p className="fine">Owner access only · No public link creation</p>
+    <main id="main" className="login-shell">
+      <section className="login-panel" aria-labelledby="login-title">
+        <div className="login-brand" aria-label="Animesh link operations">
+          <span className="brand-mark">a<span>.</span></span>
+          <span>Link operations</span>
+        </div>
+        <div className="login-copy">
+          <span className="eyebrow">PRIVATE WORKSPACE</span>
+          <h1 id="login-title">Your links.<br />A clear view.</h1>
+          <p>A private workspace for short links and the journeys they start.</p>
+        </div>
+        {params.error && <p className="notice notice-error" role="alert">Access denied. Only the configured Google owner can enter.</p>}
+        {!authConfigured() && <p className="notice">Setup required: configure Supabase and the private owner settings to enable sign-in.</p>}
+        <form action="/auth/login" method="post">
+          <button className="login-button" disabled={!authConfigured()}>
+            <span className="google-mark" aria-hidden="true">G</span>
+            Continue with Google
+          </button>
+        </form>
+        <div className="login-footer">
+          <Link className="quiet" href="/links">Open workspace</Link>
+          <span>Owner access only · No public link creation</span>
+        </div>
+      </section>
     </main>
   );
 }

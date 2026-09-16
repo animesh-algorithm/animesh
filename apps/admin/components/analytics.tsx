@@ -22,10 +22,9 @@ export function AnalyticsView({
     data.dimensions.filter((row) => row.key === key);
   return (
     <section className="analytics">
-      <div className="section-heading">
+      <div className="section-heading analytics-heading">
         <div>
-          <span className="eyebrow">RECORDED ANALYTICS</span>
-          <h2>Behind this link</h2>
+          <span className="eyebrow">RECORDED ANALYTICS</span><h2>Link performance</h2>
         </div>
         <form method="get">
           <input type="hidden" name="tab" value={tab} />
@@ -59,7 +58,7 @@ export function AnalyticsView({
           </a>
         ))}
       </nav>
-      <p className="fine">
+      <p className="analytics-disclosure">
         Through {indiaTime(data.end)} · Asia/Kolkata · Includes bots ·
         Best-effort recording
       </p>
@@ -92,7 +91,7 @@ export function AnalyticsView({
             ))}
           </div>
           <p className="insight">{textSummary(data)}</p>
-          <section className="panel">
+          <section className="panel chart-panel">
             <div className="section-heading">
               <h3>Clicks over time</h3>
               <span className="fine">
@@ -106,7 +105,7 @@ export function AnalyticsView({
                 : "No peak interval yet."}
             </p>
           </section>
-          <section className="panel">
+          <section className="panel chart-panel">
             <h3>When clicks happen</h3>
             <Heatmap rows={data.heatmap} />
           </section>
@@ -114,7 +113,7 @@ export function AnalyticsView({
       )}
       {tab === "audience" && (
         <>
-          <section className="panel">
+          <section className="panel chart-panel map-panel">
             <h3>Where clicks come from</h3>
             <WorldMap rows={data.geography} />
           </section>
