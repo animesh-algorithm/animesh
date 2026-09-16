@@ -17,6 +17,7 @@ type ProjectShowcaseProps = {
 };
 
 export function ProjectShowcase({ label, linkLabel, links, title, description, meta, tone, featured, children }: ProjectShowcaseProps) {
+  const project = ({ VisaFile: "visafile", "AI Insurance Concierge": "concierge", "Gradly Links": "gradly-links", "AI Claims Adjudication": "claims" } as Record<string, string>)[linkLabel];
   const primaryLink = links?.[0];
   const visual = (
     <>
@@ -30,6 +31,7 @@ export function ProjectShowcase({ label, linkLabel, links, title, description, m
       {primaryLink ? (
         <a
           className="project-visual-link"
+          data-analytics-event="project_link_clicked" data-analytics-placement="work" data-analytics-project={project} data-analytics-category={primaryLink.icon === "github" ? "source" : "demo"}
           href={primaryLink.href}
           target="_blank"
           rel="noopener noreferrer"
@@ -49,6 +51,7 @@ export function ProjectShowcase({ label, linkLabel, links, title, description, m
             <div className="project-links" aria-label={`${linkLabel} links`}>
               {links.map((link) => (
                 <a
+                  data-analytics-event="project_link_clicked" data-analytics-placement="work" data-analytics-project={project} data-analytics-category={link.icon === "github" ? "source" : "demo"}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"

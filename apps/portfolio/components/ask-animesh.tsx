@@ -1,5 +1,6 @@
 "use client";
 
+import { interaction, track } from "@/lib/analytics";
 import type { ChatMessage, ChatSource, ConsentMode } from "@/lib/chat/types";
 import { ChatBubble, Spark } from "@/components/icons";
 import Link from "next/link";
@@ -76,6 +77,7 @@ export function AskAnimeshProvider({ children }: { children: ReactNode }) {
 
   const open = useCallback(() => {
     triggerRef.current = document.activeElement as HTMLElement | null;
+    track("ask_opened", { placement: "drawer" });
     setIsOpen(true);
   }, []);
 
@@ -148,6 +150,8 @@ export function ChatExperience({
   onClose?: () => void;
 }) {
   const titleId = useId();
+  const opened = useRef(false);
+  useEffect(() => { if (variant === "page" && !opened.current) { opened.current = true; track("ask_opened", { placement: "page" }); } }, [variant]);
   const dialogRef = useRef<HTMLElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [consent, setConsent] = useState<ConsentMode | null>(null);
@@ -240,6 +244,7 @@ export function ChatExperience({
   const submit = async (question = input) => {
     const text = question.trim();
     if (!text || !consent || !identity || isStreaming) return;
+    const outcome = interaction("ask_question_submitted", { placement: variant });
     const userMessage: UiMessage = {
       id: randomToken(9),
       role: "user",
@@ -277,6 +282,7 @@ export function ChatExperience({
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
+      let completed = false;
       while (true) {
         const { done, value } = await reader.read();
         buffer += decoder.decode(value, { stream: !done });
@@ -301,14 +307,18 @@ export function ChatExperience({
                   : message,
               ),
             );
+          } else if (event.type === "done") {
+            completed = true;
           } else if (event.type === "error") {
             throw new Error(event.message);
           }
         }
         if (done) break;
       }
+      outcome(completed ? "ask_response_completed" : "ask_failed", { placement: variant, outcome: completed ? "completed" : "failed" });
       setAnnouncement("Answer complete.");
     } catch (caught) {
+      outcome("ask_failed", { placement: variant, outcome: "failed" });
       const message =
         caught instanceof Error ? caught.message : "Something went wrong.";
       setError(message);
@@ -357,6 +367,7 @@ export function ChatExperience({
 
   return (
     <section
+      data-private
       className={`ask-panel ask-panel-${variant}`}
       ref={dialogRef}
       role={variant === "drawer" ? "dialog" : undefined}

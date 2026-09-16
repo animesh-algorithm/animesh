@@ -35,8 +35,8 @@ export function FitSection({ bookingHref, bookingConfigured, bookingEmbedHref }:
       <div className="site-shell booking-panel" id="book" data-reveal>
         <div><p className="section-kicker">Start with a conversation</p><h2>Not sure which way in?</h2><p>Bring the rough version. I’ll help identify the right starting point.</p></div>
         <div className="booking-actions">
-          <a className="button button--light" href={bookingHref} rel={bookingConfigured ? "noreferrer" : undefined} target={bookingConfigured ? "_blank" : undefined}>{bookingConfigured ? "Book a call" : "Request a call"}</a>
-          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <a className="button button--light" data-analytics-event="booking_clicked" data-analytics-placement="booking" data-analytics-category="calendar" href={bookingHref} rel={bookingConfigured ? "noreferrer" : undefined} target={bookingConfigured ? "_blank" : undefined}>{bookingConfigured ? "Book a call" : "Request a call"}</a>
+          <a data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="email" href={`mailto:${site.email}`}>{site.email}</a>
           {!bookingConfigured ? <small>A scheduling URL has not been configured yet, so this opens a direct email request.</small> : null}
         </div>
       </div>

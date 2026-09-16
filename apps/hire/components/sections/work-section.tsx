@@ -28,7 +28,7 @@ export function WorkSection() {
               </ul>
               {project.links.length ? (
                 <div className="project-links">
-                  {project.links.map((link) => <a href={link.href} key={link.href} rel="noreferrer" target="_blank">{link.label}</a>)}
+                  {project.links.map((link) => <a data-analytics-event="project_link_clicked" data-analytics-placement="work" data-analytics-project={({ visafile: "visafile", "ai-insurance-concierge": "concierge", "gradly-links": "gradly-links", "ai-claims-adjudication": "claims" } as Record<string, string>)[project.slug]} data-analytics-category={link.href.includes("github.com") ? "source" : "demo"} href={link.href} key={link.href} rel="noreferrer" target="_blank">{link.label}</a>)}
                 </div>
               ) : null}
             </div>

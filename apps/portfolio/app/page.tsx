@@ -204,7 +204,7 @@ export default async function Home() {
               </AskAnimeshLink>
               <a
                 className="about-resume-link"
-                href="/resume.pdf"
+                data-analytics-event="resume_clicked" data-analytics-placement="about" data-analytics-category="resume" href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -328,7 +328,7 @@ export default async function Home() {
               not sure how to solve it.
             </em>
           </h2>
-          <a className="contact-button" href={`mailto:${profile.email}`}>
+          <a className="contact-button" data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="email" href={`mailto:${profile.email}`}>
             {profile.email} <ArrowUpRight />
           </a>
           <div className="footer-ask-cta">
@@ -341,28 +341,28 @@ export default async function Home() {
             <span>© {new Date().getFullYear()} Animesh Sharma</span>
             <div>
               <a
-                href={profile.links.linkedin}
+                data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="social" href={profile.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 LinkedIn
               </a>
               <a
-                href={profile.links.github}
+                data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="social" href={profile.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 GitHub
               </a>
               <a
-                href={profile.links.twitter}
+                data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="social" href={profile.links.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 X / Twitter
               </a>
               <a
-                href={profile.links.resume}
+                data-analytics-event="resume_clicked" data-analytics-placement="footer" data-analytics-category="resume" href={profile.links.resume}
                 target="_blank"
                 rel="noopener noreferrer"
               >

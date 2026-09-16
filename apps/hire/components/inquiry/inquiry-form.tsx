@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useRef, useState } from "react";
 
+import { interaction, track } from "@/lib/analytics";
 import type { InquiryField, InquiryResponse } from "@/lib/inquiries/schema";
 
 interface InquiryFormProps { email: string }
@@ -10,6 +11,8 @@ const initialErrors: Partial<Record<InquiryField, string>> = {};
 
 export function InquiryForm({ email }: InquiryFormProps) {
   const startedAt = useRef(0);
+  const engaged = useRef(false);
+  const sending = useRef(false);
   const [errors, setErrors] = useState(initialErrors);
   const [status, setStatus] = useState<{ state: "idle" | "sending" | "success" | "error"; message: string }>({ state: "idle", message: "" });
 
@@ -19,6 +22,9 @@ export function InquiryForm({ email }: InquiryFormProps) {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (sending.current) return;
+    sending.current = true;
+    const outcome = interaction("inquiry_submitted", { placement: "inquiry" });
     const form = event.currentTarget;
     const data = new FormData(form);
     setErrors({});
@@ -40,23 +46,27 @@ export function InquiryForm({ email }: InquiryFormProps) {
         }),
       });
       const result = await response.json() as InquiryResponse;
-      if (!result.ok) {
+      if (!response.ok || !result.ok) {
+        outcome("inquiry_failed", { placement: "inquiry", outcome: "rejected" });
         setErrors(result.fieldErrors ?? {});
         setStatus({ state: "error", message: result.message });
         return;
       }
+      outcome("inquiry_succeeded", { placement: "inquiry", outcome: "accepted" });
       form.reset();
+      engaged.current = false;
       startedAt.current = Date.now();
       setStatus({ state: "success", message: result.message });
     } catch {
+      outcome("inquiry_failed", { placement: "inquiry", outcome: "network" });
       setStatus({ state: "error", message: "The message could not be delivered. Please use the direct email link." });
-    }
+    } finally { sending.current = false; }
   }
 
   const fieldError = (field: InquiryField) => errors[field] ? <span className="field-error" id={`${field}-error`}>{errors[field]}</span> : null;
 
   return (
-    <form className="inquiry-form" onSubmit={submit} noValidate>
+    <form data-private onChange={() => { if (!engaged.current) { engaged.current = true; track("inquiry_started", { placement: "inquiry" }); } }} className="inquiry-form" onSubmit={submit} noValidate>
       <div className="form-row">
         <div className="field-group"><label>Name<input aria-describedby={errors.name ? "name-error" : undefined} aria-invalid={Boolean(errors.name)} autoComplete="name" name="name" required /></label>{fieldError("name")}</div>
         <div className="field-group"><label>Work email<input aria-describedby={errors.email ? "email-error" : undefined} aria-invalid={Boolean(errors.email)} autoComplete="email" name="email" required type="email" /></label>{fieldError("email")}</div>
@@ -70,7 +80,7 @@ export function InquiryForm({ email }: InquiryFormProps) {
       <label className="honeypot" aria-hidden="true">Website<input autoComplete="off" name="website" tabIndex={-1} /></label>
       <div className="form-submit">
         <button className="button" disabled={status.state === "sending"} type="submit">{status.state === "sending" ? "Sending…" : "Send the brief"}</button>
-        <p>Or email <a href={`mailto:${email}`}>{email}</a></p>
+        <p>Or email <a data-analytics-event="contact_link_clicked" data-analytics-placement="inquiry" data-analytics-category="email" href={`mailto:${email}`}>{email}</a></p>
       </div>
       <p className={`form-status form-status--${status.state}`} aria-live="polite" role="status">{status.message}</p>
     </form>

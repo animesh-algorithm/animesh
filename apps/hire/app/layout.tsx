@@ -1,3 +1,4 @@
+import { AnalyticsProvider } from "@/components/analytics-provider";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang="en">
       <body>
+        <AnalyticsProvider />
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>

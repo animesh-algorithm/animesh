@@ -433,3 +433,8 @@ main > .hero, main > section { position: relative; isolation: isolate; }
 @keyframes step-check { 0%, 25% { transform: scale(.65); opacity: .35; } 45%, 100% { transform: scale(1); opacity: 1; } }
 @keyframes source-rise { 0%, 70%, 100% { transform: translateX(0); } 82% { transform: translateX(.2rem); } }
 @keyframes availability-pulse { 0% { transform: scale(.7); opacity: .9; } 75%, 100% { transform: scale(2.15); opacity: 0; } }
+
+/* Privacy disclosure page. */
+.privacy-page { max-width: 760px; margin: 0 auto; padding: 64px 24px 140px; }
+.privacy-page h1 { font-size: clamp(2rem, 8vw, 4rem); }
+.privacy-page p { margin: 24px 0; line-height: 1.7; }

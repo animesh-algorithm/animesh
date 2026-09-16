@@ -19,13 +19,13 @@ export function SiteHeader() {
           {navItems.map((item) => (
             <a href={item.href} key={item.href}>{item.label}</a>
           ))}
-          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
+          <a data-analytics-event="resume_clicked" data-analytics-placement="header" data-analytics-category="resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
         </nav>
         <div className="header-actions">
           <AskAnimeshLink className="header-ask">
             <ChatBubble /> Ask Animesh
           </AskAnimeshLink>
-          <a className="header-contact" href="#contact">
+          <a className="header-contact" data-analytics-event="contact_link_clicked" data-analytics-placement="header" href="#contact">
             Say hello <ArrowUpRight />
           </a>
         </div>

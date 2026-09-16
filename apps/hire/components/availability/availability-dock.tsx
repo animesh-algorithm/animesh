@@ -11,7 +11,7 @@ export function AvailabilityDock({ bookingHref, configured }: AvailabilityDockPr
     <aside className="availability-dock" aria-label="Current availability">
       <AvailabilityPulse />
       <span className="availability-dock__copy"><strong>{availability.label}</strong><small>{availability.slots} slot · from {availability.nextStart}</small></span>
-      <a href={bookingHref} rel={configured ? "noreferrer" : undefined} target={configured ? "_blank" : undefined}>
+      <a data-analytics-event="booking_clicked" data-analytics-placement="booking" data-analytics-category="calendar" href={bookingHref} rel={configured ? "noreferrer" : undefined} target={configured ? "_blank" : undefined}>
         {configured ? "Book a call" : "Request a call"}
       </a>
     </aside>
