@@ -1,0 +1,3 @@
+# Architecture
+Public Next.js catch-all route resolves nested slugs via an app-local restricted PostgreSQL adapter. Successful GET returns an uncached 302 and schedules event collection with after(); HEAD performs no recording. Unknown, deleted and unavailable lookups return 404, 410 and 503. Query forwarding only adds keys absent from the destination, preserving duplicate incoming values and destination fragments.
+Metadata is trusted only when VERCEL=1. Use Vercel-overwritten x-vercel-forwarded-for and x-vercel-ip-* headers. Hash validated IPs with a private stable HMAC secret; absent IP is null. Persist coarse parsed device/browser/OS and bot boolean, never a full UA. Referrers retain hostname only. Unknown metadata stays Unknown. All database calls are uncached.

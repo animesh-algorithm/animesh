@@ -2,10 +2,12 @@
 
 ## Repository map
 
-This public monorepo contains two independently designed and deployed products:
+This public monorepo contains four independently designed and deployed products:
 
 - `apps/portfolio`: the personal portfolio at `www.animesh.cc`, including `/`, `/ask`, `/api/chat`, `/api/chat/session`, and `/resume.pdf`.
 - `apps/hire`: the consulting and inquiry site, including `/` and `/api/inquiries`.
+- `apps/links`: public redirects at `link.animesh.cc`, port 3002.
+- `apps/admin`: private Google-owner link management at `admin.animesh.cc`, port 3003; owns Supabase migrations.
 - `packages`: intentionally empty except for a placeholder. Do not create a shared package without an explicit product or architectural decision.
 
 Read the nearest application-level `AGENTS.md` and its referenced design, content, and architecture documents before changing an application. The nearest instructions win for application-specific work.
@@ -25,6 +27,6 @@ Read the nearest application-level `AGENTS.md` and its referenced design, conten
 
 ## Required validation
 
-Use Node 24 and the repository-pinned pnpm version. Run filtered app checks and the equivalent root Turbo checks. Validate production route output, both local development ports, responsive behavior at 375/768/1024/1440 CSS pixels, keyboard focus, reduced motion, assets, console output, and horizontal overflow.
+Use Node 24 and the repository-pinned pnpm version. Run filtered app checks and the equivalent root Turbo checks. Validate production route output, all four local development ports, responsive behavior at 375/768/1024/1440 CSS pixels, keyboard focus, reduced motion, assets, console output, and horizontal overflow.
 
 Treat live integration checks as explicit preview actions. Never print secrets, reassign production domains, or deploy to production while validating a migration.

@@ -1,0 +1,2 @@
+# Design
+The public application serves redirects and minimal status responses, with no directory, analytics, login or creation interface. The root page uses clear system typography, restrained ink and a simple arrow identity. Unknown/deleted/unavailable routes return plain status text without disclosing database details. The page remains readable on phones and supports native keyboard focus. Management design belongs exclusively to Admin.

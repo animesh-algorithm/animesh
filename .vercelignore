@@ -1,0 +1,9 @@
+.git
+.turbo
+.vercel
+.env
+.env.*
+**/.next
+**/node_modules
+**/coverage
+**/*.tsbuildinfo

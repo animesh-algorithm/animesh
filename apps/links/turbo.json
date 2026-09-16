@@ -1,0 +1,11 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "env": ["LINKS_ORIGIN"]
+    },
+    "dev": {
+      "passThroughEnv": ["DATABASE_URL", "CLICK_HASH_SECRET", "LINKS_ORIGIN"]
+    }
+  }
+}

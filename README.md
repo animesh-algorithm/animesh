@@ -1,11 +1,13 @@
 # Animesh Platform
 
-Public pnpm/Turborepo workspace for Animesh Sharma's two independent websites.
+Public pnpm/Turborepo workspace for Animesh Sharma's four independent applications.
 
 ## Workspace
 
 - `apps/portfolio` — personal portfolio and Ask Animesh, served locally on port 3000. Vercel root: `apps/portfolio`.
 - `apps/hire` — consulting site and inquiry flow, served locally on port 3001. Vercel root: `apps/hire`.
+- `apps/links` — public short-link redirects on port 3002. Vercel root: `apps/links`.
+- `apps/admin` — private Google-owner link operations on port 3003. Vercel root: `apps/admin`.
 - `packages` — reserved for deliberately shared packages; none exist today.
 
 The applications keep separate package names, React versions, configurations, content, styles, and deployment projects. This repository does not provide shared visual or product code.
@@ -24,7 +26,7 @@ pnpm test
 pnpm --filter animesh-portfolio knowledge:check
 ```
 
-`pnpm dev` starts Portfolio at `http://localhost:3000` and Hire at `http://localhost:3001`.
+`pnpm dev` starts Portfolio at `http://localhost:3000`, Hire at `http://localhost:3001`, Links at `http://localhost:3002`, and Admin at `http://localhost:3003`.
 
 ## Environment ownership
 
@@ -34,3 +36,5 @@ Keep environment files inside the application that owns them; never create a roo
 - Hire owns Resend, inquiry sender/recipient, public site URL, and booking URL settings. Start from `apps/hire/.env.example`.
 
 Vercel environment values and scopes remain attached to each existing project. Do not copy values between projects or commit local environment files.
+
+Links and Admin use one dedicated Supabase project, with distinct database privileges. Start from their app-local `.env.example` files. See [provisioning and rollout](apps/admin/docs/deployment.md) for Google OAuth, migrations, owner configuration, restricted runtime credentials, backups and preview checks. Missing configuration denies private access. Production deployment and DNS activation are a separate launch step.

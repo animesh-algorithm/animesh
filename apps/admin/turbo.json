@@ -1,0 +1,25 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "env": [
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+        "ADMIN_ORIGIN",
+        "OWNER_GOOGLE_EMAIL",
+        "OWNER_USER_ID",
+        "LINKS_ORIGIN"
+      ]
+    },
+    "dev": {
+      "passThroughEnv": [
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+        "ADMIN_ORIGIN",
+        "OWNER_GOOGLE_EMAIL",
+        "OWNER_USER_ID",
+        "LINKS_ORIGIN"
+      ]
+    }
+  }
+}
