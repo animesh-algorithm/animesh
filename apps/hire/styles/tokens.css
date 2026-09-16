@@ -1,0 +1,51 @@
+:root {
+  --color-paper: #f7f5f0;
+  --color-ink: #191919;
+  --color-white: #ffffff;
+  --color-cobalt: #2f6bff;
+  --color-cobalt-dark: #1746b8;
+  --color-butter: #ffd66b;
+  --color-coral: #ff785a;
+  --color-lilac: #b7a6ff;
+  --color-mint: #79d3a6;
+  --color-muted-ink: #62605b;
+  --color-warm-panel: #eeeae2;
+  --color-work-panel: #f1eff8;
+
+  --font-sans: Arial, Helvetica, sans-serif;
+  --font-display: Arial, Helvetica, sans-serif;
+
+  --text-display: clamp(3rem, 8vw, 7.5rem);
+  --text-h2: clamp(2.25rem, 5vw, 5rem);
+  --text-h3: clamp(1.5rem, 2.5vw, 2.5rem);
+  --text-lead: clamp(1.125rem, 1.6vw, 1.5rem);
+  --text-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+  --space-6: 3rem;
+  --space-8: 4rem;
+  --space-12: 6rem;
+  --space-section: clamp(5rem, 10vw, 10rem);
+
+  --radius-small: 0.65rem;
+  --radius-medium: 1.5rem;
+  --radius-large: 2.75rem;
+  --border: 2px solid var(--color-ink);
+  --shadow-hard: 0.45rem 0.45rem 0 var(--color-ink);
+  --shell: min(100% - 2rem, 90rem);
+  --measure: 66ch;
+  --texture-grain: url("/noise-grain.svg");
+  --texture-grain-size: 256px 256px;
+  --texture-grain-opacity: 0.075;
+  --section-curve-height: clamp(2rem, 3.8vw, 3.75rem);
+  --section-curve-height-compact: clamp(1.5rem, 2.5vw, 2.5rem);
+  --transition-control: 180ms ease;
+  --motion-fast: 180ms;
+  --motion-normal: 350ms;
+  --motion-slow: 600ms;
+  --motion-crawl: 1000ms;
+  --ease-out: cubic-bezier(.22, 1, .36, 1);
+}
