@@ -22,7 +22,8 @@ main > .hero, main > section { position: relative; isolation: isolate; }
 .wordmark { position: relative; display: inline-flex; align-items: flex-end; min-height: 2.7rem; padding: .2rem 1.8rem .2rem 0; color: var(--color-ink); font-family: var(--font-display); font-size: clamp(1.85rem, 3vw, 2.55rem); font-weight: 900; letter-spacing: -.085em; line-height: .86; text-decoration: none; }
 .wordmark__text { display: inline-flex; align-items: baseline; white-space: nowrap; }
 .wordmark__text span + span { margin-left: -.05em; }
-.wordmark__sun { position: absolute; top: .05rem; right: .05rem; width: .95rem; aspect-ratio: 1; border: 1px solid var(--color-white); border-radius: 50%; background: #ffb000; box-shadow: 0 0 0 1px var(--color-ink), 0 0 .45rem rgba(255, 176, 0, .8), 0 0 1rem rgba(255, 214, 107, .48), inset 0 0 0 1px rgba(255, 255, 255, .78); }
+.wordmark__sun { position: absolute; top: .05rem; right: .05rem; isolation: isolate; width: .95rem; aspect-ratio: 1; border: 1px solid var(--color-white); border-radius: 50%; background: #ffb000; box-shadow: 0 0 0 1px var(--color-ink), 0 0 .45rem rgba(255, 176, 0, .8), 0 0 1rem rgba(255, 214, 107, .48), inset 0 0 0 1px rgba(255, 255, 255, .78); }
+.wordmark__sun::after { position: absolute; z-index: -1; inset: -.05rem; border: 2px solid #ffb000; border-radius: 50%; content: ""; filter: drop-shadow(0 0 .4rem rgba(255, 176, 0, .9)); animation: availability-pulse 1.8s var(--ease-out) infinite; }
 .primary-nav { display: flex; align-items: center; gap: clamp(1rem, 2.5vw, 2.5rem); font-size: .95rem; font-weight: 800; }
 .primary-nav > a:not(.button) { text-decoration-thickness: 2px; text-decoration-color: transparent; transition: text-decoration-color var(--transition-control); }
 .primary-nav > a:not(.button):hover { text-decoration-color: currentColor; }
