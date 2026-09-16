@@ -23,7 +23,8 @@
     "qrcode": "^1.5.4",
     "world-atlas": "^2.0.2",
     "topojson-client": "^3.1.0",
-    "d3-geo": "^3.1.1"
+    "d3-geo": "^3.1.1",
+    "@radix-ui/react-tooltip": "^1.2.16"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

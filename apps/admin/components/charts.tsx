@@ -36,8 +36,7 @@ export function Trend({ rows }: { rows: Analytics["trends"] }) {
             fill="var(--chart-cobalt)"
           >
             <title>
-              {row.interval} IST{step > 1 ? ` · ${step} buckets grouped` : ""}:{" "}
-              {row.clicks} clicks
+              {`${row.interval} IST${step > 1 ? ` · ${step} buckets grouped` : ""}: ${row.clicks} clicks`}
             </title>
           </rect>
         ))}
@@ -174,7 +173,7 @@ export function WorldMap({ rows }: { rows: Analytics["geography"] }) {
                   fillOpacity="0.65"
                 >
                   <title>
-                    {row.country}: {row.clicks} clicks · approximate location
+                    {`${row.country}: ${row.clicks} clicks · approximate location`}
                   </title>
                 </circle>
               )

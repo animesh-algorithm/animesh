@@ -8,7 +8,7 @@ Admin is a light, dense link-operations workspace influenced by the clarity and 
 - The application workspace is pale blue-lilac (`#f3f4ff`). White surfaces use thin cool-gray rules, restrained one-pixel shadows, and 10–12px radii. Modal surfaces use 14px radii.
 - Purple, teal, pink, and yellow are status colors only. They distinguish migrated, active/native, deleted/error, and summary categories without becoming decorative page themes.
 - Typography uses the existing system stack. Headings are compact and direct; control and table labels use small, strong text for repeat-workflow scanning. No font dependency is introduced.
-- Interface icons are app-local outline SVG components. Familiar icon-only actions always include semantic labels, visible hover/focus tooltips, and status announcements where state changes.
+- Interface icons remain app-local outline SVG components. Link actions use Radix Tooltip for accessible hover/focus help, retain semantic labels and status announcements, and share an explicit grid-centered control primitive so icon geometry never depends on text baselines. Modal close controls keep a local focus tooltip so a single Escape always dismisses the native dialog.
 
 ## Density and hierarchy
 
@@ -30,6 +30,8 @@ Controls have distinct default, hover, active, disabled, and visible focus state
 Creation and deletion use native modal dialogs. Creation initially focuses Destination URL. Deletion initially focuses Cancel. The browser contains focus within an open modal; Escape, Cancel, close, and backdrop interaction dismiss it and restore focus to the trigger. Deletion remains a separate danger action and states that the path is permanently reserved.
 
 Copy announces success or failure through a polite live region. Tooltips appear on hover and keyboard focus but never replace accessible names. Reduced-motion preferences disable all transitions and animation.
+
+The QR action opens a native dialog with a scannable preview of the short URL and a Download PNG action. Images load only when opened, through the existing owner-protected endpoint. Loading and image failures are announced; dismissal restores focus to the QR trigger.
 
 ## Analytics and content rules
 

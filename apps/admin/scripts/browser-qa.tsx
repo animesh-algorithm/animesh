@@ -5,6 +5,7 @@ import { readFileSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import assert from "node:assert/strict";
+import QRCode from "qrcode";
 async function main() {
   const output = mkdtempSync(join(tmpdir(), "animesh-links-qa-"));
   const bundle = await build({
@@ -24,7 +25,14 @@ async function main() {
     },
   });
   const css = readFileSync("app/globals.css");
+  const qrPng = await QRCode.toBuffer("https://link.animesh.cc/fixture", { width: 768, margin: 4 });
   const server = createServer((request, response) => {
+    if (/^\/api\/links\/[^/]+\/qr$/.test(request.url || "")) {
+      response.setHeader("Content-Type", "image/png");
+      response.setHeader("Content-Disposition", 'attachment; filename="link-qr.png"');
+      response.end(qrPng);
+      return;
+    }
     if (request.url === "/fixture.js") {
       response.setHeader("Content-Type", "text/javascript");
       response.end(bundle.outputFiles[0].text);
@@ -158,6 +166,34 @@ async function main() {
             "Create dialog must restore trigger focus",
           );
           const firstCopy = page.getByRole("button", { name: "Copy short link" }).first();
+          const iconAlignment = await page
+            .locator(".link-actions")
+            .first()
+            .locator(".icon-button")
+            .evaluateAll((controls) =>
+              controls.map((control) => {
+                const controlBounds = control.getBoundingClientRect();
+                const iconBounds = control.querySelector("svg")!.getBoundingClientRect();
+                return {
+                  x:
+                    iconBounds.left + iconBounds.width / 2 -
+                    (controlBounds.left + controlBounds.width / 2),
+                  y:
+                    iconBounds.top + iconBounds.height / 2 -
+                    (controlBounds.top + controlBounds.height / 2),
+                };
+              }),
+            );
+          assert(
+            iconAlignment.every(
+              ({ x, y }) => Math.abs(x) <= 0.5 && Math.abs(y) <= 0.5,
+            ),
+            `Action icons must be centered: ${JSON.stringify(iconAlignment)}`,
+          );
+          await firstCopy.focus();
+          await page.keyboard.press("Tab");
+          await page.keyboard.press("Shift+Tab");
+          await page.getByRole("tooltip", { name: "Copy link" }).waitFor();
           await firstCopy.click();
           await page.locator("[role=status]").filter({ hasText: /Copied|unavailable/ }).waitFor();
           if (width < 768) {
@@ -165,6 +201,30 @@ async function main() {
             assert.equal(await filters.getAttribute("open"), null);
             await filters.locator("summary").click();
             assert.notEqual(await filters.getAttribute("open"), null);
+          }
+        }
+        if (path === "/links" || path === "/links/fixture?tab=overview") {
+          const qrTrigger = page.getByRole("button", { name: "Show QR code" }).first();
+          await qrTrigger.focus();
+          await page.keyboard.press("Enter");
+          const qrDialog = page.getByRole("dialog", { name: "QR code", exact: true });
+          await qrDialog.waitFor();
+          const image = qrDialog.getByRole("img");
+          await image.waitFor();
+          assert.equal(await image.evaluate((img) => (img as HTMLImageElement).naturalWidth), 768);
+          assert.match(await qrDialog.getByRole("link", { name: "Download PNG" }).getAttribute("href") || "", /^\/api\/links\/[^/]+\/qr$/);
+          const bounds = await qrDialog.evaluate((el) => ({ width: el.clientWidth, scroll: el.scrollWidth, right: el.getBoundingClientRect().right }));
+          assert(bounds.scroll <= bounds.width && bounds.right <= width, "QR dialog must fit the viewport");
+          await page.keyboard.press("Tab");
+          assert(await qrDialog.evaluate((el) => el.contains(document.activeElement)), "QR dialog must contain focus");
+          await page.keyboard.press("Escape");
+          await qrDialog.waitFor({ state: "hidden" });
+          await page.waitForFunction(() => document.activeElement?.getAttribute("aria-label") === "Show QR code");
+          if (width === 375 || width === 1440) {
+            await qrTrigger.click();
+            await qrDialog.getByRole("img").waitFor();
+            await page.screenshot({ path: join(output, `${width}-${path === "/links" ? "directory" : "detail"}-qr.png`) });
+            await qrDialog.getByRole("button", { name: "Close", exact: true }).click();
           }
         }
         if (path === "/links/fixture?tab=overview") {

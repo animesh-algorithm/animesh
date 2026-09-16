@@ -65,7 +65,7 @@ export function Dialog({
             onClick={onClose}
           >
             <CloseIcon />
-            <span className="tooltip" role="tooltip">
+            <span className="inline-tooltip" role="tooltip">
               Close
             </span>
           </button>
