@@ -5,6 +5,7 @@ const navItems = [
   { href: "#work", label: "Work" },
   { href: "#about", label: "About" },
   { href: "#notes", label: "Notes" },
+  { href: "https://blog.animesh.cc", label: "Blog" },
 ];
 
 export function SiteHeader() {

@@ -1,0 +1,55 @@
+# Implementation validation · 2026-09-17
+
+Used Node 24.19.0 and pinned pnpm 10.34.5. Frozen-lockfile install succeeds; existing application importer resolutions and original package/snapshot entries were preserved while adding blog-local dependencies.
+
+Blog lint, typecheck, 30 tests and production build pass. Equivalent root Turbo lint/typecheck/test (all five apps) and build pass. Production output keeps public article/tag/RSS/sitemap routes dynamic, with one five-minute public data cache; preview/media/auth routes are dynamic and uncached. No credential-free fixture content enters a production build.
+
+The first combined root check encountered duplicate ignored Portfolio `.next/types/* 3.ts` files. Only duplicate generated type output was removed; the subsequent root checks passed. Tracked generated Portfolio tsbuildinfo was restored after verification.
+
+Browser QA covered the index and all seven inspected articles at 375/768/1024/1440 CSS pixels: 32 successful route/layout checks with document/body width equal to the viewport. Six axe WCAG A/AA audits covered the index, React/useMemo and Dragon Ball at 375 and 1440, with no violations after selecting Shiki's high-contrast light theme. Search and tag search, keyboard skip navigation, heading contents links, actual clipboard copying, GIF play/pause, reduced motion, RSS membership, denied draft media and synthetic long code/table internal scrolling pass. No uncaught JavaScript exceptions were recorded. Browser artifacts and detailed metrics are at `/tmp/animesh-blog-qa` for this local run.
+
+Portfolio was checked at all four widths: both Blog links exist; document/body do not overflow. All five local development ports (3000–3004) returned 200 for `/`. Existing app route/build output remains intact; public backend integrations were not invoked by the port smoke tests.
+
+## Media exceptions
+
+Of eight Dragon Ball images, five external GIFs generated first-frame PNGs successfully, one uploaded GIF used the labeled inspection placeholder, and two original external sources were unavailable. `media2.giphy.com/media/WOb8EeFziTQNE02WXs/giphy.gif` returned 404 on a direct server request. `thumbs.gfycat.com/InsecureDiligentLaughingthrush-size_restricted.gif` failed DNS resolution (ENOTFOUND). Those requests produce graceful unavailable messages and expected resource errors in the browser console; the original CMS references were preserved. Do not silently replace editorial assets or claim all assets passed.
+
+## Deferred live checks
+
+The user selected fixtures and documented provisioning. The app-local NOTION_TOKEN was subsequently supplied and live source access verified; Google owner OAuth and licensed Cubano provisioning remain separate checks. Connector inspection established source membership and seven published article records, but does not validate deployed API authentication, live API block fidelity, uploaded media expiry or owner OAuth. Development uses Outfit for display as documented.
+
+The independent Vercel project was provisioned with root apps/blog, Node 24 and pinned frozen pnpm installation. The platform labeled both first-deployment attempts production, even with an explicit preview target; both deployments were removed. Vercel list confirms no retained deployments. No custom domain was attached. Resolve that platform behavior before deploying; then perform live Notion and Google owner/rejection checks. Production launch remains a separate action.
+
+## Thumbnail and cloud follow-up (2026-09-17)
+
+Added original full-width layered clouds with reduced-motion stillness and available thumbnail images in all archive/related lists. All 30 blog tests and 20 root Turbo tasks passed, followed by a successful final blog build. Fixture browser QA passed 32 responsive checks and reader interactions; synthetic thumbnail layout and live index document/body widths pass at 375/768/1024/1440. Live Notion verification confirms seven valid published entries and recursive blocks. The dev server was restarted after credentials were supplied and fixtures disabled; the live index has seven posts, seven thumbnail metadata entries and no snapshot banner. Some concurrent live media checks encountered upstream timeouts, so do not interpret HTTP 200 route metadata alone as image fidelity validation.
+
+A subsequent isolated live browser check confirmed the snapshot banner absent, all seven posts present and four thumbnail images decoded successfully, including the Clustering cover in the saved screenshot. Simulated thumbnail 404 responses collapse to text. Live source credentials were supplied during implementation; uploaded media expiry and Google owner OAuth remain unverified.
+
+## Hero composition follow-up (2026-09-17)
+
+The homepage hero was iterated against the supplied reference at its 2547×1256 capture size and at the requested 1900×800 target. Four rendered comparisons refined the hero height, SVG aspect ratio, cloud silhouettes, notebook scale, asymmetric foreground wave and archive overlap. The final desktop hero occupies 70% of the 2547×1256 viewport; at 1900×800 the archive begins at 537px, leaving its first controls visible near the bottom as in the reference. The artwork is original and uses no copied site assets.
+
+Browser QA passed 32 route/viewport checks at 375/768/1024/1440, including document and body overflow checks. Reduced-motion emulation disables cloud, orbit and notebook animations; keyboard focus begins at the skip link. Root Turbo lint, typecheck, tests and builds passed across all five apps. Ports 3000, 3002, 3003 and 3004 returned 200; the running Hire app on 3001 retained its existing 404 response at `/`.
+
+## Category and footer artwork follow-up (2026-09-17)
+
+Reduced the desktop notebook-and-pencil focal group to 74% of its previous SVG scale while preserving the right-side composition. Added a prominent `Browse by category` control using the existing canonical tag routes, active states, query preservation and article counts. Added an original full-width footer scene that repeats the layered clouds, dashed orbit, notebook, pencil and yellow accent; its content remains aligned to the site grid.
+
+Rendered the live homepage at 1900×800 and 375×812. The page, category browser and full-width footer had zero horizontal overflow; the hero notebook rendered at 177×152 CSS pixels on desktop and remains intentionally hidden at phone width. Reduced-motion rendering reports no animation for hero clouds, the hero notebook or the footer notebook.
+
+Fixture browser QA passed 32 responsive route checks plus reader interactions at 375/768/1024/1440. The live homepage was separately verified with Notion thumbnails and no fixture banner. Root Turbo validation passed all 20 lint, typecheck, test and build tasks. No production deployment was made.
+
+## Illustrated footer redesign follow-up (2026-09-17)
+
+Removed the homepage category panel and moved live Notion topics into the footer navigation. Rebuilt the footer as a responsive 620px desktop scene with a deliberate asymmetric page-to-sky silhouette, a boundary-crossing notebook, three broad cropped lower cloud forms and a stable four-column content grid. Tablet uses two columns; mobile stacks the same semantic groups. No newsletter form was added because V1 has no newsletter service.
+
+Screenshot-driven checks at 375, 768, 1024, 1440 and 1900 CSS pixels found no document or body overflow. Footer navigation exposes eight live topic links; a topic link navigated to its canonical tag route. Decorative layers do not receive pointer events, keyboard focus has the three-pixel visible outline, reduced motion disables cloud and notebook animation, and axe reported no WCAG A/AA violations at 375 and 1440. Blog lint, typecheck, 30 tests and build passed on Node 24.19.0; the root Turbo lint, typecheck, test and build run passed all 20 tasks. No production deployment was made.
+
+## Article cloud masthead follow-up (2026-09-17)
+
+Added the blog's layered sky-blue cloud silhouettes to published and preview article mastheads, with an asymmetric warm-paper transition before the reading surface. The illustration is decorative and pointer-inert; cloud drift stops under reduced motion. Compact and longest article titles retain at least 120px of transition clearance at 375px.
+
+After visual review, the article-specific silhouette was replaced with the homepage's exact SVG paths, colors, transforms, animation classes and mobile crop. The article masthead omits only the homepage notebook-and-pencil focal group.
+
+Browser QA passed the homepage and all seven articles at 375/768/1024/1440: 32 route checks with no document or body overflow, six axe WCAG A/AA scans with no violations, and the existing keyboard, contents, clipboard, GIF, code/table, RSS and draft-media checks. The GIF QA selector was narrowed to the animated image so an article thumbnail cannot be mistaken for the first GIF. Focus retains a three-pixel outline and reduced-motion computation reports no cloud animation.

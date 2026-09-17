@@ -340,6 +340,7 @@ export default async function Home() {
           <div className="footer-bottom">
             <span>© {new Date().getFullYear()} Animesh Sharma</span>
             <div>
+              <a href="https://blog.animesh.cc">Blog</a>
               <a
                 data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="social" href={profile.links.linkedin}
                 target="_blank"

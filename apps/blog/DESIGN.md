@@ -1,0 +1,9 @@
+# Design
+
+A spacious, text-led notebook: warm paper, dark plum ink, violet links and yellow accents. The index header is one uninterrupted illustrated scene behind the navigation: original layered sky-blue SVG clouds drift gently, a notebook-and-pencil focal point occupies the right side, and an asymmetric warm-paper foreground rises into the archive. All decorative motion stops for reduced motion; article surfaces stay quiet. Available Notion thumbnails accompany archive and related-article entries; absent or failed thumbnails collapse to text.
+
+Outfit is self-hosted from the licensed Fontsource distribution for UI, headings and 18–20px reading text. Reading width should stay near 68 characters, with 1.85 line height. Cubano is reserved for masthead and page titles; until authorized webfont files and their license are provided, the documented display fallback is bold Outfit. No Cubano asset is bundled.
+
+Desktop has a tag sidebar and sticky article contents. Search uses a real form and URL state. Individual article mastheads use the exact layered sky-blue cloud silhouettes and warm-paper foreground wave from the homepage, without its notebook focal artwork. The footer is a spacious illustrated bookend: an asymmetric sky silhouette rises into the page, the notebook and pencil cross its boundary, and live Notion topics sit in a stable four-column navigation grid above broad lower clouds. Tablet uses two columns and mobile stacks the groups. Code and tables must scroll internally; page content must never overflow. All controls must have visible focus. GIFs render a first-frame PNG until reduced-motion readers explicitly press Play; Pause restores that still frame. Unsupported media gets a graceful message.
+
+V1 is light mode. Do not add newsletter, comments, analytics or tutorial demos.
