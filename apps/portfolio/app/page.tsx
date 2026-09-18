@@ -48,8 +48,10 @@ export default async function Home() {
           OPEN TO GOOD IDEAS & GOOD CONVERSATIONS
         </div>
         <h1 id="hero-title">
-          I figure things out. <br />
-          Then I <em>build</em> them.
+          <span className="hero-line">I figure things out.</span> <br />
+          <span className="hero-line">
+            Then I <em>build</em> them.
+          </span>
         </h1>
         <div className="hero-bottom">
           <div className="hero-intro">

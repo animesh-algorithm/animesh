@@ -23,8 +23,9 @@ interface BiographySection {
 
 export const profile = {
   name: "Animesh Sharma",
-  location: "Madhya Pradesh, India",
-  headline: "Engineer, product person, automation obsessive, and problem solver.",
+  location: "India",
+  headline:
+    "Engineer, product person, automation obsessive, and problem solver.",
   biography: [
     {
       paragraphs: [
@@ -168,7 +169,8 @@ export const experience = [
 export const notes = [
   {
     title: "Context is something you acquire.",
-    description: "“I don’t have enough context” is useful for about five minutes.",
+    description:
+      "“I don’t have enough context” is useful for about five minutes.",
     readingTime: "4 min",
   },
   {
