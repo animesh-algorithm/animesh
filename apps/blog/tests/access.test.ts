@@ -5,6 +5,7 @@ const mock = vi.hoisted(() => ({
   public: vi.fn(),
   preview: vi.fn(),
   page: vi.fn(),
+  imageFile: vi.fn(),
 }));
 vi.mock("../auth", () => ({ auth: mock.auth }));
 vi.mock("../lib/content", () => ({
@@ -12,7 +13,7 @@ vi.mock("../lib/content", () => ({
   getPreviewPost: mock.preview,
   fixtureMode: () => false,
 }));
-vi.mock("../lib/notion", () => ({ notion: { page: mock.page } }));
+vi.mock("../lib/notion", () => ({ notion: { page: mock.page, imageFile: mock.imageFile } }));
 import { GET } from "../app/media/[pageId]/[blockId]/route";
 const id = "a".repeat(32),
   blockId = "b".repeat(32);
@@ -83,9 +84,9 @@ it("refreshes a signed media URL after an expired download", async () => {
   mock.page.mockResolvedValue({
     properties: { published: { checkbox: true } },
   });
-  mock.preview
-    .mockResolvedValueOnce(post("https://file.notion.so/expired.png"))
-    .mockResolvedValueOnce(post("https://file.notion.so/refreshed.png"));
+  mock.imageFile
+    .mockResolvedValueOnce(post("https://file.notion.so/expired.png").blocks[0].data)
+    .mockResolvedValueOnce(post("https://file.notion.so/refreshed.png").blocks[0].data);
   const { default: sharp } = await import("sharp");
   const image = await sharp({ create: { width: 4, height: 4, channels: 3, background: "white" } }).png().toBuffer();
   const fetcher = vi
@@ -102,7 +103,8 @@ it("refreshes a signed media URL after an expired download", async () => {
     { params: Promise.resolve({ pageId: id, blockId }) },
   );
   expect(response.status).toBe(200);
-  expect(mock.preview).toHaveBeenCalledTimes(2);
+  expect(mock.imageFile).toHaveBeenCalledTimes(2);
+  expect(mock.preview).not.toHaveBeenCalled();
   expect(fetcher.mock.calls[1][0]).toBe("https://file.notion.so/refreshed.png");
   expect(response.headers.get("cache-control")).toBe("private, no-store");
   vi.unstubAllGlobals();
@@ -112,7 +114,7 @@ it("rejects a block that does not belong to the authorized page", async () => {
   mock.page.mockResolvedValue({
     properties: { published: { checkbox: true } },
   });
-  mock.preview.mockResolvedValue({ id, blocks: [] });
+  mock.imageFile.mockResolvedValue(undefined);
   expect(
     (
       await GET(new Request(`https://test/media/${id}/${blockId}`), {

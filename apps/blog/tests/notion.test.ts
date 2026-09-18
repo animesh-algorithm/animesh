@@ -108,3 +108,26 @@ it("returns 404 membership failure for an inaccessible page without retrying", a
   expect(await repo.page("a".repeat(32))).toBeNull();
   expect(retrieve).toHaveBeenCalledTimes(1);
 });
+it("retrieves image files directly and verifies nested page ancestry", async () => {
+  const pageId = "a".repeat(32), blockId = "b".repeat(32), parentId = "c".repeat(32);
+  const image = { type: "external", external: { url: "https://media.tenor.com/a.gif" } };
+  const retrieve = vi.fn()
+    .mockResolvedValueOnce({ type: "image", image, parent: { type: "block_id", block_id: parentId } })
+    .mockResolvedValueOnce({ type: "toggle", parent: { type: "page_id", page_id: pageId } });
+  const repo = new NotionRepository({ blocks: { retrieve } } as unknown as Client);
+  expect(await repo.imageFile(pageId, blockId)).toEqual(image);
+  expect(retrieve.mock.calls.map(([arg]) => arg.block_id)).toEqual([blockId, parentId]);
+});
+it("rejects images from other pages, deleted ancestors and ancestry cycles", async () => {
+  const pageId = "a".repeat(32), blockId = "b".repeat(32);
+  for (const block of [
+    { type: "image", image: {}, parent: { type: "page_id", page_id: "c".repeat(32) } },
+    { type: "image", image: {}, archived: true, parent: { type: "page_id", page_id: pageId } },
+    { type: "image", image: {}, parent: { type: "block_id", block_id: blockId } },
+  ]) {
+    const retrieve = vi.fn().mockResolvedValue(block);
+    const repo = new NotionRepository({ blocks: { retrieve } } as unknown as Client);
+    expect(await repo.imageFile(pageId, blockId)).toBeUndefined();
+    expect(retrieve).toHaveBeenCalledTimes(1);
+  }
+});

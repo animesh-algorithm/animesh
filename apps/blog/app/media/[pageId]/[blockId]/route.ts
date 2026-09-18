@@ -31,13 +31,13 @@ export async function GET(
       (!page || (!preview && !page.properties.published?.checkbox))
     )
       return reject();
-    let file;
-    if (blockId === "thumbnail") file = page?.properties.thumbnail?.files?.[0];
-    else {
+    const readFile = async () => {
+      if (blockId === "thumbnail") return page?.properties.thumbnail?.files?.[0];
+      if (!fixtureMode()) return notion.imageFile(pageId, blockId);
       const post = await getPreviewPost(pageId);
-      if (!post) return reject();
-      file = blockFile(post, blockId);
-    }
+      return post ? blockFile(post, blockId) : undefined;
+    };
+    let file = await readFile();
     if (!file) return reject();
     if (fixtureMode() && fileUrl(file)?.startsWith("https://fixture.invalid/"))
       return new Response(
@@ -51,8 +51,7 @@ export async function GET(
       if (blockId === "thumbnail")
         file = (await notion.page(pageId))?.properties.thumbnail?.files?.[0];
       else {
-        const post = await getPreviewPost(pageId);
-        file = post ? blockFile(post, blockId) : undefined;
+        file = await readFile();
       }
     }
     const url = fileUrl(file);
@@ -66,9 +65,7 @@ export async function GET(
       const refreshed =
         blockId === "thumbnail"
           ? (await notion.page(pageId))?.properties.thumbnail?.files?.[0]
-          : await getPreviewPost(pageId).then((p) =>
-              p ? blockFile(p, blockId) : undefined,
-            );
+          : await readFile();
       const next = fileUrl(refreshed);
       if (!next) return reject();
       image = await downloadImage(next, query.get("still") === "1");

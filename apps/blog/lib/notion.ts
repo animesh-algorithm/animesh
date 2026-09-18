@@ -7,6 +7,7 @@ import {
   type Page,
   type Block,
   type BlockData,
+  type FileRef,
 } from "./model";
 export class NotionUnavailable extends Error {
   constructor(public readonly status?: number) {
@@ -123,6 +124,26 @@ export class NotionRepository {
       cursor = result.has_more ? (result.next_cursor ?? undefined) : undefined;
     } while (cursor);
     return blocks;
+  }
+  async imageFile(pageId: string, blockId: string): Promise<FileRef | undefined> {
+    if (!validId(pageId) || !validId(blockId)) return;
+    let id = blockId;
+    let file: FileRef | undefined;
+    const visited = new Set<string>();
+    for (let depth = 0; depth <= 30; depth++) {
+      if (visited.has(id)) return;
+      visited.add(id);
+      const block = await this.retry(() => this.client.blocks.retrieve({ block_id: id }));
+      if (!("type" in block) || block.archived || block.in_trash) return;
+      if (depth === 0) {
+        if (block.type !== "image") return;
+        file = block.image as FileRef;
+      }
+      const parent = block.parent;
+      if (parent.type === "page_id") return sameId(parent.page_id, pageId) ? file : undefined;
+      if (parent.type !== "block_id") return;
+      id = parent.block_id;
+    }
   }
 }
 export const notion = new NotionRepository();
