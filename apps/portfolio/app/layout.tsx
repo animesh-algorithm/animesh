@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   robots: process.env.VERCEL_ENV === "preview" ? { index: false, follow: false } : { index: true, follow: true },
   title: "Animesh Sharma — Engineer, product & AI automation",
   openGraph: { type: "website", siteName: "Animesh Sharma", title: "Animesh Sharma — Engineering, AI & automation", description: "Products, AI systems, and automation built by Animesh Sharma.", url: "/" },
-  twitter: { card: "summary_large_image" },
+  twitter: { card: "summary_large_image", title: "Animesh Sharma — Engineering, AI & automation", description: "Products, AI systems, and automation built by Animesh Sharma.", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Animesh Sharma — I figure things out. Then I build them." }] },
   description: "Animesh builds products, AI systems, and automation that solve hard, ambiguous problems.",
 };
 

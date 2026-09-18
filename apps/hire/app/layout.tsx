@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${site.name} — Product, automation, and internal tools`,
     description: site.hero.support,
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Hire Animesh — From messy to shipped." }],
   },
   icons: { icon: "/favicon.svg" },
 };

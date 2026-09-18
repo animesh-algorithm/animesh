@@ -26,12 +26,13 @@ export async function generateMetadata({
       modifiedTime: p.updatedAt,
       authors: ["Animesh Sharma"],
       tags: p.tags,
-      images: p.thumbnail ? [mediaPath(p.id, "thumbnail")] : ["/social.png"],
+      images: p.thumbnail ? [mediaPath(p.id, "thumbnail")] : ["/opengraph-image"],
     },
     twitter: {
       card: "summary_large_image",
       title: p.title,
       description: excerpt(p.description, 160),
+      images: p.thumbnail ? [mediaPath(p.id, "thumbnail")] : ["/opengraph-image"],
     },
   };
 }
@@ -56,7 +57,7 @@ export default async function PostPage({
       name: "Animesh Sharma",
       url: "https://www.animesh.cc",
     },
-    image: `${ORIGIN}/social.png`,
+    image: `${ORIGIN}${post.thumbnail ? mediaPath(post.id, "thumbnail") : "/opengraph-image"}`,
     url: `${ORIGIN}/${post.slug}`,
     mainEntityOfPage: `${ORIGIN}/${post.slug}`,
   };
