@@ -3,6 +3,9 @@ import React from "react";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
+// Rasterized from the site's fine-grain SVG so OG rendering needs no SVG filters.
+const grainData = readFile(join(process.cwd(), "assets/textures/noise-grain.png"));
+
 export const alt = "Animesh Links — A shorter way there. Branded links at link.animesh.cc.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -12,6 +15,7 @@ const fontData = Promise.all([400, 700].map((weight) =>
 
 export default async function Image() {
   const [regular, bold] = await fontData;
+  const grain = "data:image/png;base64," + (await grainData).toString("base64");
   return new ImageResponse(
     <div style={{ display: "flex", width: "100%", height: "100%", background: "#f5f3ef", color: "#272331", fontFamily: "Inter", position: "relative", overflow: "hidden" }}>
       <div style={{ display: "flex", flexDirection: "column", padding: "54px 64px", width: 760 }}>
@@ -32,6 +36,7 @@ export default async function Image() {
         <path d="M70 514H340" stroke="#aaa0ba" strokeWidth="2" />
         <circle cx="70" cy="514" r="7" fill="#272331" /><circle cx="340" cy="514" r="7" fill="#272331" />
       </svg>
+      <div style={{ display: "flex", position: "absolute", top: 0, left: 0, width: 1200, height: 630, backgroundImage: `url(${grain})`, backgroundSize: "256px 256px", backgroundRepeat: "repeat", opacity: 0.22 }} />
     </div>,
     { ...size, fonts: [
       { name: "Inter", data: regular, weight: 400, style: "normal" },

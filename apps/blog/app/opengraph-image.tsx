@@ -2,6 +2,9 @@ import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 
+// Rasterized from the site's fine-grain SVG so OG rendering needs no SVG filters.
+const grainData = readFile(join(process.cwd(), "assets/textures/noise-grain.png"));
+
 const fontData = Promise.all([400, 700].map((weight) =>
   readFile(join(process.cwd(), "assets/fonts/outfit-" + weight + ".woff"))
 ));
@@ -12,6 +15,7 @@ export const contentType = "image/png";
 
 export default async function Image() {
   const [regular, bold] = await fontData;
+  const grain = "data:image/png;base64," + (await grainData).toString("base64");
   return new ImageResponse(
     <div style={{ display: "flex", width: "100%", height: "100%", background: "#a9d9ed", color: "#342246", fontFamily: "Outfit", position: "relative", overflow: "hidden" }}>
       <svg width="1200" height="630" viewBox="0 0 1200 630" style={{ position: "absolute", top: 0, left: 0 }}>
@@ -36,6 +40,7 @@ export default async function Image() {
         <div style={{ display: "flex", marginTop: 28, fontSize: 25, maxWidth: 580, lineHeight: 1.4 }}>On building things, following curiosity, and finding a little perspective.</div>
         <div style={{ display: "flex", marginTop: "auto", fontSize: 21, color: "#5633a7" }}>blog.animesh.cc</div>
       </div>
+      <div style={{ display: "flex", position: "absolute", top: 0, left: 0, width: 1200, height: 630, backgroundImage: `url(${grain})`, backgroundSize: "256px 256px", backgroundRepeat: "repeat", opacity: 0.22 }} />
     </div>, {
       ...size,
       fonts: [
