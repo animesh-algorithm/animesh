@@ -3033,7 +3033,6 @@ body.dialog-open {
 }
 @media (prefers-reduced-motion: no-preference) {
   html[data-motion="enhanced"] .hero h1,
-  html[data-motion="enhanced"] .hero-intro,
   html[data-motion="enhanced"] .hero-status,
   html[data-motion="enhanced"] .hero-spark,
   html[data-motion="enhanced"] .hero-sticker,
@@ -3043,9 +3042,6 @@ body.dialog-open {
   html[data-motion="enhanced"] .hero h1 {
     transform: translate3d(0, var(--hero-lift, 0), 0) scale(var(--hero-scale, 1));
     transform-origin: left center;
-  }
-  html[data-motion="enhanced"] .hero-intro {
-    transform: translate3d(var(--hero-intro-x, 0), var(--hero-intro-y, 0), 0);
   }
   html[data-motion="enhanced"] .circle-link {
     transform: translate3d(0, var(--hero-circle-y, 0), 0) rotate(var(--hero-circle-turn, 0deg));

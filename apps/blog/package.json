@@ -21,6 +21,7 @@
     "react-dom": "19.3.0",
     "@notionhq/client": "5.26.0",
     "next-auth": "5.0.0-beta.32",
+    "motion": "^12.43.0",
     "shiki": "4.4.3",
     "sharp": "0.35.4",
     "server-only": "0.0.1",

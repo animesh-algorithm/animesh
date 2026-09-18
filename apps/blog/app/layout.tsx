@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ORIGIN } from "@/lib/model";
 import { SiteFooter } from "@/components/footer";
+import { MotionExperience } from "@/components/motion-experience";
 import "@fontsource-variable/outfit";
 import "./globals.css";
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
+        <MotionExperience />
         <a className="skip-link" href="#main">
           Skip to content
         </a>

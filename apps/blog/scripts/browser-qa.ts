@@ -50,6 +50,14 @@ try {
           `Page overflow ${width} ${route}: ${JSON.stringify(metrics)}`,
         );
       results.push({ width, route, status: response?.status(), metrics });
+      await page.evaluate(async () => {
+        for (let y = 0; y < document.body.scrollHeight; y += innerHeight * .7) {
+          window.scrollTo({ top: y, behavior: "instant" });
+          await new Promise((resolve) => setTimeout(resolve, 80));
+        }
+        window.scrollTo({ top: 0, behavior: "instant" });
+      });
+      await page.waitForTimeout(700);
       if (
         (width === 375 || width === 1440) &&
         (route === "/" ||
@@ -84,12 +92,39 @@ try {
         route.includes("usememo") ||
         route.includes("dragon-ball")
       )
+        {
+        // Settle one-time reveals before capturing a full-page visual artifact.
+        if (route === "/") {
+          await page.evaluate(async () => {
+            for (let y = 0; y < document.body.scrollHeight; y += innerHeight * .7) {
+              window.scrollTo({ top: y, behavior: "instant" });
+              await new Promise((resolve) => setTimeout(resolve, 80));
+            }
+            window.scrollTo({ top: 0, behavior: "instant" });
+          });
+          await page.waitForTimeout(700);
+        }
         await page.screenshot({
           path: `${output}/${route === "/" ? "index" : route.includes("usememo") ? "react" : "dragon-ball"}-${width}.png`,
           fullPage: route === "/",
         });
+        }
     }
   }
+  await page.goto(origin);
+  await page.waitForFunction(() => document.documentElement.dataset.motionReady === "true");
+  const lastPost = page.locator(".post-list .post-row").last();
+  await lastPost.scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => document.querySelector(".post-list .post-row:last-child")?.classList.contains("is-revealed"));
+  await page.waitForTimeout(700);
+  if (await lastPost.evaluate((element) => getComputedStyle(element).opacity) !== "1")
+    throw new Error("Scroll reveal did not settle");
+  const progress = await page.locator(".reading-progress").evaluate((element) => getComputedStyle(element).transform);
+  if (progress === "none" || progress.startsWith("matrix(0,")) throw new Error("Scroll progress failed");
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await page.waitForTimeout(700);
+  if (!await lastPost.evaluate((element) => element.classList.contains("is-revealed")))
+    throw new Error("Scroll reveal repeated");
   await page.goto(origin);
   await page.locator("#search").fill("useMemo");
   await page.getByRole("button", { name: "Search articles" }).click();
@@ -106,6 +141,14 @@ try {
   await page.keyboard.press("Enter");
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto(origin + "/how-dragon-ball-helped-me-beat-imposter-syndrome");
+  await page.waitForFunction(() => document.documentElement.dataset.motion === "static");
+  const reduced = await page.evaluate(() => ({
+    hidden: [...document.querySelectorAll<HTMLElement>(".prose > *")].some((element) => getComputedStyle(element).opacity !== "1"),
+    cloud: getComputedStyle(document.querySelector(".cloud-layer")!).animationName,
+    depth: getComputedStyle(document.querySelector(".cloud-layer")!).translate,
+  }));
+  if (reduced.hidden || reduced.cloud !== "none" || reduced.depth !== "none")
+    throw new Error(`Reduced motion failed: ${JSON.stringify(reduced)}`);
   const play = page.getByRole("button", { name: "Play animation" });
   if ((await play.count()) !== 8)
     throw new Error("Reduced-motion GIF controls failed");
@@ -211,6 +254,8 @@ try {
           "tag search",
           "keyboard skip",
           "reduced motion",
+          "one-time scroll reveals",
+          "scroll progress",
           "GIF play/pause",
           "RSS",
           "draft media rejection",
