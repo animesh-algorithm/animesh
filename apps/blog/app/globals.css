@@ -866,9 +866,6 @@ body:has(.article-cloud-header) .masthead small {
   border-color: var(--violet);
   transform: translateX(4px);
 }
-.toc .toc-heading_3 a {
-  padding-left: 1.7rem;
-}
 .article-end {
   margin-top: 4rem;
   padding: 2rem 0;

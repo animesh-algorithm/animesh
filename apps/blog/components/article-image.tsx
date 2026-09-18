@@ -31,8 +31,7 @@ function ImageContent({
     () => matchMedia("(prefers-reduced-motion: reduce)").matches,
     () => true,
   );
-  const [requested, setRequested] = useState<boolean | null>(null);
-  const playing = animated && (requested ?? !reduced);
+  const playing = animated && !reduced;
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
@@ -52,18 +51,9 @@ function ImageContent({
             Retrying image…
           </p>
         ) : (
-          <div className="media-failure">
-            <p>Image unavailable.</p>
-            <button
-              type="button"
-              onClick={() => {
-                setAttempt(0);
-                setFailed(false);
-              }}
-            >
-              Retry image
-            </button>
-          </div>
+          <p className="media-failure" role="status">
+            Image unavailable.
+          </p>
         )
       ) : (
         <img
@@ -74,19 +64,6 @@ function ImageContent({
           decoding="async"
           onError={() => setFailed(true)}
         />
-      )}
-      {animated && (
-        <button
-          type="button"
-          aria-pressed={playing}
-          onClick={() => {
-            setRequested(!playing);
-            setAttempt(0);
-            setFailed(false);
-          }}
-        >
-          {playing ? "Pause animation" : "Play animation"}
-        </button>
       )}
     </div>
   );

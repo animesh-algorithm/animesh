@@ -149,27 +149,15 @@ try {
   }));
   if (reduced.hidden || reduced.cloud !== "none" || reduced.depth !== "none")
     throw new Error(`Reduced motion failed: ${JSON.stringify(reduced)}`);
-  const play = page.getByRole("button", { name: "Play animation" });
-  if ((await play.count()) !== 8)
-    throw new Error("Reduced-motion GIF controls failed");
-  const image = play.first().locator("xpath=..").locator("img");
-  if (!(await image.getAttribute("src"))?.includes("still=1"))
-    throw new Error("GIF did not defer animation");
-  await play.first().click();
-  await page.waitForFunction(
-    () =>
-      !document
-        .querySelector(".article-image:has(button) img")
-        ?.getAttribute("src")
-        ?.includes("still=1"),
-  );
-  await page.getByRole("button", { name: "Pause animation" }).first().click();
-  await page.waitForFunction(() =>
-    document
-      .querySelector(".article-image:has(button) img")
-      ?.getAttribute("src")
-      ?.includes("still=1"),
-  );
+  const images = page.locator(".article-image img");
+  if ((await images.count()) !== 8)
+    throw new Error("Reduced-motion GIF images missing");
+  for (const image of await images.all()) {
+    if (!(await image.getAttribute("src"))?.includes("still=1"))
+      throw new Error("GIF did not defer animation");
+  }
+  if (await page.locator(".article-image button").count())
+    throw new Error("Removed image controls still present");
   const react = (posts as Post[]).find((p) => p.slug.includes("usememo"))!;
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.goto(origin + `/${react.slug}`);
