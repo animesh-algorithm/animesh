@@ -8,7 +8,7 @@ export function PostThumbnail({ id, slug, title }: { id: string; slug: string; t
   if (failed) return null;
   return (
     <Link className="post-thumbnail" href={`/${slug}`} aria-label={`Read ${title}`}>
-      <img ref={(image) => { if (image?.complete && image.naturalWidth === 0) setFailed(true); }} src={mediaPath(id, "thumbnail")} alt="" loading="lazy" width={320} height={200} onError={() => setFailed(true)} />
+      <img ref={(image) => { if (image?.complete && image.naturalWidth === 0) setFailed(true); }} src={mediaPath(id, "thumbnail")} alt="" loading="lazy" decoding="async" width={320} height={200} onError={() => setFailed(true)} />
     </Link>
   );
 }

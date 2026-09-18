@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
       disallow:
         process.env.VERCEL_ENV === "preview"
           ? ["/"]
-          : ["/preview", "/api/", "/media/", "/*?q=", "/*?tag="],
+          : ["/preview", "/api/", "/*?q=", "/*?tag="],
     },
     sitemap: `${ORIGIN}/sitemap.xml`,
   };

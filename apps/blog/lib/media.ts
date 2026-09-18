@@ -104,5 +104,12 @@ export async function downloadImage(
         .toBuffer(),
       type: "image/png",
     };
+  // Keep animation intact; resize and compress static editorial images.
+  if (type !== "image/gif" && ((await sharp(bytes, { limitInputPixels: 40000000 }).metadata()).pages ?? 1) <= 1) {
+    const optimized = await sharp(bytes, { animated: false, limitInputPixels: 40000000 })
+      .rotate().resize({ width: 1600, withoutEnlargement: true })
+      .webp({ quality: 82 }).toBuffer();
+    if (optimized.length < bytes.length) return { bytes: optimized, type: "image/webp" };
+  }
   return { bytes, type };
 }

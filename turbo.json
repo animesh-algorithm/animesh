@@ -10,6 +10,8 @@
         "!.next/cache/**"
       ],
       "env": [
+        "GOOGLE_SITE_VERIFICATION",
+        "VERCEL_ENV",
         "NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN",
         "NEXT_PUBLIC_POSTHOG_HOST",
         "NEXT_PUBLIC_POSTHOG_ENABLED",

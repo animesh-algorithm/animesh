@@ -1,3 +1,4 @@
+import { ScrollMotion } from "@/components/scroll-motion";
 import { ArrowUpRight, Asterisk, ChatBubble, Spark } from "@/components/icons";
 import { AskAnimeshLink } from "@/components/ask-animesh";
 import { ProjectShowcase } from "@/components/project-showcase";
@@ -19,6 +20,8 @@ import {
 } from "@/content/profile";
 import { connection } from "next/server";
 
+export const metadata = { alternates: { canonical: "/" } };
+
 function randomOption<const Options extends readonly string[]>(
   options: Options,
 ) {
@@ -35,6 +38,8 @@ export default async function Home() {
 
   return (
     <main id="top">
+      <ScrollMotion />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Person", "@id": "https://www.animesh.cc/#person", name: "Animesh Sharma", url: "https://www.animesh.cc", sameAs: [profile.links.linkedin, profile.links.github, profile.links.twitter], description: "Engineer, product person, and automation builder." }).replace(/</g, "\\u003c") }} />
       <SiteHeader />
 
       <section className="hero shell" aria-labelledby="hero-title">
@@ -341,6 +346,7 @@ export default async function Home() {
             <span>© {new Date().getFullYear()} Animesh Sharma</span>
             <div>
               <a href="https://blog.animesh.cc">Blog</a>
+              <a href="/privacy">Privacy</a>
               <a
                 data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="social" href={profile.links.linkedin}
                 target="_blank"
@@ -370,7 +376,7 @@ export default async function Home() {
                 Résumé
               </a>
             </div>
-            <a className="consulting-link" href="#top">
+            <a className="consulting-link" href="https://hire.animesh.cc">
               Looking for professional project help? <span>Work with me ↗</span>
             </a>
           </div>

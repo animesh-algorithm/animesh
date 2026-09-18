@@ -3,6 +3,7 @@ import { getPublicPosts } from "@/lib/content";
 import { ORIGIN } from "@/lib/model";
 export const dynamic = "force-dynamic";
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  if (process.env.VERCEL_ENV === "preview") return [];
   const posts = await getPublicPosts();
   return [
     { url: ORIGIN },

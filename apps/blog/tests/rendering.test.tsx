@@ -84,3 +84,13 @@ it("renders embeds as safe links and rejects iframe/script execution", async () 
   expect(result).not.toContain("<iframe");
   expect(result).not.toContain("javascript:");
 });
+
+it("keeps a single article H1 and prevents skipped levels through nested blocks", async () => {
+  const first = { ...block("heading_3", { rich_text: [{ plain_text: "First section" }] }), id: "first" };
+  const nested = { ...block("heading_3", { rich_text: [{ plain_text: "Nested section" }] }), id: "nested" };
+  const next = { ...block("heading_1", { rich_text: [{ plain_text: "Next section" }] }), id: "next" };
+  const result = await html(<Blocks blocks={[first, block("toggle", { rich_text: [{ plain_text: "Details" }] }, [nested]), next]} pageId={"a".repeat(32)} />);
+  expect([...result.matchAll(/<h([1-6]) /g)].map(match => Number(match[1]))).toEqual([2, 3, 2]);
+  expect(result).toContain("First section");
+  expect(result).toContain("Nested section");
+});

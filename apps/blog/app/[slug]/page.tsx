@@ -56,6 +56,8 @@ export default async function PostPage({
       name: "Animesh Sharma",
       url: "https://www.animesh.cc",
     },
+    image: `${ORIGIN}/social.png`,
+    url: `${ORIGIN}/${post.slug}`,
     mainEntityOfPage: `${ORIGIN}/${post.slug}`,
   };
   return (

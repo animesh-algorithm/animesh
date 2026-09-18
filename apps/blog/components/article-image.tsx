@@ -33,6 +33,7 @@ export function ArticleImage({
           src={animated && !playing ? `${src}&still=1` : src}
           alt={alt}
           loading="lazy"
+          decoding="async"
           onError={() => setFailed(true)}
         />
       )}

@@ -3,6 +3,7 @@
   "tasks": {
     "build": {
       "env": [
+        "GOOGLE_SITE_VERIFICATION",
         "BLOG_ORIGIN",
         "BLOG_OWNER_EMAIL",
         "NOTION_TOKEN",

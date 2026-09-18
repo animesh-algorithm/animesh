@@ -3,7 +3,31 @@ import { codeToTokens, bundledLanguages, type BundledLanguage } from "shiki";
 import { RichText } from "./rich-text";
 import { CopyButton } from "./copy-button";
 import { ArticleImage } from "./article-image";
-import { headingId, plain, safeLink, mediaPath, type Block } from "@/lib/model";
+import { headingId, walk, plain, safeLink, mediaPath, type Block } from "@/lib/model";
+function headingLevelsFor(blocks: Block[]) {
+  const levels = new Map<string, "h2" | "h3" | "h4">();
+  let previous = 1;
+  for (const block of walk(blocks)) {
+    if (!["heading_1", "heading_2", "heading_3"].includes(block.type)) continue;
+    const requested = block.type === "heading_1" ? 2 : block.type === "heading_2" ? 3 : 4;
+    previous = Math.min(requested, previous + 1);
+    levels.set(block.id, `h${previous}` as "h2" | "h3" | "h4");
+  }
+  return levels;
+}
+function Heading({
+  level,
+  id,
+  children,
+}: {
+  level: "h2" | "h3" | "h4";
+  id: string;
+  children: ReactNode;
+}) {
+  if (level === "h4") return <h4 id={id}>{children}</h4>;
+  if (level === "h3") return <h3 id={id}>{children}</h3>;
+  return <h2 id={id}>{children}</h2>;
+}
 function language(value = "text") {
   const aliases: Record<string, string> = {
     "plain text": "text",
@@ -57,17 +81,19 @@ export async function Blocks({
   blocks,
   pageId,
   preview = false,
+  headingLevels = headingLevelsFor(blocks),
 }: {
   blocks: Block[];
   pageId: string;
   preview?: boolean;
+  headingLevels?: Map<string, "h2" | "h3" | "h4">;
 }) {
   const output: ReactNode[] = [];
   for (let i = 0; i < blocks.length; i++) {
     const b = blocks[i],
       d = b.data;
     const child = () => (
-      <Blocks blocks={b.children} pageId={pageId} preview={preview} />
+      <Blocks blocks={b.children} pageId={pageId} preview={preview} headingLevels={headingLevels} />
     );
     if (["bulleted_list_item", "numbered_list_item"].includes(b.type)) {
       const group = [b];
@@ -82,6 +108,7 @@ export async function Blocks({
                 blocks={item.children}
                 pageId={pageId}
                 preview={preview}
+                headingLevels={headingLevels}
               />
             </li>
           ))}
@@ -104,13 +131,11 @@ export async function Blocks({
       case "heading_1":
       case "heading_2":
       case "heading_3": {
-        const Tag =
-          b.type === "heading_1" ? "h2" : b.type === "heading_2" ? "h3" : "h4";
         node = (
           <>
-            <Tag id={headingId(b)}>
+            <Heading level={headingLevels.get(b.id) ?? "h2"} id={headingId(b)}>
               <RichText text={d.rich_text} />
-            </Tag>
+            </Heading>
             {child()}
           </>
         );

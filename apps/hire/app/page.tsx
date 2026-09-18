@@ -15,6 +15,8 @@ import { services } from "@/content/services";
 import { site } from "@/content/site";
 import { getBookingDestination } from "@/lib/booking";
 
+export const metadata = { alternates: { canonical: "/" } };
+
 export default function HomePage() {
   const booking = getBookingDestination();
   return (
@@ -27,6 +29,7 @@ export default function HomePage() {
               <AvailabilityPulse className="availability-ping--hero" />
               {availability.label} · {availability.slots} project slot · from {availability.nextStart}
             </p>
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Service", name: "Product engineering and automation", url: "https://hire.animesh.cc", serviceType: ["Product engineering", "AI automation", "Internal tools"], provider: { "@type": "Person", name: site.person, url: "https://www.animesh.cc" } }).replace(/</g, "\\u003c") }} />
             <h1>{site.hero.heading}</h1>
             <p className="hero-copy">{site.hero.support}</p>
             <div className="hero-actions">

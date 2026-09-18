@@ -86,11 +86,13 @@ it("refreshes a signed media URL after an expired download", async () => {
   mock.preview
     .mockResolvedValueOnce(post("https://file.notion.so/expired.png"))
     .mockResolvedValueOnce(post("https://file.notion.so/refreshed.png"));
+  const { default: sharp } = await import("sharp");
+  const image = await sharp({ create: { width: 4, height: 4, channels: 3, background: "white" } }).png().toBuffer();
   const fetcher = vi
     .fn()
     .mockResolvedValueOnce(new Response(null, { status: 403 }))
     .mockResolvedValueOnce(
-      new Response(new Uint8Array([1, 2, 3]), {
+      new Response(image, {
         headers: { "content-type": "image/png" },
       }),
     );

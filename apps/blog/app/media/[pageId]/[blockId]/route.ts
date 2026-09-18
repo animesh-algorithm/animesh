@@ -74,7 +74,7 @@ export async function GET(
       image = await downloadImage(next, query.get("still") === "1");
     }
     return new Response(image.bytes as BodyInit, {
-      headers: { ...headers, "Content-Type": image.type },
+      headers: { ...headers, "X-Robots-Tag": preview ? "noindex, nofollow" : "index, follow", "Content-Type": image.type },
     });
   } catch {
     return reject();

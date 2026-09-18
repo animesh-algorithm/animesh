@@ -1,5 +1,5 @@
 import Link from "next/link";
-export const metadata = { title: "Privacy choices" };
+export const metadata = { title: "Privacy choices", description: "How analytics and privacy choices work on Hire Animesh.", alternates: { canonical: "/privacy" } };
 export default function PrivacyPage() {
   return <main className="privacy-page" id="main-content">
     <Link href="/">← Home</Link><h1>Privacy choices</h1>

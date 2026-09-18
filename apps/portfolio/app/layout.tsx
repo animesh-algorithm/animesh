@@ -4,7 +4,12 @@ import { AskAnimeshProvider } from "@/components/ask-animesh";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Animesh — Engineer, product person, problem solver",
+  metadataBase: new URL("https://www.animesh.cc"),
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
+  robots: process.env.VERCEL_ENV === "preview" ? { index: false, follow: false } : { index: true, follow: true },
+  title: "Animesh Sharma — Engineer, product & AI automation",
+  openGraph: { type: "website", siteName: "Animesh Sharma", title: "Animesh Sharma — Engineering, AI & automation", description: "Products, AI systems, and automation built by Animesh Sharma.", url: "/" },
+  twitter: { card: "summary_large_image" },
   description: "Animesh builds products, AI systems, and automation that solve hard, ambiguous problems.",
 };
 

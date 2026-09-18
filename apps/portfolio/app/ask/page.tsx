@@ -2,6 +2,7 @@ import { ChatExperience } from "@/components/ask-animesh";
 import Link from "next/link";
 
 export const metadata = {
+  alternates: { canonical: "/ask" },
   title: "Ask Animesh — AI stand-in",
   description:
     "Ask a disclosed AI stand-in about Animesh's approved public work and experience.",

@@ -5,6 +5,8 @@ import { SiteFooter } from "@/components/footer";
 import "@fontsource-variable/outfit";
 import "./globals.css";
 export const metadata: Metadata = {
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
+  twitter: { card: "summary_large_image", images: ["/social.png"] },
   metadataBase: new URL(ORIGIN),
   robots:
     process.env.VERCEL_ENV === "preview"

@@ -63,3 +63,14 @@ it("turns an animation into a first-frame PNG", async () => {
   expect(Buffer.from(result.bytes).subarray(1, 4).toString()).toBe("PNG");
   expect(fetcher.mock.calls[0][1].cache).toBe("no-store");
 });
+
+it("compresses oversized static images without changing animation responses", async () => {
+  const { default: sharp } = await import("sharp");
+  const png = await sharp({ create: { width: 2400, height: 1200, channels: 3, background: "#f7f5f0" } }).png().toBuffer();
+  const fetcher = vi.fn().mockResolvedValue(new Response(png, { headers: { "content-type": "image/png" } }));
+  const result = await downloadImage("https://file.notion.so/image", false, fetcher);
+  const dimensions = await sharp(result.bytes).metadata();
+  expect(dimensions.width).toBe(1600);
+  expect(result.type).toBe("image/webp");
+  expect(result.bytes.length).toBeLessThan(png.length);
+});

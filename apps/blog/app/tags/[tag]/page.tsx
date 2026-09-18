@@ -14,6 +14,7 @@ export async function generateMetadata({
   const { q } = await searchParams;
   return {
     title: `${tag} articles`,
+    description: `Notes and articles about ${tag} by Animesh Sharma.`,
     alternates: { canonical: `/tags/${encodeURIComponent(tag)}` },
     robots: q || fixtureMode() ? { index: false, follow: true } : undefined,
   };

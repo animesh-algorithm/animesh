@@ -9,6 +9,9 @@ import { getBookingDestination } from "@/lib/booking";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://hire.animesh.cc"),
+  verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
+  robots: process.env.VERCEL_ENV === "preview" ? { index: false, follow: false } : { index: true, follow: true },
   title: {
     default: `${site.name} — Product, automation, and internal tools`,
     template: `%s — ${site.name}`,
@@ -19,11 +22,13 @@ export const metadata: Metadata = {
   creator: site.person,
   openGraph: {
     type: "website",
+    siteName: site.name,
+    url: "/",
     title: `${site.name} — Product, automation, and internal tools`,
     description: site.hero.support,
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: `${site.name} — Product, automation, and internal tools`,
     description: site.hero.support,
   },

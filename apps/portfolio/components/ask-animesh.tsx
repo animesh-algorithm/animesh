@@ -378,7 +378,7 @@ export function ChatExperience({
       <header className="ask-panel-header">
         <div>
           <p className="eyebrow">AI stand-in · not Animesh live</p>
-          <h1 id={titleId}>Ask Animesh</h1>
+          {variant === "page" ? <h1 id={titleId}>Ask Animesh</h1> : <h2 id={titleId}>Ask Animesh</h2>}
         </div>
         {variant === "drawer" ? (
           <button className="ask-close" type="button" onClick={onClose}>
