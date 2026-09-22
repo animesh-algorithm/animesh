@@ -44,6 +44,38 @@ function dependencies(overrides: Partial<ChatDependencies> = {}): ChatDependenci
 }
 
 describe("POST /api/chat core", () => {
+  it("does not email an invalid request", async () => {
+    const notify = vi.fn();
+    const invalidRequest = new NextRequest("http://localhost/api/chat", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ messages: [] }),
+    });
+
+    const response = await handleChat(
+      invalidRequest,
+      dependencies({ activityNotifier: { notify } }),
+    );
+
+    expect(response.status).toBe(400);
+    expect(notify).not.toHaveBeenCalled();
+  });
+
+  it("emails the latest question once for an accepted request", async () => {
+    const notify = vi.fn().mockResolvedValue({ ok: true });
+    const deps = dependencies({ activityNotifier: { notify } });
+
+    await (await handleChat(request(), deps)).text();
+
+    expect(notify).toHaveBeenCalledOnce();
+    expect(notify).toHaveBeenCalledWith(expect.objectContaining({
+      question: "What did you build at Gradly?",
+      consent: "no_store",
+    }));
+    expect(notify.mock.calls[0][0]).not.toHaveProperty("sessionId");
+    expect(notify.mock.calls[0][0]).not.toHaveProperty("messages");
+  });
+
   it("streams meta, text, trusted sources, and done", async () => {
     const deps = dependencies();
     const response = await handleChat(request(), deps);
@@ -139,6 +171,34 @@ describe("POST /api/chat core", () => {
     },
   );
 
+  it("emails a question that receives a refusal", async () => {
+    const notify = vi.fn().mockResolvedValue({ ok: true });
+    const deps = dependencies({ activityNotifier: { notify } });
+    (deps.ai!.classify as ReturnType<typeof vi.fn>) = vi.fn().mockResolvedValue("unrelated");
+
+    await (await handleChat(request(), deps)).text();
+
+    expect(notify).toHaveBeenCalledOnce();
+  });
+
+  it("keeps chat available when activity email delivery throws", async () => {
+    const notify = vi.fn().mockRejectedValue(new Error("provider secret"));
+    const consoleError = vi.spyOn(console, "error").mockImplementation(() => {});
+    const response = await handleChat(
+      request(),
+      dependencies({ activityNotifier: { notify } }),
+    );
+
+    expect(response.status).toBe(200);
+    expect(await response.text()).toContain("event: done");
+    expect(consoleError).toHaveBeenCalledWith(
+      "Ask activity email delivery failed",
+      expect.objectContaining({ requestId: expect.any(String) }),
+    );
+    expect(JSON.stringify(consoleError.mock.calls)).not.toContain("provider secret");
+    consoleError.mockRestore();
+  });
+
   it("sanitizes an OpenAI timeout", async () => {
     const deps = dependencies();
     (deps.ai!.moderate as ReturnType<typeof vi.fn>) = vi
@@ -166,9 +226,11 @@ describe("POST /api/chat core", () => {
   });
 
   it("returns 429 with retry guidance", async () => {
+    const notify = vi.fn();
     const response = await handleChat(
       request(),
       dependencies({
+        activityNotifier: { notify },
         rateLimiter: {
           check: vi.fn().mockResolvedValue({ allowed: false, retryAfterSeconds: 42 }),
         } as never,
@@ -176,6 +238,7 @@ describe("POST /api/chat core", () => {
     );
     expect(response.status).toBe(429);
     expect(response.headers.get("retry-after")).toBe("42");
+    expect(notify).not.toHaveBeenCalled();
   });
 
   it("fails closed when Redis rate limiting fails", async () => {

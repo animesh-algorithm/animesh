@@ -8,12 +8,39 @@ import type { SessionStore } from "./session-store";
 import type { ChatRequest, SseEvent } from "./types";
 import { chatRequestSchema } from "./validation";
 import { ASSISTANT_MESSAGE_MAX_LENGTH } from "./client-history";
+import type { AskActivityNotifier } from "./activity-mail";
 
 export interface ChatDependencies {
   ai: AskOpenAI | null;
   rateLimiter: RateLimiter | null;
   sessionStore: SessionStore | null;
+  activityNotifier?: AskActivityNotifier | null;
   rateLimitSalt?: string;
+}
+
+async function notifyAskActivity(
+  notifier: AskActivityNotifier | null | undefined,
+  question: string,
+  consent: ChatRequest["consent"],
+) {
+  if (!notifier) return;
+
+  const requestId = crypto.randomUUID();
+  try {
+    const result = await notifier.notify({
+      question,
+      consent,
+      submittedAt: new Date().toISOString(),
+    });
+    if (!result.ok) {
+      console.error("Ask activity email delivery failed", {
+        requestId,
+        providerStatus: result.status,
+      });
+    }
+  } catch {
+    console.error("Ask activity email delivery failed", { requestId });
+  }
 }
 
 function eventResponse(event: SseEvent, status = 200, extraHeaders = {}) {
@@ -74,7 +101,7 @@ export async function handleChat(
       {
         type: "error",
         code: "storage_unavailable",
-        message: "Saved chats are unavailable right now. Choose “Don’t save chat” to continue.",
+        message: "Saved chats are unavailable right now. Choose “Don’t save chat history” to continue.",
       },
       503,
     );
@@ -113,7 +140,14 @@ export async function handleChat(
     const boundedTranscript = payload.messages
       .map((message) => `${message.role}: ${message.text}`)
       .join("\n");
-    const unsafe = await ai.moderate(boundedTranscript);
+    const [unsafe] = await Promise.all([
+      ai.moderate(boundedTranscript),
+      notifyAskActivity(
+        dependencies.activityNotifier,
+        latest,
+        payload.consent,
+      ),
+    ]);
     const classification = unsafe
       ? "unsafe"
       : await ai.classify(boundedTranscript);

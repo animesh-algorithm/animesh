@@ -488,6 +488,10 @@ export function ChatExperience({
             A.
           </span>
           <h2>Ask anything about me.</h2>
+          <p>
+            Your question is emailed to Animesh. Choose whether to also save the
+            chat history.
+          </p>
 
           <div className="ask-consent-actions">
             <button type="button" onClick={() => chooseConsent("persist_30d")}>
@@ -498,7 +502,7 @@ export function ChatExperience({
               type="button"
               onClick={() => chooseConsent("no_store")}
             >
-              Don’t save chat
+              Don’t save chat history
             </button>
           </div>
         </div>
@@ -588,7 +592,7 @@ export function ChatExperience({
             <span>
               {consent === "persist_30d"
                 ? "Chat saved for 30 days."
-                : "Chat not saved."}
+                : "Chat history not saved. Questions are still emailed to Animesh."}
             </span>
             {consent === "persist_30d" ? (
               <button type="button" onClick={() => void deleteSavedChat()}>

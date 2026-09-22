@@ -2,6 +2,19 @@
 
 The homepage remains dynamic; Ask APIs, streaming, retrieval, session deletion and separate chat consent remain app-local.
 
+## Optional Ask activity email
+
+`lib/chat/activity-mail.ts` sends the latest validated, rate-limit-accepted user
+question to the configured owner through Resend. It never includes an answer,
+previous messages, IP address, session identifier or token. Delivery runs alongside
+moderation and is best-effort: missing configuration or a provider failure never
+blocks the chat response.
+
+Enable it with the server-only `RESEND_API_KEY`, `ASK_ACTIVITY_FROM_EMAIL` and
+`ASK_ACTIVITY_TO_EMAIL` variables. All three are required. The visitor disclosure
+clarifies that this email is separate from the choice to retain chat history for
+30 days or only in the current browser tab.
+
 ## Optional PostHog analytics
 
 `lib/analytics` owns a typed allowlisted adapter.
