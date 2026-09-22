@@ -1,7 +1,11 @@
 "use client";
 
 import { interaction, track } from "@/lib/analytics";
-import type { ChatMessage, ChatSource, ConsentMode } from "@/lib/chat/types";
+import {
+  sanitizeClientHistory,
+  type ClientHistoryMessage,
+} from "@/lib/chat/client-history";
+import type { ChatSource, ConsentMode } from "@/lib/chat/types";
 import { ArrowUpRight, ChatBubble, Spark } from "@/components/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -27,9 +31,11 @@ const suggestedQuestions = [
   "What kind of problems are you best at?",
 ] as const;
 
-interface UiMessage extends ChatMessage {
-  id: string;
-  sources?: ChatSource[];
+type UiMessage = ClientHistoryMessage;
+
+interface SavedChat {
+  identity: ReturnType<typeof newIdentity>;
+  messages: unknown;
 }
 
 interface AskContextValue {
@@ -56,6 +62,19 @@ function newIdentity() {
     sessionToken: randomToken(32),
     createdAt: Date.now(),
   };
+}
+
+function isSavedIdentity(value: unknown): value is ReturnType<typeof newIdentity> {
+  if (!value || typeof value !== "object") return false;
+  const identity = value as Record<string, unknown>;
+  return (
+    typeof identity.sessionId === "string" &&
+    /^[A-Za-z0-9_-]{20,100}$/.test(identity.sessionId) &&
+    typeof identity.sessionToken === "string" &&
+    /^[A-Za-z0-9_-]{32,160}$/.test(identity.sessionToken) &&
+    typeof identity.createdAt === "number" &&
+    Number.isFinite(identity.createdAt)
+  );
 }
 
 function parseSseChunk(chunk: string) {
@@ -201,6 +220,47 @@ export function ChatExperience({
   const [error, setError] = useState<string | null>(null);
   const [announcement, setAnnouncement] = useState("");
 
+  const restoreSavedChat = (mode: ConsentMode) => {
+    const storage = mode === "persist_30d" ? localStorage : sessionStorage;
+    const saved = storage.getItem(storageKey(mode));
+    if (!saved) return false;
+
+    try {
+      const parsed = JSON.parse(saved) as Partial<SavedChat>;
+      if (!isSavedIdentity(parsed.identity)) {
+        storage.removeItem(storageKey(mode));
+        return false;
+      }
+      const expired =
+        mode === "persist_30d" &&
+        Date.now() - parsed.identity.createdAt >= BROWSER_STORAGE_TTL_MS;
+      if (expired) {
+        storage.removeItem(storageKey(mode));
+        return false;
+      }
+      setIdentity(parsed.identity);
+      setMessages(sanitizeClientHistory(parsed.messages));
+      setConsent(mode);
+      return true;
+    } catch {
+      storage.removeItem(storageKey(mode));
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    const restoreTimer = window.setTimeout(() => {
+      try {
+        if (!restoreSavedChat("persist_30d")) {
+          restoreSavedChat("no_store");
+        }
+      } catch {
+        // Browser storage is optional; leave the choice available when it is blocked.
+      }
+    }, 0);
+    return () => window.clearTimeout(restoreTimer);
+  }, []);
+
   useEffect(() => {
     if (variant !== "drawer") return;
     const panel = dialogRef.current;
@@ -241,41 +301,30 @@ export function ChatExperience({
   }, [consent]);
 
   const chooseConsent = (mode: ConsentMode) => {
-    const storage = mode === "persist_30d" ? localStorage : sessionStorage;
-    const saved = storage.getItem(storageKey(mode));
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved) as {
-          identity: ReturnType<typeof newIdentity>;
-          messages: UiMessage[];
-        };
-        const expired =
-          mode === "persist_30d" &&
-          Date.now() - parsed.identity.createdAt >= BROWSER_STORAGE_TTL_MS;
-        if (expired) {
-          storage.removeItem(storageKey(mode));
-          setIdentity(newIdentity());
-          setMessages([]);
-        } else {
-          setIdentity(parsed.identity);
-          setMessages(parsed.messages ?? []);
-        }
-      } catch {
-        setIdentity(newIdentity());
-      }
-    } else {
-      setIdentity(newIdentity());
+    try {
+      if (restoreSavedChat(mode)) return;
+    } catch {
+      // Browser storage is optional; a new in-memory chat can still start.
     }
+    setIdentity(newIdentity());
+    setMessages([]);
     setConsent(mode);
   };
 
   useEffect(() => {
     if (!consent || !identity) return;
-    const storage = consent === "persist_30d" ? localStorage : sessionStorage;
-    storage.setItem(
-      storageKey(consent),
-      JSON.stringify({ identity, messages }),
-    );
+    try {
+      const storage = consent === "persist_30d" ? localStorage : sessionStorage;
+      storage.setItem(
+        storageKey(consent),
+        JSON.stringify({
+          identity,
+          messages: sanitizeClientHistory(messages),
+        }),
+      );
+    } catch {
+      // Browser storage is optional; keep the in-memory conversation working.
+    }
   }, [consent, identity, messages]);
 
   const submit = async (question = input) => {
@@ -290,7 +339,7 @@ export function ChatExperience({
       text: text.slice(0, 800),
     };
     const assistantId = randomToken(9);
-    const nextMessages = [...messages, userMessage];
+    const nextMessages = sanitizeClientHistory([...messages, userMessage]);
     setMessages([
       ...nextMessages,
       { id: assistantId, role: "assistant", text: "" },
@@ -308,12 +357,12 @@ export function ChatExperience({
           ...identity,
           consent,
           consentVersion: CONSENT_VERSION,
-          messages: nextMessages
-            .slice(-16)
-            .map(({ role, text: messageText }) => ({
+          messages: sanitizeClientHistory(nextMessages).map(
+            ({ role, text: messageText }) => ({
               role,
               text: messageText,
-            })),
+            }),
+          ),
         }),
       });
       if (!response.body) throw new Error("No response stream");

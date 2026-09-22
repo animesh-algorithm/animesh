@@ -1,6 +1,7 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import { Redis } from "@upstash/redis";
 import { redactVisitorContact } from "./redaction";
+import { normalizeChatHistory } from "./client-history";
 import type { ChatMessage, StoredSession } from "./types";
 
 export const SESSION_TTL_MS = 30 * 24 * 60 * 60 * 1000;
@@ -34,11 +35,13 @@ export function createStoredSession({
     createdAt: new Date(now).toISOString(),
     expiresAt: now + SESSION_TTL_MS,
     consentVersion,
-    messages: messages.map((message) => ({
-      ...message,
-      text: redactVisitorContact(message.text),
-      createdAt: new Date(now).toISOString(),
-    })),
+    messages: normalizeChatHistory(
+      messages.map((message) => ({
+        ...message,
+        text: redactVisitorContact(message.text),
+        createdAt: new Date(now).toISOString(),
+      })),
+    ),
   };
 }
 
@@ -81,9 +84,11 @@ export class SessionStore {
       ? {
           ...existing,
           consentVersion: input.consentVersion,
-          messages: mergeMessages(existing.messages, incoming.messages),
+          messages: normalizeChatHistory(
+            mergeMessages(existing.messages, incoming.messages),
+          ),
         }
-      : incoming;
+      : { ...incoming, messages: normalizeChatHistory(incoming.messages) };
     await this.redis.set(key, session, { pxat: session.expiresAt });
     return session;
   }

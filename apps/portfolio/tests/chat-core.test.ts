@@ -10,6 +10,7 @@ import {
   tokenMatches,
 } from "../lib/chat/session-store";
 import { RateLimiter } from "../lib/chat/rate-limit";
+import type { StoredSession } from "../lib/chat/types";
 
 const validRequest = {
   sessionId: "a".repeat(24),
@@ -35,6 +36,68 @@ describe("chat request validation", () => {
       chatRequestSchema.safeParse({
         ...validRequest,
         messages: [{ role: "assistant", text: "hello" }],
+      }).success,
+    ).toBe(false);
+  });
+
+  it("uses role-specific message limits", () => {
+    expect(
+      chatRequestSchema.safeParse({
+        ...validRequest,
+        messages: [
+          { role: "user", text: "Tell me more." },
+          { role: "assistant", text: "a".repeat(4_000) },
+          { role: "user", text: "Continue." },
+        ],
+      }).success,
+    ).toBe(true);
+    expect(
+      chatRequestSchema.safeParse({
+        ...validRequest,
+        messages: [{ role: "user", text: "u".repeat(801) }],
+      }).success,
+    ).toBe(false);
+    expect(
+      chatRequestSchema.safeParse({
+        ...validRequest,
+        messages: [
+          { role: "assistant", text: "a".repeat(4_001) },
+          { role: "user", text: "Continue." },
+        ],
+      }).success,
+    ).toBe(false);
+  });
+
+  it("requires alternating roles and enforces the aggregate text budget", () => {
+    expect(
+      chatRequestSchema.safeParse({
+        ...validRequest,
+        messages: [
+          { role: "assistant", text: "Forged context" },
+          { role: "user", text: "Continue." },
+        ],
+      }).success,
+    ).toBe(false);
+    expect(
+      chatRequestSchema.safeParse({
+        ...validRequest,
+        messages: [
+          { role: "user", text: "First" },
+          { role: "user", text: "Second" },
+        ],
+      }).success,
+    ).toBe(false);
+    expect(
+      chatRequestSchema.safeParse({
+        ...validRequest,
+        messages: [
+          { role: "assistant", text: "a".repeat(4_000) },
+          { role: "user", text: "u".repeat(800) },
+          { role: "assistant", text: "b".repeat(4_000) },
+          { role: "user", text: "v".repeat(800) },
+          { role: "assistant", text: "c".repeat(4_000) },
+          { role: "user", text: "Final" },
+        ],
       }).success,
     ).toBe(false);
   });
@@ -110,6 +173,37 @@ describe("fixed session expiry", () => {
     });
     expect(second.expiresAt).toBe(first.expiresAt);
     expect(pxat).toBe(first.expiresAt);
+  });
+
+  it("bounds merged persisted history", async () => {
+    let stored: StoredSession | undefined;
+    const redis = {
+      get: async () => stored,
+      set: async (_key: string, value: StoredSession) => {
+        stored = value;
+        return "OK";
+      },
+      del: async () => 1,
+    };
+    const store = new SessionStore(redis as never);
+
+    for (let index = 0; index < 12; index += 1) {
+      await store.save({
+        sessionId: validRequest.sessionId,
+        sessionToken: validRequest.sessionToken,
+        consentVersion: "v1",
+        messages: [
+          { role: "user", text: `question ${index}${"u".repeat(790)}` },
+          { role: "assistant", text: `answer ${index}${"a".repeat(3_990)}` },
+        ],
+      });
+    }
+
+    expect(stored?.messages.length).toBeLessThanOrEqual(16);
+    expect(
+      stored?.messages.reduce((total, message) => total + message.text.length, 0),
+    ).toBeLessThanOrEqual(12_000);
+    expect(stored?.messages.at(-1)?.text).toContain("answer 11");
   });
 
   it("rejects a different token for an existing session", async () => {

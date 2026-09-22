@@ -7,6 +7,7 @@ import type { RateLimiter } from "./rate-limit";
 import type { SessionStore } from "./session-store";
 import type { ChatRequest, SseEvent } from "./types";
 import { chatRequestSchema } from "./validation";
+import { ASSISTANT_MESSAGE_MAX_LENGTH } from "./client-history";
 
 export interface ChatDependencies {
   ai: AskOpenAI | null;
@@ -109,8 +110,13 @@ export async function handleChat(
     }
 
     const latest = payload.messages.at(-1)?.text ?? "";
-    const unsafe = await ai.moderate(latest);
-    const classification = unsafe ? "unsafe" : await ai.classify(latest);
+    const boundedTranscript = payload.messages
+      .map((message) => `${message.role}: ${message.text}`)
+      .join("\n");
+    const unsafe = await ai.moderate(boundedTranscript);
+    const classification = unsafe
+      ? "unsafe"
+      : await ai.classify(boundedTranscript);
 
     if (
       classification === "unrelated" ||
@@ -170,7 +176,7 @@ export async function handleChat(
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
       async start(controller) {
-        let answer = "";
+        let answerForPersistence = "";
         const send = (event: SseEvent) =>
           controller.enqueue(encoder.encode(encodeSse(event)));
         try {
@@ -180,7 +186,11 @@ export async function handleChat(
             persisted: payload.consent === "persist_30d",
           });
           for await (const delta of grounded.deltas) {
-            answer += delta;
+            if (answerForPersistence.length < ASSISTANT_MESSAGE_MAX_LENGTH) {
+              answerForPersistence = (
+                answerForPersistence + delta
+              ).slice(0, ASSISTANT_MESSAGE_MAX_LENGTH);
+            }
             send({ type: "delta", text: delta });
           }
           const sources = await grounded.sources();
@@ -192,7 +202,7 @@ export async function handleChat(
               consentVersion: payload.consentVersion,
               messages: [
                 ...payload.messages,
-                { role: "assistant", text: answer },
+                { role: "assistant", text: answerForPersistence },
               ],
             });
           }

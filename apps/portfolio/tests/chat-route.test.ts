@@ -45,13 +45,77 @@ function dependencies(overrides: Partial<ChatDependencies> = {}): ChatDependenci
 
 describe("POST /api/chat core", () => {
   it("streams meta, text, trusted sources, and done", async () => {
-    const response = await handleChat(request(), dependencies());
+    const deps = dependencies();
+    const response = await handleChat(request(), deps);
     const body = await response.text();
     expect(response.status).toBe(200);
     expect(body).toContain("event: meta");
     expect(body).toContain("I built ");
     expect(body).toContain("Website");
     expect(body).toContain("event: done");
+    expect(deps.ai!.moderate).toHaveBeenCalledWith(
+      "user: What did you build at Gradly?",
+    );
+    expect(deps.ai!.classify).toHaveBeenCalledWith(
+      "user: What did you build at Gradly?",
+    );
+  });
+
+  it("classifies the full bounded conversation", async () => {
+    const deps = dependencies();
+    const conversationRequest = new NextRequest("http://localhost/api/chat", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        sessionId: "a".repeat(24),
+        sessionToken: "b".repeat(43),
+        consent: "no_store",
+        consentVersion: "v1",
+        messages: [
+          { role: "user", text: "First question" },
+          { role: "assistant", text: "Earlier answer" },
+          { role: "user", text: "Follow up" },
+        ],
+      }),
+    });
+
+    await (await handleChat(conversationRequest, deps)).text();
+
+    const transcript =
+      "user: First question\nassistant: Earlier answer\nuser: Follow up";
+    expect(deps.ai!.moderate).toHaveBeenCalledWith(transcript);
+    expect(deps.ai!.classify).toHaveBeenCalledWith(transcript);
+  });
+
+  it("streams the full answer but persists at most 4000 assistant characters", async () => {
+    const save = vi.fn();
+    const deps = dependencies({ sessionStore: { save } as never });
+    (deps.ai!.streamAnswer as ReturnType<typeof vi.fn>) = vi.fn().mockResolvedValue({
+      deltas: (async function* () {
+        yield "a".repeat(3_000);
+        yield "b".repeat(3_000);
+      })(),
+      sources: vi.fn().mockResolvedValue([]),
+    });
+    const persistentRequest = new NextRequest("http://localhost/api/chat", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        sessionId: "a".repeat(24),
+        sessionToken: "b".repeat(43),
+        consent: "persist_30d",
+        consentVersion: "v1",
+        messages: [{ role: "user", text: "Tell me more." }],
+      }),
+    });
+
+    const body = await (await handleChat(persistentRequest, deps)).text();
+
+    expect(body).toContain("b".repeat(1_000));
+    const saved = save.mock.calls[0]?.[0].messages;
+    expect(saved.at(-1).role).toBe("assistant");
+    expect(saved.at(-1).text).toHaveLength(4_000);
+    expect(saved.at(-1).text).toBe(`${"a".repeat(3_000)}${"b".repeat(1_000)}`);
   });
 
   it("returns a grounded abstention when retrieval has no evidence", async () => {
