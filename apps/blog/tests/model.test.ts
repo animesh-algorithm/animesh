@@ -49,6 +49,17 @@ describe("publication contract", () => {
       "old",
     ]);
   });
+  it("accepts Notion date properties for createdAt", () => {
+    const dated = page("dated");
+    dated.id = "b".repeat(32);
+    dated.properties.createdAt = {
+      type: "date",
+      date: { start: "2024-06-15T18:35:00.000+05:30" },
+    };
+    expect(publicPosts([dated]).map((p) => [p.slug, p.createdAt])).toEqual([
+      ["dated", "2024-06-15T18:35:00.000+05:30"],
+    ]);
+  });
 });
 it("searches title and description with exact tag filters", () => {
   const posts = fixturePosts();

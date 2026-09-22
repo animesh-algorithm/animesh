@@ -49,6 +49,7 @@ export type Property = {
   multi_select?: { name: string }[];
   files?: FileRef[];
   created_time?: string;
+  date?: { start?: string | null; end?: string | null; time_zone?: string | null };
 };
 export type Page = {
   id: string;
@@ -113,7 +114,8 @@ export const validSlug = (slug: string) =>
   !reserved.has(slug);
 export function mapPage(p: Page): Post {
   const v = p.properties;
-  const createdAt = v.createdAt?.created_time ?? "";
+  const createdAt =
+    v.createdAt?.created_time ?? v.createdAt?.date?.start ?? "";
   return {
     id: p.id,
     title: plain(v.title?.title),

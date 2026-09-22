@@ -24,7 +24,7 @@ async function fetchPublic(): Promise<Post[]> {
   }
   return posts;
 }
-const cachedPublic = unstable_cache(fetchPublic, ["blog-public-v1"], {
+const cachedPublic = unstable_cache(fetchPublic, ["blog-public-v2"], {
   revalidate: 300,
 });
 export async function getPublicPosts(): Promise<Post[]> {

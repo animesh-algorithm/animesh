@@ -28,6 +28,7 @@ it("keeps preview reads out of the public cache", async () => {
   mock.pages.mockResolvedValue([page()]);
   expect((await getPreviewPost("a".repeat(32)))?.published).toBe(false);
   expect(mock.pages).not.toHaveBeenCalled();
+  expect(mock.cache.mock.calls[0][1]).toEqual(["blog-public-v2"]);
   expect(mock.cache.mock.calls[0][2]).toEqual({ revalidate: 300 });
   expect((await getPublicPosts()).map((p) => p.slug)).toEqual(["hello"]);
   expect(mock.pages).toHaveBeenCalledTimes(1);
