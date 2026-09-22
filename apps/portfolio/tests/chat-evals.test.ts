@@ -25,10 +25,12 @@ describe("Ask Animesh eval coverage", () => {
   });
 
   it("keeps the prompt contract grounded, disclosed, and tool-limited", () => {
-    expect(answerInstructions).toContain("AI stand-in, not Animesh live");
+    expect(answerInstructions).toContain("AI assistant, not Animesh live");
     expect(answerInstructions).toContain("file_search results");
     expect(answerInstructions).toContain("Do not infer or invent");
     expect(answerInstructions).toContain("Do not use web search");
+    expect(answerInstructions).toContain("general audience");
+    expect(answerInstructions).toContain("brief, direct, human, and non-technical");
     expect(classifierInstructions).toContain("prompt_injection");
     expect(classifierInstructions).toContain("private data");
   });

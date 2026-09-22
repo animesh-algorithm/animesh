@@ -50,7 +50,7 @@ export async function handleChat(
       {
         type: "error",
         code: "invalid_request",
-        message: "That message could not be sent. Check the input and try again.",
+        message: "That message could not be sent. Try again.",
       },
       400,
     );
@@ -63,7 +63,7 @@ export async function handleChat(
       {
         type: "error",
         code: "service_unavailable",
-        message: "Ask Animesh is not configured yet. Please try again later.",
+        message: "Ask Animesh is unavailable right now. Try again later.",
       },
       503,
     );
@@ -73,7 +73,7 @@ export async function handleChat(
       {
         type: "error",
         code: "storage_unavailable",
-        message: "Saved chat is temporarily unavailable. Continue without saving instead.",
+        message: "Saved chats are unavailable right now. Choose “Don’t save chat” to continue.",
       },
       503,
     );
@@ -101,7 +101,7 @@ export async function handleChat(
         {
           type: "error",
           code: "rate_limited",
-          message: "That’s enough rapid-fire questions for now. Try again shortly.",
+          message: "Too many questions at once. Try again shortly.",
         },
         429,
         { "Retry-After": String(retryAfterSeconds) },
@@ -142,7 +142,7 @@ export async function handleChat(
 
     if (classification === "in_scope" && !(await ai.hasEvidence(latest))) {
       const answer =
-        "That isn’t in my approved public sources. Ask about the work, experience, projects, or public contact details that are documented here.";
+        "I don’t have enough information to answer that. Try asking about my work, projects, or experience.";
       if (payload.consent === "persist_30d" && sessionStore) {
         await sessionStore.save({
           sessionId: payload.sessionId,
@@ -201,7 +201,7 @@ export async function handleChat(
           send({
             type: "error",
             code: "generation_failed",
-            message: "The answer stream failed. Please try again.",
+            message: "I couldn’t finish that answer. Please try again.",
           });
         } finally {
           controller.close();
@@ -214,7 +214,7 @@ export async function handleChat(
       {
         type: "error",
         code: "request_failed",
-        message: "Ask Animesh is temporarily unavailable. Please try again.",
+        message: "Ask Animesh is unavailable right now. Try again later.",
       },
       503,
     );

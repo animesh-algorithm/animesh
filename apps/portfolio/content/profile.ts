@@ -172,7 +172,7 @@ export const experiments = [
     title: "Rediscover the songs you already love.",
     description:
       "Reads the musical traits of your saved songs to spot patterns and draft playlists. You review, tweak, and approve every one before it reaches Spotify.",
-    meta: "Machine Learning · Automation · Spotify API",
+    meta: "Machine Learning · Automation · Product",
     links: [
       {
         href: "https://sortifi.vercel.app/",

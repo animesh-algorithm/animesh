@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PostThumbnail } from "./post-thumbnail";
 import { Artwork } from "./artwork";
+import { ArrowUpRightIcon, CloseIcon, SparkIcon } from "./icons";
 import { filterPosts, excerpt, displayDate, type Post } from "@/lib/model";
 export function PostList({ posts }: { posts: Post[] }) {
   return (
@@ -18,7 +19,7 @@ export function PostList({ posts }: { posts: Post[] }) {
             <Link href={`/${p.slug}`}>
               {p.title}
               <span className="post-arrow" aria-hidden="true">
-                ↗
+                <ArrowUpRightIcon />
               </span>
             </Link>
           </h2>
@@ -97,7 +98,7 @@ export function BlogIndex({
                 maxLength={200}
               />
               <button type="submit" aria-label="Search articles">
-                Search ↗
+                Search <ArrowUpRightIcon />
               </button>
             </div>
           </form>
@@ -133,7 +134,7 @@ export function BlogIndex({
           </div>
           {(q || tag) && (
             <Link className="clear-filter" href="/">
-              Clear search and filters ×
+              Clear search and filters <CloseIcon />
             </Link>
           )}
           {filtered.length ? (
@@ -166,13 +167,15 @@ export function BlogIndex({
             ))}
           </ul>
           <div className="sidebar-note">
-            <span aria-hidden="true">✳</span>
+            <SparkIcon className="sidebar-note-icon" />
             <p>
               Good questions tend to lead
               <br />
               to interesting places.
             </p>
-            <Link href="/rss.xml">Follow via RSS ↗</Link>
+            <Link href="/rss.xml">
+              Follow via RSS <ArrowUpRightIcon />
+            </Link>
           </div>
         </aside>
       </div>

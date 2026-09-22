@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FooterArtwork } from "./artwork";
 import { getPublicPosts } from "@/lib/content";
+import { ArrowUpRightIcon, SparkIcon } from "./icons";
 
 export async function SiteFooter() {
   const posts = await getPublicPosts().catch(() => []);
@@ -20,7 +21,7 @@ export async function SiteFooter() {
       <div className="footer-content">
         <section className="footer-intro" aria-labelledby="footer-brand">
           <Link className="footer-brand" id="footer-brand" href="/">
-            animesh <span aria-hidden="true">✳</span>
+            animesh <SparkIcon className="brand-icon" />
           </Link>
           <p>A notebook with the occasional rabbit hole.</p>
           <small>© {new Date().getFullYear()} Animesh Sharma</small>
@@ -48,7 +49,7 @@ export async function SiteFooter() {
               <Link href="/">All writing</Link>
             </li>
             <li>
-              <Link href="/rss.xml">RSS feed ↗</Link>
+              <Link href="/rss.xml">RSS feed <ArrowUpRightIcon /></Link>
             </li>
           </ul>
         </nav>
@@ -57,15 +58,15 @@ export async function SiteFooter() {
           <h2 id="footer-elsewhere">Elsewhere</h2>
           <ul>
             <li>
-              <a href="https://www.animesh.cc">Portfolio ↗</a>
+              <a href="https://www.animesh.cc">Portfolio <ArrowUpRightIcon /></a>
             </li>
             <li>
               <a href="https://www.linkedin.com/in/animeshsharma42">
-                LinkedIn ↗
+                LinkedIn <ArrowUpRightIcon />
               </a>
             </li>
             <li>
-              <a href="https://github.com/animesh-algorithm">GitHub ↗</a>
+              <a href="https://github.com/animesh-algorithm">GitHub <ArrowUpRightIcon /></a>
             </li>
           </ul>
         </nav>

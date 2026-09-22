@@ -34,6 +34,8 @@ it("renders nested lists, headings, quotes, callouts, toggles and tables", async
   expect(result).toContain("<blockquote>");
   expect(result).toContain('scope="col"');
   expect(result).toContain('class="callout"');
+  expect(result).toContain('class="callout-icon"');
+  expect(result).not.toContain("💡");
   expect(result).toContain("Hidden text");
 });
 it("escapes CMS text and unsafe links, retaining formatting", () => {

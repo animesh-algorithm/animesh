@@ -20,6 +20,7 @@ import {
 
 const CONSENT_VERSION = process.env.NEXT_PUBLIC_CHAT_CONSENT_VERSION ?? "v1";
 const BROWSER_STORAGE_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+const DRAWER_TRANSITION_MS = 300;
 const suggestedQuestions = [
   "What did you build at Gradly?",
   "Tell me how VisaFile works.",
@@ -58,9 +59,7 @@ function newIdentity() {
 }
 
 function parseSseChunk(chunk: string) {
-  const dataLine = chunk
-    .split("\n")
-    .find((line) => line.startsWith("data: "));
+  const dataLine = chunk.split("\n").find((line) => line.startsWith("data: "));
   if (!dataLine) return null;
   return JSON.parse(dataLine.slice(6)) as
     | { type: "meta" }
@@ -72,24 +71,51 @@ function parseSseChunk(chunk: string) {
 
 export function AskAnimeshProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isRendered, setIsRendered] = useState(false);
   const triggerRef = useRef<HTMLElement | null>(null);
+  const closeTimerRef = useRef<number | null>(null);
   const pathname = usePathname();
 
   const open = useCallback(() => {
+    if (closeTimerRef.current !== null) {
+      window.clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
     triggerRef.current = document.activeElement as HTMLElement | null;
     track("ask_opened", { placement: "drawer" });
+    setIsRendered(true);
     setIsOpen(true);
   }, []);
 
   const close = useCallback(() => {
+    if (!isOpen) return;
     setIsOpen(false);
-    window.setTimeout(() => triggerRef.current?.focus(), 0);
-  }, []);
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    closeTimerRef.current = window.setTimeout(
+      () => {
+        setIsRendered(false);
+        triggerRef.current?.focus();
+        closeTimerRef.current = null;
+      },
+      prefersReducedMotion ? 0 : DRAWER_TRANSITION_MS,
+    );
+  }, [isOpen]);
+
+  useEffect(
+    () => () => {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current);
+      }
+    },
+    [],
+  );
 
   return (
     <AskContext.Provider value={{ open }}>
       {children}
-      {pathname !== "/ask" && !isOpen ? (
+      {pathname !== "/ask" && !isRendered ? (
         <button
           className="ask-widget"
           type="button"
@@ -103,15 +129,17 @@ export function AskAnimeshProvider({ children }: { children: ReactNode }) {
             <Spark />
           </span>
           <span className="ask-widget-copy">
-            <small>AI stand-in</small>
             <strong>Ask Animesh</strong>
           </span>
         </button>
       ) : null}
-      {isOpen ? (
-        <div className="ask-overlay" onMouseDown={(event) => {
-          if (event.target === event.currentTarget) close();
-        }}>
+      {isRendered ? (
+        <div
+          className={`ask-overlay${isOpen ? "" : " is-closing"}`}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) close();
+          }}
+        >
           <ChatExperience variant="drawer" onClose={close} />
         </div>
       ) : null}
@@ -135,7 +163,8 @@ export function AskAnimeshLink({
       href="/ask"
       onClick={(event) => {
         onClick?.();
-        if (!context || event.metaKey || event.ctrlKey || event.shiftKey) return;
+        if (!context || event.metaKey || event.ctrlKey || event.shiftKey)
+          return;
         event.preventDefault();
         context.open();
       }}
@@ -154,13 +183,18 @@ export function ChatExperience({
 }) {
   const titleId = useId();
   const opened = useRef(false);
-  useEffect(() => { if (variant === "page" && !opened.current) { opened.current = true; track("ask_opened", { placement: "page" }); } }, [variant]);
+  useEffect(() => {
+    if (variant === "page" && !opened.current) {
+      opened.current = true;
+      track("ask_opened", { placement: "page" });
+    }
+  }, [variant]);
   const dialogRef = useRef<HTMLElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [consent, setConsent] = useState<ConsentMode | null>(null);
-  const [identity, setIdentity] = useState<ReturnType<typeof newIdentity> | null>(
-    null,
-  );
+  const [identity, setIdentity] = useState<ReturnType<
+    typeof newIdentity
+  > | null>(null);
   const [messages, setMessages] = useState<UiMessage[]>([]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
@@ -247,7 +281,9 @@ export function ChatExperience({
   const submit = async (question = input) => {
     const text = question.trim();
     if (!text || !consent || !identity || isStreaming) return;
-    const outcome = interaction("ask_question_submitted", { placement: variant });
+    const outcome = interaction("ask_question_submitted", {
+      placement: variant,
+    });
     const userMessage: UiMessage = {
       id: randomToken(9),
       role: "user",
@@ -262,7 +298,7 @@ export function ChatExperience({
     setInput("");
     setError(null);
     setIsStreaming(true);
-    setAnnouncement("AI stand-in is answering.");
+    setAnnouncement("Ask Animesh is answering.");
 
     try {
       const response = await fetch("/api/chat", {
@@ -318,7 +354,10 @@ export function ChatExperience({
         }
         if (done) break;
       }
-      outcome(completed ? "ask_response_completed" : "ask_failed", { placement: variant, outcome: completed ? "completed" : "failed" });
+      outcome(completed ? "ask_response_completed" : "ask_failed", {
+        placement: variant,
+        outcome: completed ? "completed" : "failed",
+      });
       setAnnouncement("Answer complete.");
     } catch (caught) {
       outcome("ask_failed", { placement: variant, outcome: "failed" });
@@ -380,8 +419,11 @@ export function ChatExperience({
     >
       <header className="ask-panel-header">
         <div>
-          <p className="eyebrow">AI stand-in · not Animesh live</p>
-          {variant === "page" ? <h1 id={titleId}>Ask Animesh</h1> : <h2 id={titleId}>Ask Animesh</h2>}
+          {variant === "page" ? (
+            <h1 id={titleId}>Ask Animesh</h1>
+          ) : (
+            <h2 id={titleId}>Ask Animesh</h2>
+          )}
         </div>
         {variant === "drawer" ? (
           <button className="ask-close" type="button" onClick={onClose}>
@@ -392,39 +434,31 @@ export function ChatExperience({
 
       {!consent ? (
         <div className="ask-consent">
-          <span className="ask-consent-mark" aria-hidden="true">A.</span>
-          <h2>Public facts. Straight answers.</h2>
-          <p>
-            This disclosed AI stand-in answers from approved information about
-            my work and experience. Your requests are processed by OpenAI.
-          </p>
+          <span className="ask-consent-mark" aria-hidden="true">
+            A.
+          </span>
+          <h2>Ask anything about me.</h2>
+
           <div className="ask-consent-actions">
             <button type="button" onClick={() => chooseConsent("persist_30d")}>
-              Continue and save for 30 days
+              Save chat for 30 days
             </button>
             <button
               className="ask-secondary-action"
               type="button"
               onClick={() => chooseConsent("no_store")}
             >
-              Continue without saving
+              Don’t save chat
             </button>
           </div>
-          <small>
-            No-save keeps history only in this browser session. OpenAI response
-            storage remains disabled in both modes.
-          </small>
         </div>
       ) : (
         <div className="ask-conversation">
           <div className="ask-messages" aria-label="Conversation">
             {messages.length === 0 ? (
               <div className="ask-empty">
-                <h2>Ask about the work.</h2>
-                <p>
-                  Projects, experience, technical decisions, current interests,
-                  or the public version of how to reach me.
-                </p>
+                <h2>What would you like to know?</h2>
+                <p>Ask about my projects, experience, or how I work.</p>
                 <div className="ask-suggestions">
                   {suggestedQuestions.map((question) => (
                     <button
@@ -443,7 +477,7 @@ export function ChatExperience({
                 className={`ask-message ask-message-${message.role}`}
                 key={message.id}
               >
-                <span>{message.role === "user" ? "You" : "AI Animesh"}</span>
+                <span>{message.role === "user" ? "You" : "Ask Animesh"}</span>
                 <p>{message.text || <i>Thinking…</i>}</p>
                 {message.sources?.length ? (
                   <div className="ask-sources" aria-label="Sources">
@@ -451,8 +485,14 @@ export function ChatExperience({
                       <a
                         href={source.href}
                         key={source.id}
-                        target={source.href.endsWith(".pdf") ? "_blank" : undefined}
-                        rel={source.href.endsWith(".pdf") ? "noopener noreferrer" : undefined}
+                        target={
+                          source.href.endsWith(".pdf") ? "_blank" : undefined
+                        }
+                        rel={
+                          source.href.endsWith(".pdf")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
                       >
                         {source.label} <ArrowUpRight />
                       </a>
@@ -471,7 +511,7 @@ export function ChatExperience({
               value={input}
               onChange={(event) => setInput(event.target.value.slice(0, 800))}
               onKeyDown={handleInputKeyDown}
-              placeholder="Ask about my work, experience, or projects…"
+              placeholder="Ask about my work or experience…"
               rows={3}
               maxLength={800}
               disabled={isStreaming}
@@ -479,16 +519,26 @@ export function ChatExperience({
             <div>
               <span>{input.length}/800</span>
               <button type="submit" disabled={!input.trim() || isStreaming}>
-                {isStreaming ? "Answering…" : <>Send <ArrowUpRight /></>}
+                {isStreaming ? (
+                  "Answering…"
+                ) : (
+                  <>
+                    Send <ArrowUpRight />
+                  </>
+                )}
               </button>
             </div>
           </form>
-          {error ? <p className="ask-error" role="alert">{error}</p> : null}
+          {error ? (
+            <p className="ask-error" role="alert">
+              {error}
+            </p>
+          ) : null}
           <div className="ask-session-controls">
             <span>
               {consent === "persist_30d"
-                ? "Saved for 30 days from the first message."
-                : "Not saved by this site."}
+                ? "Chat saved for 30 days."
+                : "Chat not saved."}
             </span>
             {consent === "persist_30d" ? (
               <button type="button" onClick={() => void deleteSavedChat()}>
@@ -500,8 +550,11 @@ export function ChatExperience({
       )}
 
       <footer className="ask-panel-footer">
-        {variant === "drawer" ? <Link href="/ask">Open full page <ArrowUpRight /></Link> : null}
-        <span>Answers are limited to approved public sources.</span>
+        {variant === "drawer" ? (
+          <Link href="/ask" onClick={() => onClose?.()}>
+            Open full page <ArrowUpRight />
+          </Link>
+        ) : null}
       </footer>
       <p className="sr-only" aria-live="polite" aria-atomic="true">
         {announcement}

@@ -58,7 +58,7 @@ describe("POST /api/chat core", () => {
     const deps = dependencies();
     (deps.ai!.hasEvidence as ReturnType<typeof vi.fn>) = vi.fn().mockResolvedValue(false);
     const body = await (await handleChat(request(), deps)).text();
-    expect(body).toContain("isn’t in my approved public sources");
+    expect(body).toContain("don’t have enough information");
     expect(body).not.toContain("I built systems");
   });
 
@@ -83,7 +83,7 @@ describe("POST /api/chat core", () => {
     const response = await handleChat(request(), deps);
     const body = await response.text();
     expect(response.status).toBe(503);
-    expect(body).toContain("temporarily unavailable");
+    expect(body).toContain("unavailable right now");
     expect(body).not.toContain("secret upstream");
   });
 

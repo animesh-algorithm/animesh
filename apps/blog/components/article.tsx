@@ -12,6 +12,7 @@ import {
 } from "@/lib/model";
 import { ArticleImage } from "./article-image";
 import { ArticleArtwork } from "./artwork";
+import { ArrowLeftIcon, ArrowUpRightIcon, SparkIcon } from "./icons";
 export function Article({
   post,
   posts = [],
@@ -35,7 +36,7 @@ export function Article({
         <ArticleArtwork />
         <div className="article-header-content">
           <Link className="back-link" href={preview ? "/preview" : "/"}>
-            ← {preview ? "Preview directory" : "All writing"}
+            <ArrowLeftIcon /> {preview ? "Preview directory" : "All writing"}
           </Link>
           <ul className="post-tags">
             {post.tags.map((t) => (
@@ -70,9 +71,11 @@ export function Article({
           )}
           <Blocks blocks={post.blocks} pageId={post.id} preview={preview} />
           <div className="article-end">
-            <span aria-hidden="true">✳</span>
+            <SparkIcon className="article-end-icon" />
             <p>Thanks for reading.</p>
-            <Link href="https://www.animesh.cc">More about Animesh ↗</Link>
+            <Link href="https://www.animesh.cc">
+              More about Animesh <ArrowUpRightIcon />
+            </Link>
           </div>
         </article>
         {toc.length > 0 && (

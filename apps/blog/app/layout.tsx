@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ORIGIN } from "@/lib/model";
 import { SiteFooter } from "@/components/footer";
 import { MotionExperience } from "@/components/motion-experience";
+import { ArrowUpRightIcon, SparkIcon } from "@/components/icons";
 import "@fontsource-variable/outfit";
 import "./globals.css";
 export const metadata: Metadata = {
@@ -32,14 +33,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </a>
         <header className="site-header">
           <Link className="masthead" href="/">
-            animesh<span aria-hidden="true">✳</span>
+            animesh<SparkIcon className="brand-icon" />
             <small>THE BLOG</small>
           </Link>
           <nav aria-label="Main navigation">
             <Link href="/">Writing</Link>
-            <a href="https://www.animesh.cc">About me ↗</a>
+            <a href="https://www.animesh.cc">About me <ArrowUpRightIcon /></a>
             <Link className="rss-link" href="/rss.xml">
-              RSS ↗
+              RSS <ArrowUpRightIcon />
             </Link>
           </nav>
         </header>

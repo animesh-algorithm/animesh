@@ -152,8 +152,6 @@ export function ScrollMotion() {
 
         if (experiments) {
           const progress = viewportProgress(experiments, viewportHeight);
-          experiments.style.setProperty("--experiments-progress", progress.toFixed(4));
-          experiments.style.setProperty("--experiments-drift", `${(progress - 0.5) * -32}px`);
           experiments.style.setProperty("--sortify-record-turn", `${progress * -8}deg`);
         }
         experimentRows.forEach((row, index) => {
@@ -206,7 +204,7 @@ export function ScrollMotion() {
         ["--hero-scroll", "--hero-lift", "--hero-fade", "--hero-scale", "--hero-circle-y", "--hero-circle-turn", "--hero-sticker-y", "--hero-sticker-turn", "--hero-spark-x", "--hero-spark-y", "--hero-spark-turn"]
           .forEach((property) => hero?.style.removeProperty(property));
         projects.forEach((project) => ["--scene-shift", "--scene-tilt", "--copy-shift"].forEach((property) => project.style.removeProperty(property)));
-        ["--experiments-progress", "--experiments-drift", "--sortify-record-turn"].forEach((property) => experiments?.style.removeProperty(property));
+        experiments?.style.removeProperty("--sortify-record-turn");
         experimentRows.forEach((row) => ["--experiment-layer-y", "--experiment-layer-far-y", "--experiment-layer-mid-y", "--experiment-layer-close-y", "--experiment-grid-x"].forEach((property) => row.style.removeProperty(property)));
         chapters.forEach((chapter) => chapter.style.removeProperty("--chapter-progress"));
         ["--about-turn", "--about-shift", "--about-side-shift"].forEach((property) => about?.style.removeProperty(property));

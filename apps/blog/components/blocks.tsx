@@ -3,6 +3,7 @@ import { codeToTokens, bundledLanguages, type BundledLanguage } from "shiki";
 import { RichText } from "./rich-text";
 import { CopyButton } from "./copy-button";
 import { ArticleImage } from "./article-image";
+import { ArrowUpRightIcon, CheckboxIcon, NoteIcon } from "./icons";
 import { headingId, walk, plain, safeLink, mediaPath, type Block } from "@/lib/model";
 function headingLevelsFor(blocks: Block[]) {
   const levels = new Map<string, "h2" | "h3" | "h4">();
@@ -152,7 +153,7 @@ export async function Blocks({
       case "callout":
         node = (
           <aside className="callout">
-            <span aria-hidden="true">{d.icon?.emoji ?? "↗"}</span>
+            <NoteIcon className="callout-icon" />
             <div>
               <RichText text={d.rich_text} />
               {child()}
@@ -198,8 +199,8 @@ export async function Blocks({
       case "to_do":
         node = (
           <div className="todo">
-            <span aria-label={d.checked ? "Completed" : "Incomplete"}>
-              {d.checked ? "☑" : "☐"}
+            <span className="todo-icon" aria-label={d.checked ? "Completed" : "Incomplete"}>
+              <CheckboxIcon checked={Boolean(d.checked)} />
             </span>{" "}
             <RichText text={d.rich_text} />
             {child()}
@@ -264,7 +265,7 @@ export async function Blocks({
             {href ? (
               <p>
                 <a href={href} rel="noopener noreferrer">
-                  {plain(d.caption) || "Open linked content"} ↗
+                  {plain(d.caption) || "Open linked content"} <ArrowUpRightIcon />
                 </a>
               </p>
             ) : (

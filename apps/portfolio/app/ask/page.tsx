@@ -3,9 +3,9 @@ import Link from "next/link";
 
 export const metadata = {
   alternates: { canonical: "/ask" },
-  title: "Ask Animesh — AI stand-in",
+  title: "Ask Animesh",
   description:
-    "Ask a disclosed AI stand-in about Animesh's approved public work and experience.",
+    "Ask an AI assistant about Animesh’s work, projects, and experience.",
 };
 
 export default function AskPage() {

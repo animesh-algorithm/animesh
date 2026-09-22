@@ -70,18 +70,9 @@ export function ExperimentsShelf({
 }) {
   return (
     <section className="experiments-shelf" aria-labelledby="experiments-title">
-      <div className="experiments-divider" aria-hidden="true">
-        <svg viewBox="0 0 900 58" preserveAspectRatio="none">
-          <path d="M3 39C119 8 229 52 351 31C481 8 591 8 711 28C778 39 835 40 897 24" />
-          <path d="M727 30C786 42 839 41 897 25" />
-          <circle cx="706" cy="27" r="4" />
-        </svg>
-      </div>
       <header className="experiments-heading">
-        <div>
-          <span className="project-label">Also shipping</span>
-          <h3 id="experiments-title">Experiments</h3>
-        </div>
+        <span className="project-label">Also shipping</span>
+        <h3 id="experiments-title">Experiments</h3>
         <p>Side projects that started as an itch and became real products.</p>
       </header>
 
