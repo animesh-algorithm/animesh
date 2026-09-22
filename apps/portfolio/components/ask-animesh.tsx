@@ -7,6 +7,7 @@ import {
 } from "@/lib/chat/client-history";
 import type { ChatSource, ConsentMode } from "@/lib/chat/types";
 import { ArrowUpRight, ChatBubble, Spark } from "@/components/icons";
+import { AskResponse } from "@/components/ask-response";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -527,7 +528,7 @@ export function ChatExperience({
                 key={message.id}
               >
                 <span>{message.role === "user" ? "You" : "Ask Animesh"}</span>
-                <p>{message.text || <i>Thinking…</i>}</p>
+                {message.text ? <AskResponse text={message.text} /> : <i>Thinking…</i>}
                 {message.sources?.length ? (
                   <div className="ask-sources" aria-label="Sources">
                     {message.sources.map((source) => (

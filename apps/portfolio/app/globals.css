@@ -3466,7 +3466,7 @@ body.dialog-open {
   text-transform: uppercase;
 }
 
-.ask-message > p {
+.ask-message-content {
   margin: 0;
   padding: 16px 18px;
   border: 1px solid var(--ink);
@@ -3477,6 +3477,29 @@ body.dialog-open {
   overflow-wrap: anywhere;
 }
 
+.ask-message-content p,
+.ask-message-content ul {
+  margin: 0;
+}
+
+.ask-message-content p + p,
+.ask-message-content p + ul,
+.ask-message-content ul + p,
+.ask-message-content ul + ul {
+  margin-top: 1em;
+}
+
+.ask-message-content ul {
+  padding-left: 1.2em;
+}
+
+.ask-message-content a {
+  color: inherit;
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.14em;
+}
+
 .ask-message-user {
   margin-left: auto;
 }
@@ -3485,7 +3508,7 @@ body.dialog-open {
   text-align: right;
 }
 
-.ask-message-user > p {
+.ask-message-user > .ask-message-content {
   border-radius: 18px 3px 18px 18px;
   background: var(--coral-soft);
 }
@@ -3796,7 +3819,7 @@ body.dialog-open {
   .ask-message {
     max-width: 92%;
   }
-  .ask-message > p {
+  .ask-message-content {
     padding: 13px 14px;
     font-size: 14px;
   }
