@@ -4,44 +4,95 @@ export function VisaFlowVisual() {
   return (
     <div
       className="visual visual-visa"
-      aria-label="Abstract interface preview for a guided application product"
+      aria-label="VisaFile reviews DS-160 answers, enters them on the CEAC website, and pauses when CEAC needs the applicant"
       role="img"
     >
-      <div className="window-bar">
-        <span />
-        <span />
-        <span />
-        <small>Guided application</small>
-      </div>
-      <div className="visa-layout">
-        <aside>
-          <div className="avatar-mark">A</div>
-          <i className="active" />
-          <i />
-          <i />
-          <i />
-          <b>72%</b>
+      <div className="visa-scene" aria-hidden="true">
+        <section className="visa-app-window">
+          <header className="visa-app-header">
+            <span className="visa-app-mark">V</span>
+            <strong>VisaFile</strong>
+            <small>DS-160</small>
+          </header>
+          <div className="visa-app-body">
+            <span className="visa-kicker">REVIEW COMPLETE</span>
+            <h3>Answers reviewed</h3>
+            <ul className="visa-review-list">
+              <li>
+                <i>
+                  <Check />
+                </i>
+                <span>
+                  <strong>Personal</strong>
+                  <small>Identity and contact</small>
+                </span>
+              </li>
+              <li>
+                <i>
+                  <Check />
+                </i>
+                <span>
+                  <strong>Travel</strong>
+                  <small>Trip and companions</small>
+                </span>
+              </li>
+              <li>
+                <i>
+                  <Check />
+                </i>
+                <span>
+                  <strong>Work &amp; education</strong>
+                  <small>History checked</small>
+                </span>
+              </li>
+            </ul>
+            <div className="visa-ready-state">
+              <span>
+                <i /> Ready for automation
+              </span>
+              <ArrowRight />
+            </div>
+          </div>
+        </section>
+
+        <div className="visa-route">
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M4 86 C40 86 40 18 96 18" />
+          </svg>
+          <span className="visa-route-dot" />
+        </div>
+
+        <section className="ceac-window">
+          <header className="ceac-header">
+            <span>
+              <i /> CEAC website
+            </span>
+            <small>Official form</small>
+          </header>
+          <div className="ceac-body">
+            <span className="ceac-status">
+              <i /> Entering reviewed answers
+            </span>
+            <div className="ceac-form-line is-long" />
+            <div className="ceac-form-line" />
+            <div className="ceac-form-line is-short" />
+            <div className="ceac-progress">
+              <span />
+            </div>
+          </div>
+        </section>
+
+        <aside className="visa-checkpoint">
+          <span className="visa-checkpoint-icon">!</span>
+          <div>
+            <small>HUMAN CHECKPOINT</small>
+            <strong>CEAC needs you</strong>
+            <p>CAPTCHA or correction</p>
+            <span>
+              Resume same session <ArrowRight />
+            </span>
+          </div>
         </aside>
-        <div className="visa-content">
-          <span className="mini-label">SECTION 04</span>
-          <h3>Let’s check the details.</h3>
-          <p>A calmer way through a complicated process.</p>
-          <div className="form-row">
-            <span />
-            <span />
-          </div>
-          <div className="form-row form-row-short">
-            <span />
-            <span />
-          </div>
-          <div className="mock-button">
-            Continue <ArrowRight />
-          </div>
-        </div>
-        <div className="helper-note">
-          <Spark />
-          <span>Everything looks consistent.</span>
-        </div>
       </div>
     </div>
   );

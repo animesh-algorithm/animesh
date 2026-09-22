@@ -1,5 +1,12 @@
 import { ScrollMotion } from "@/components/scroll-motion";
-import { ArrowDown, ArrowDownRight, ArrowUpRight, Asterisk, ChatBubble, Spark } from "@/components/icons";
+import {
+  ArrowDown,
+  ArrowDownRight,
+  ArrowUpRight,
+  Asterisk,
+  ChatBubble,
+  Spark,
+} from "@/components/icons";
 import { AskAnimeshLink } from "@/components/ask-animesh";
 import { ProjectShowcase } from "@/components/project-showcase";
 import {
@@ -28,8 +35,13 @@ function randomOption<const Options extends readonly string[]>(
   return options[Math.floor(Math.random() * options.length)];
 }
 
-function highlightExperienceCopy(paragraph: string, emphasis: readonly string[]) {
-  const escaped = emphasis.map((phrase) => phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+function highlightExperienceCopy(
+  paragraph: string,
+  emphasis: readonly string[],
+) {
+  const escaped = emphasis.map((phrase) =>
+    phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+  );
   return paragraph.split(new RegExp(`(${escaped.join("|")})`, "g"));
 }
 
@@ -44,7 +56,24 @@ export default async function Home() {
   return (
     <main id="top">
       <ScrollMotion />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@type": "Person", "@id": "https://www.animesh.cc/#person", name: "Animesh Sharma", url: "https://www.animesh.cc", sameAs: [profile.links.linkedin, profile.links.github, profile.links.twitter], description: "Engineer, product person, and automation builder." }).replace(/</g, "\\u003c") }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "@id": "https://www.animesh.cc/#person",
+            name: "Animesh Sharma",
+            url: "https://www.animesh.cc",
+            sameAs: [
+              profile.links.linkedin,
+              profile.links.github,
+              profile.links.twitter,
+            ],
+            description: "Engineer, product person, and automation builder.",
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       <SiteHeader />
 
       <section className="hero shell" aria-labelledby="hero-title">
@@ -82,7 +111,9 @@ export default async function Home() {
         <Spark className="hero-spark" />
         <div className="hero-sticker">
           <span>BUILD</span>
-          <b><ArrowDownRight /></b>
+          <b>
+            <ArrowDownRight />
+          </b>
           <span>SHIP</span>
         </div>
       </section>
@@ -216,7 +247,10 @@ export default async function Home() {
               </AskAnimeshLink>
               <a
                 className="about-resume-link"
-                data-analytics-event="resume_clicked" data-analytics-placement="about" data-analytics-category="resume" href="/resume.pdf"
+                data-analytics-event="resume_clicked"
+                data-analytics-placement="about"
+                data-analytics-category="resume"
+                href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -252,32 +286,51 @@ export default async function Home() {
             title="I kept picking up problems until my job title had to catch up."
           />
           <div className="experience-list">
-            {experience.map(({ period, role, company, headline, paragraphs, emphasis, closing }) => (
-              <div className="experience-row" key={period}>
-                <span className="experience-period">{period}</span>
-                <div className="experience-role">
-                  <h3>{role}</h3>
-                  <p>{company}</p>
-                </div>
-                <div className="experience-description">
-                  <p className="experience-headline">{headline}</p>
-                  <div className="experience-copy">
-                    {paragraphs.map((paragraph) => {
-                      const parts = highlightExperienceCopy(paragraph, emphasis);
+            {experience.map(
+              ({
+                period,
+                role,
+                company,
+                headline,
+                paragraphs,
+                emphasis,
+                closing,
+              }) => (
+                <div className="experience-row" key={period}>
+                  <span className="experience-period">{period}</span>
+                  <div className="experience-role">
+                    <h3>{role}</h3>
+                    <p>{company}</p>
+                  </div>
+                  <div className="experience-description">
+                    <p className="experience-headline">{headline}</p>
+                    <div className="experience-copy">
+                      {paragraphs.map((paragraph) => {
+                        const parts = highlightExperienceCopy(
+                          paragraph,
+                          emphasis,
+                        );
 
-                      return (
-                        <p key={paragraph}>
-                          {parts.map((part, index) =>
-                            emphasis.includes(part) ? <strong key={`${part}-${index}`}>{part}</strong> : part,
-                          )}
-                        </p>
-                      );
-                    })}
-                    {closing ? <p className="experience-closing">{closing}</p> : null}
+                        return (
+                          <p key={paragraph}>
+                            {parts.map((part, index) =>
+                              emphasis.includes(part) ? (
+                                <strong key={`${part}-${index}`}>{part}</strong>
+                              ) : (
+                                part
+                              ),
+                            )}
+                          </p>
+                        );
+                      })}
+                      {closing ? (
+                        <p className="experience-closing">{closing}</p>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ),
+            )}
           </div>
           <Spark className="experience-mark" />
         </div>
@@ -354,7 +407,13 @@ export default async function Home() {
               not sure how to solve it.
             </em>
           </h2>
-          <a className="contact-button" data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="email" href={`mailto:${profile.email}`}>
+          <a
+            className="contact-button"
+            data-analytics-event="contact_link_clicked"
+            data-analytics-placement="footer"
+            data-analytics-category="email"
+            href={`mailto:${profile.email}`}
+          >
             {profile.email} <ArrowUpRight />
           </a>
           <div className="footer-ask-cta">
@@ -369,28 +428,40 @@ export default async function Home() {
               <a href="https://blog.animesh.cc">Blog</a>
               <a href="/privacy">Privacy</a>
               <a
-                data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="social" href={profile.links.linkedin}
+                data-analytics-event="contact_link_clicked"
+                data-analytics-placement="footer"
+                data-analytics-category="social"
+                href={profile.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 LinkedIn
               </a>
               <a
-                data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="social" href={profile.links.github}
+                data-analytics-event="contact_link_clicked"
+                data-analytics-placement="footer"
+                data-analytics-category="social"
+                href={profile.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 GitHub
               </a>
               <a
-                data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="social" href={profile.links.twitter}
+                data-analytics-event="contact_link_clicked"
+                data-analytics-placement="footer"
+                data-analytics-category="social"
+                href={profile.links.twitter}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 X / Twitter
               </a>
               <a
-                data-analytics-event="resume_clicked" data-analytics-placement="footer" data-analytics-category="resume" href={profile.links.resume}
+                data-analytics-event="resume_clicked"
+                data-analytics-placement="footer"
+                data-analytics-category="resume"
+                href={profile.links.resume}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -398,7 +469,10 @@ export default async function Home() {
               </a>
             </div>
             <a className="consulting-link" href="https://hire.animesh.cc">
-              Looking for professional project help? <span>Work with me <ArrowUpRight /></span>
+              Looking for professional project help?{" "}
+              <span>
+                Work with me <ArrowUpRight />
+              </span>
             </a>
           </div>
         </div>
