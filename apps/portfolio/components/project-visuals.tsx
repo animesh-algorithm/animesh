@@ -258,23 +258,3 @@ export function ClaimsVisual() {
     </div>
   );
 }
-
-export function PlaygroundVisual() {
-  return (
-    <div
-      className="visual visual-playground"
-      aria-label="Abstract preview of small creative experiments"
-      role="img"
-    >
-      <div className="playground-grid" />
-      <div className="shape shape-arch" />
-      <div className="shape shape-ball" />
-      <div className="shape shape-pill">A—04</div>
-      <p>
-        Small ideas,
-        <br />
-        <em>made tangible.</em>
-      </p>
-    </div>
-  );
-}

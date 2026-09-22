@@ -34,6 +34,28 @@ Focus: AI · Automation · Payments.
 Public links:
 - Watch demo: https://www.loom.com/share/b30c16086f2848efa91a0098af48d74c
 
+# Experiments
+
+## Sortify
+
+Reads the musical traits of your saved songs to spot patterns and draft playlists. You review, tweak, and approve every one before it reaches Spotify.
+
+Focus: Machine Learning · Automation · Spotify API.
+
+Public links:
+- Try Sortify: https://sortifi.vercel.app/
+- GitHub: https://github.com/animesh-algorithm/Sortify/
+
+## Crate
+
+Turns an Instagram export into a private, searchable library. It finds related captions, tags, and notes on your device, then suggests collections you can shape yourself.
+
+Focus: On-device AI · Semantic Search · Privacy.
+
+Public links:
+- Try Crate: https://crate-nu-lilac.vercel.app/
+- GitHub: https://github.com/animesh-algorithm/crate
+
 # Public website experience summary
 
 ## Now — Chief of Staff · Gradly

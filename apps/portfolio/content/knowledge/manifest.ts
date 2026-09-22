@@ -27,7 +27,7 @@ export const knowledgeManifest: readonly KnowledgeSource[] = [
     title: "Selected work",
     category: "work",
     sourceUrl: "/#work",
-    updatedAt: "2026-09-16",
+    updatedAt: "2026-09-22",
     visibility: "public",
     file: "selected-work.md",
   },

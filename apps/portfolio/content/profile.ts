@@ -15,6 +15,19 @@ export interface ProfileProject {
   }[];
 }
 
+export interface ProfileExperiment {
+  id: "sortify" | "crate";
+  name: string;
+  title: string;
+  description: string;
+  meta: string;
+  links: readonly {
+    href: string;
+    label: string;
+    icon: "demo" | "github";
+  }[];
+}
+
 interface BiographySection {
   paragraphs: readonly string[];
   beat?: string;
@@ -151,6 +164,49 @@ export const projects = [
     ],
   },
 ] as const satisfies readonly ProfileProject[];
+
+export const experiments = [
+  {
+    id: "sortify",
+    name: "Sortify",
+    title: "Rediscover the songs you already love.",
+    description:
+      "Reads the musical traits of your saved songs to spot patterns and draft playlists. You review, tweak, and approve every one before it reaches Spotify.",
+    meta: "Machine Learning · Automation · Spotify API",
+    links: [
+      {
+        href: "https://sortifi.vercel.app/",
+        label: "Try Sortify",
+        icon: "demo",
+      },
+      {
+        href: "https://github.com/animesh-algorithm/Sortify/",
+        label: "GitHub",
+        icon: "github",
+      },
+    ],
+  },
+  {
+    id: "crate",
+    name: "Crate",
+    title: "Find what you saved for a reason.",
+    description:
+      "Turns an Instagram export into a private, searchable library. It finds related captions, tags, and notes on your device, then suggests collections you can shape yourself.",
+    meta: "On-device AI · Semantic Search · Product",
+    links: [
+      {
+        href: "https://crate-nu-lilac.vercel.app/",
+        label: "Try Crate",
+        icon: "demo",
+      },
+      {
+        href: "https://github.com/animesh-algorithm/crate",
+        label: "GitHub",
+        icon: "github",
+      },
+    ],
+  },
+] as const satisfies readonly ProfileExperiment[];
 
 export const experience: readonly ProfileExperience[] = [
   {

@@ -4,13 +4,13 @@ export const events = ["$pageview", "project_link_clicked", "contact_link_clicke
 export type AnalyticsEvent = typeof events[number];
 export interface EventProperties {
   placement?: "header" | "hero" | "work" | "about" | "footer" | "widget" | "drawer" | "page" | "inquiry" | "booking" | "availability";
-  project?: "visafile" | "concierge" | "gradly-links" | "claims";
+  project?: "visafile" | "concierge" | "gradly-links" | "claims" | "sortify" | "crate";
   category?: "demo" | "source" | "email" | "social" | "calendar" | "resume";
   outcome?: "accepted" | "rejected" | "network" | "completed" | "failed";
 }
 const allowed = {
   placement: ["header", "hero", "work", "about", "footer", "widget", "drawer", "page", "inquiry", "booking", "availability"],
-  project: ["visafile", "concierge", "gradly-links", "claims"],
+  project: ["visafile", "concierge", "gradly-links", "claims", "sortify", "crate"],
   category: ["demo", "source", "email", "social", "calendar", "resume"],
   outcome: ["accepted", "rejected", "network", "completed", "failed"],
 };

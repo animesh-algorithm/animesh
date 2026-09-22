@@ -1,4 +1,4 @@
-import { experience, profile, projects } from "../content/profile";
+import { experience, experiments, profile, projects } from "../content/profile";
 
 export function renderProfileKnowledge() {
   const biography = profile.biography
@@ -44,9 +44,25 @@ Focus: ${project.meta}.${
         `## ${item.period} — ${item.role} · ${item.company}\n\n${item.headline}\n\n${item.paragraphs.join("\n\n")}${item.closing ? `\n\n${item.closing}` : ""}`,
     )
     .join("\n");
+  const experimentWork = experiments
+    .map(
+      (experiment) => `## ${experiment.name}
+
+${experiment.description}
+
+Focus: ${experiment.meta}.
+
+Public links:
+${experiment.links.map((link) => `- ${link.label}: ${link.href}`).join("\n")}`,
+    )
+    .join("\n\n");
   return `# Selected work
 
 ${work}
+
+# Experiments
+
+${experimentWork}
 
 # Public website experience summary
 

@@ -44,6 +44,8 @@ describe("optional analytics privacy boundary", () => {
   it("drops arbitrary properties and strips sensitive URL components from events and replay", async () => {
     const adapter = await import("../lib/analytics");
     expect(adapter.allowProperties({ outcome: "failed", ...{ email: "synthetic-secret", placement: "synthetic-secret" } } as never)).toEqual({ outcome: "failed" });
+    expect(adapter.allowProperties({ project: "sortify", placement: "work", category: "demo" })).toEqual({ project: "sortify", placement: "work", category: "demo" });
+    expect(adapter.allowProperties({ project: "crate", placement: "work", category: "source" })).toEqual({ project: "crate", placement: "work", category: "source" });
     expect(adapter.redactReplay({ href: "https://example.test/ask?synthetic-secret#secret", nested: [{ name: "https://referrer.test/?secret" }] })).toEqual({ href: "https://example.test/ask", nested: [{ name: "https://referrer.test/" }] });
     await adapter.initializeAnalytics();
     const config = sdk.init.mock.calls[0][1];

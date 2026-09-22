@@ -8,11 +8,11 @@ import {
   Spark,
 } from "@/components/icons";
 import { AskAnimeshLink } from "@/components/ask-animesh";
+import { ExperimentsShelf } from "@/components/experiments-shelf";
 import { ProjectShowcase } from "@/components/project-showcase";
 import {
   ClaimsVisual,
   DataVisual,
-  // PlaygroundVisual,
   StudioVisual,
   VisaFlowVisual,
 } from "@/components/project-visuals";
@@ -20,6 +20,7 @@ import { SectionHeading } from "@/components/section-heading";
 import { SiteHeader } from "@/components/site-header";
 import {
   experience,
+  experiments,
   notes,
   profile,
   projects,
@@ -184,25 +185,7 @@ export default async function Home() {
             >
               <ClaimsVisual />
             </ProjectShowcase>
-
-            {/*
-            <ProjectShowcase
-              label="Project 04 — Experiments"
-              linkLabel="Experiments"
-              title={
-                <>
-                  Things I built because
-                  <br />
-                  “someone should make this.”
-                </>
-              }
-              description="Small tools, automations, experiments, and occasionally questionable ideas that made it far enough to become software."
-              meta="Ongoing · Playground"
-              tone="yellow"
-            >
-              <PlaygroundVisual />
-            </ProjectShowcase>
-            */}
+            <ExperimentsShelf experiments={experiments} />
           </div>
           <div className="work-ask-cta">
             <p>You’ve seen the work. Ask for the story.</p>
