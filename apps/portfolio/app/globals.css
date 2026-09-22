@@ -240,6 +240,10 @@ button {
 .header-contact:hover svg {
   transform: translate(3px, -3px);
 }
+.mobile-menu-toggle,
+.mobile-menu {
+  display: none;
+}
 
 .hero {
   min-height: calc(100svh - 104px);
@@ -380,6 +384,10 @@ button {
   background: var(--ink);
   transform: translateY(4px);
 }
+.circle-link svg {
+  width: 22px;
+  height: 22px;
+}
 .hero-spark {
   position: absolute;
   color: var(--violet);
@@ -415,8 +423,11 @@ button {
   transform: rotate(3deg) translateY(-5px);
 }
 .hero-sticker b {
-  font-size: 25px;
   line-height: 1.1;
+}
+.hero-sticker b svg {
+  width: 25px;
+  height: 25px;
 }
 @keyframes float {
   50% {
@@ -715,9 +726,13 @@ button {
   background: var(--ink);
   font-size: 8px;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
 }
-.mock-button span {
-  margin-left: 16px;
+.mock-button svg {
+  width: 11px;
+  height: 11px;
 }
 .helper-note {
   position: absolute;
@@ -735,8 +750,10 @@ button {
   transform: rotate(3deg);
   font-size: 8px;
 }
-.helper-note i {
-  font-style: normal;
+.helper-note svg {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
   color: var(--yellow);
 }
 
@@ -935,6 +952,10 @@ button {
   place-items: center;
   font-size: 11px;
   opacity: 0.48;
+}
+.links-connector svg {
+  width: 12px;
+  height: 12px;
 }
 .links-result {
   border-color: rgba(47, 125, 95, 0.34);
@@ -1166,6 +1187,10 @@ button {
   background: var(--coral);
   font-weight: 900;
 }
+.claims-upload-icon svg {
+  width: 15px;
+  height: 15px;
+}
 .claims-upload div {
   display: grid;
   gap: 2px;
@@ -1207,8 +1232,10 @@ button {
   font-size: 9px;
   font-weight: 800;
 }
-.claims-submit span {
-  font-size: 15px;
+.claims-submit svg {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
 }
 .claims-journey {
   padding: clamp(1.8rem, 3.5vw, 3rem);
@@ -1248,6 +1275,10 @@ button {
   font-size: 9px;
   font-style: normal;
   font-weight: 900;
+}
+.claims-journey li > i svg {
+  width: 12px;
+  height: 12px;
 }
 .claims-journey li.is-complete > i {
   color: var(--white);
@@ -1294,6 +1325,10 @@ button {
   color: var(--white);
   background: var(--green);
   font-weight: 900;
+}
+.claims-payout-check svg {
+  width: 15px;
+  height: 15px;
 }
 .claims-payout > div {
   min-width: 0;
@@ -1529,10 +1564,10 @@ button {
   line-height: 1.6;
 }
 .experience-mark {
-  width: min(100%, 1050px);
+  width: 32px;
+  height: 32px;
   margin: 28px 0 0 auto;
   color: var(--violet-deep);
-  font-size: 32px;
 }
 
 .now-section {
@@ -1622,11 +1657,12 @@ button {
 .now-orbit::after {
   inset: 190px;
 }
-.now-orbit span {
+.now-orbit > svg {
   position: absolute;
   left: 47%;
   top: 47%;
-  font-size: 40px;
+  width: 40px;
+  height: 40px;
   color: var(--yellow);
 }
 .now-orbit i {
@@ -1808,7 +1844,15 @@ button {
   justify-self: end;
 }
 .consulting-link span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   color: white;
+}
+.consulting-link svg {
+  width: 12px;
+  height: 12px;
+  flex: 0 0 auto;
 }
 
 @media (max-width: 900px) {
@@ -1889,12 +1933,6 @@ button {
   .site-header,
   .site-header-inner {
     height: 82px;
-  }
-  .site-header-inner {
-    grid-template-columns: 1fr auto;
-  }
-  .main-nav {
-    display: none;
   }
   .monogram {
     width: 39px;
@@ -2887,7 +2925,108 @@ body.dialog-open {
 
 @media (max-width: 900px) {
   .header-actions {
-    gap: 14px;
+    gap: 0;
+  }
+  .site-header-inner {
+    grid-template-columns: 1fr auto;
+    position: relative;
+  }
+  .main-nav,
+  .header-actions .header-ask,
+  .header-actions .header-contact {
+    display: none;
+  }
+  .mobile-menu-toggle {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    display: grid;
+    place-content: center;
+    gap: 6px;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+  }
+  .mobile-menu-toggle span {
+    width: 17px;
+    height: 1.5px;
+    background: currentColor;
+    transition: transform 180ms var(--ease-out);
+  }
+  .mobile-menu-toggle[aria-expanded="true"] span:first-child {
+    transform: translateY(3.75px) rotate(45deg);
+  }
+  .mobile-menu-toggle[aria-expanded="true"] span:last-child {
+    transform: translateY(-3.75px) rotate(-45deg);
+  }
+  .mobile-menu {
+    position: absolute;
+    z-index: 5;
+    top: 70px;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    border: 1.5px solid var(--ink);
+    border-radius: var(--radius-md);
+    background: var(--paper);
+    box-shadow: var(--shadow-sm);
+    pointer-events: none;
+    transition:
+      opacity 180ms var(--ease-out),
+      transform 180ms var(--ease-out),
+      visibility 180ms;
+  }
+  .mobile-menu[data-open="true"] {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+  .mobile-menu nav {
+    display: grid;
+  }
+  .mobile-menu nav a {
+    min-height: 48px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+    font-size: 1.05rem;
+    font-weight: 750;
+  }
+  .mobile-menu-actions {
+    padding-top: 14px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .mobile-menu-actions a {
+    min-height: 44px;
+    padding: 10px 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 1.5px solid var(--ink);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    text-align: center;
+  }
+  .mobile-menu-actions a:first-child {
+    color: var(--white);
+    background: var(--ink);
+  }
+  .mobile-menu-actions svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
   }
   .footer-ask-cta {
     align-items: flex-start;

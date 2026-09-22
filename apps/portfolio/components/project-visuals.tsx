@@ -1,3 +1,5 @@
+import { ArrowDown, ArrowRight, ArrowUp, Check, Spark } from "./icons";
+
 export function VisaFlowVisual() {
   return (
     <div
@@ -33,11 +35,11 @@ export function VisaFlowVisual() {
             <span />
           </div>
           <div className="mock-button">
-            Continue <span>→</span>
+            Continue <ArrowRight />
           </div>
         </div>
         <div className="helper-note">
-          <i>✦</i>
+          <Spark />
           <span>Everything looks consistent.</span>
         </div>
       </div>
@@ -55,7 +57,7 @@ export function StudioVisual() {
       <div className="studio-orbit orbit-one" />
       <div className="studio-orbit orbit-two" />
       <div className="studio-center">
-        <span className="studio-spark">✦</span>
+        <Spark className="studio-spark" />
         <strong>
           Context in,
           <br />
@@ -96,7 +98,7 @@ export function DataVisual() {
           <span>https://</span>
           <b>Paste a long URL…</b>
         </div>
-        <span className="links-connector">↓</span>
+        <span className="links-connector"><ArrowDown /></span>
         <div className="links-step links-result">
           <small>BRANDED LINK</small>
           <span>
@@ -146,7 +148,7 @@ export function ClaimsVisual() {
             <p>We’ll take it from here.</p>
 
             <div className="claims-upload">
-              <span className="claims-upload-icon">↑</span>
+              <span className="claims-upload-icon"><ArrowUp /></span>
               <div>
                 <strong>Medical bill</strong>
                 <small>PDF uploaded</small>
@@ -158,7 +160,7 @@ export function ClaimsVisual() {
               <strong>Added securely</strong>
             </div>
             <div className="claims-submit">
-              Submit for review <span>→</span>
+              Submit for review <ArrowRight />
             </div>
           </section>
 
@@ -166,14 +168,14 @@ export function ClaimsVisual() {
             <span className="claims-eyebrow">WORKING IN THE BACKGROUND</span>
             <ol>
               <li className="is-complete">
-                <i>✓</i>
+                <i><Check /></i>
                 <span>
                   <b>Bill analyzed</b>
                   <small>Details captured</small>
                 </span>
               </li>
               <li className="is-complete">
-                <i>✓</i>
+                <i><Check /></i>
                 <span>
                   <b>Eligibility checked</b>
                   <small>Reimbursement approved</small>
@@ -192,7 +194,7 @@ export function ClaimsVisual() {
       </div>
 
       <div className="claims-payout" aria-hidden="true">
-        <span className="claims-payout-check">✓</span>
+        <span className="claims-payout-check"><Check /></span>
         <div>
           <small>PAYMENT INITIATED</small>
           <strong>On the way.</strong>

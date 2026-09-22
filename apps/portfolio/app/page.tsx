@@ -1,5 +1,5 @@
 import { ScrollMotion } from "@/components/scroll-motion";
-import { ArrowUpRight, Asterisk, ChatBubble, Spark } from "@/components/icons";
+import { ArrowDown, ArrowDownRight, ArrowUpRight, Asterisk, ChatBubble, Spark } from "@/components/icons";
 import { AskAnimeshLink } from "@/components/ask-animesh";
 import { ProjectShowcase } from "@/components/project-showcase";
 import {
@@ -71,13 +71,13 @@ export default async function Home() {
             href="#work"
             aria-label="See selected work"
           >
-            ↓
+            <ArrowDown />
           </a>
         </div>
         <Spark className="hero-spark" />
         <div className="hero-sticker">
           <span>BUILD</span>
-          <b>↘</b>
+          <b><ArrowDownRight /></b>
           <span>SHIP</span>
         </div>
       </section>
@@ -222,7 +222,7 @@ export default async function Home() {
           <aside className="about-side">
             <div>
               <span>BASED IN</span>
-              <strong>{profile.location} ↗</strong>
+              <strong>{profile.location}</strong>
             </div>
             <div>
               <span>WORKS ACROSS</span>
@@ -258,9 +258,7 @@ export default async function Home() {
               </div>
             ))}
           </div>
-          <div className="experience-mark" aria-hidden="true">
-            ✦
-          </div>
+          <Spark className="experience-mark" />
         </div>
       </section>
 
@@ -270,7 +268,7 @@ export default async function Home() {
       >
         <div className="now-card shell">
           <div className="now-orbit">
-            <span>✦</span>
+            <Spark />
             <i />
             <i />
           </div>
@@ -379,7 +377,7 @@ export default async function Home() {
               </a>
             </div>
             <a className="consulting-link" href="https://hire.animesh.cc">
-              Looking for professional project help? <span>Work with me ↗</span>
+              Looking for professional project help? <span>Work with me <ArrowUpRight /></span>
             </a>
           </div>
         </div>

@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { ArrowUpRight, ChatBubble } from "./icons";
 import { AskAnimeshLink } from "./ask-animesh";
 
@@ -9,6 +12,21 @@ const navItems = [
 ];
 
 export function SiteHeader() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [menuOpen]);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <header className="site-header">
       <div className="site-header-inner shell">
@@ -29,6 +47,31 @@ export function SiteHeader() {
           <a className="header-contact" data-analytics-event="contact_link_clicked" data-analytics-placement="header" href="#contact">
             Say hello <ArrowUpRight />
           </a>
+          <button
+            className="mobile-menu-toggle"
+            type="button"
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span />
+            <span />
+          </button>
+        </div>
+        <div className="mobile-menu" data-open={menuOpen ? "true" : "false"} id="mobile-navigation">
+          <nav aria-label="Mobile navigation">
+            {navItems.map((item) => (
+              <a href={item.href} key={item.href} onClick={closeMenu}>{item.label}</a>
+            ))}
+            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" onClick={closeMenu}>Résumé</a>
+          </nav>
+          <div className="mobile-menu-actions">
+            <AskAnimeshLink className="mobile-menu-ask" onClick={closeMenu}>
+              <ChatBubble /> Ask Animesh
+            </AskAnimeshLink>
+            <a href="#contact" onClick={closeMenu}>Say hello <ArrowUpRight /></a>
+          </div>
         </div>
       </div>
     </header>

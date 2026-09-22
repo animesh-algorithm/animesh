@@ -1,0 +1,13 @@
+- Remove all the emojies showing in the mobile version and any vibecoded slop
+- Make the navbar responsive
+- Plan and redraw the illustrations
+- Bring back the experiments and have it redirect to the latest projects like Sortify and Crate projects
+- Make the you've seen the work component to float
+- Re-write the content and ensure abstraction in the Ask Animesh feature
+- Setup notification for Ask Animesh activity
+- Write content for the blog/notes section
+- Link blog & hire
+- The hero section doesn't have my name on it
+- Ask AI to review/critique the content and re-write
+- Remove MP and just keep India
+- See if posthog is implemented correctly in production

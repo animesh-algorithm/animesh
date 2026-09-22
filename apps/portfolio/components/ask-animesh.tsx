@@ -2,7 +2,7 @@
 
 import { interaction, track } from "@/lib/analytics";
 import type { ChatMessage, ChatSource, ConsentMode } from "@/lib/chat/types";
-import { ChatBubble, Spark } from "@/components/icons";
+import { ArrowUpRight, ChatBubble, Spark } from "@/components/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -122,9 +122,11 @@ export function AskAnimeshProvider({ children }: { children: ReactNode }) {
 export function AskAnimeshLink({
   children,
   className,
+  onClick,
 }: {
   children: ReactNode;
   className?: string;
+  onClick?: () => void;
 }) {
   const context = useContext(AskContext);
   return (
@@ -132,6 +134,7 @@ export function AskAnimeshLink({
       className={className}
       href="/ask"
       onClick={(event) => {
+        onClick?.();
         if (!context || event.metaKey || event.ctrlKey || event.shiftKey) return;
         event.preventDefault();
         context.open();
@@ -451,7 +454,7 @@ export function ChatExperience({
                         target={source.href.endsWith(".pdf") ? "_blank" : undefined}
                         rel={source.href.endsWith(".pdf") ? "noopener noreferrer" : undefined}
                       >
-                        {source.label} ↗
+                        {source.label} <ArrowUpRight />
                       </a>
                     ))}
                   </div>
@@ -476,7 +479,7 @@ export function ChatExperience({
             <div>
               <span>{input.length}/800</span>
               <button type="submit" disabled={!input.trim() || isStreaming}>
-                {isStreaming ? "Answering…" : "Send ↗"}
+                {isStreaming ? "Answering…" : <>Send <ArrowUpRight /></>}
               </button>
             </div>
           </form>
@@ -497,7 +500,7 @@ export function ChatExperience({
       )}
 
       <footer className="ask-panel-footer">
-        {variant === "drawer" ? <Link href="/ask">Open full page ↗</Link> : null}
+        {variant === "drawer" ? <Link href="/ask">Open full page <ArrowUpRight /></Link> : null}
         <span>Answers are limited to approved public sources.</span>
       </footer>
       <p className="sr-only" aria-live="polite" aria-atomic="true">
