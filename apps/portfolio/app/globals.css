@@ -1514,12 +1514,11 @@ button {
   border-top: 1px solid var(--line);
 }
 .experience-row {
-  min-height: 164px;
   display: grid;
-  grid-template-columns: 1.15fr 3.2fr 4.65fr;
+  grid-template-columns: 1.15fr 2.8fr 5.05fr;
   gap: clamp(20px, 3vw, 44px);
   align-items: start;
-  padding-block: 34px;
+  padding-block: clamp(36px, 4.2vw, 68px);
   border-bottom: 1px solid var(--line);
   transition:
     padding 260ms var(--ease-out),
@@ -1530,8 +1529,7 @@ button {
   background: rgba(255, 253, 248, 0.3);
 }
 .experience-row span,
-.experience-role p,
-.experience-description {
+.experience-role p {
   font-size: 12px;
   color: var(--ink-soft);
 }
@@ -1560,8 +1558,38 @@ button {
   font-weight: 700;
 }
 .experience-description {
-  max-width: 430px;
-  line-height: 1.6;
+  max-width: 560px;
+  color: var(--ink-soft);
+}
+.experience-headline {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 2.25vw, 2.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+.experience-copy {
+  display: grid;
+  gap: 14px;
+  margin-top: 26px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.experience-copy p {
+  margin: 0;
+}
+.experience-copy strong {
+  color: var(--ink);
+  font-weight: 800;
+}
+.experience-closing {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 2vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
 }
 .experience-mark {
   width: 32px;
@@ -2175,6 +2203,9 @@ button {
   }
   .experience-description {
     margin-top: 20px;
+  }
+  .experience-copy {
+    margin-top: 18px;
     font-size: 13px;
   }
   .experience-mark {

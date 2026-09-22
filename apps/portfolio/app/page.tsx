@@ -28,6 +28,11 @@ function randomOption<const Options extends readonly string[]>(
   return options[Math.floor(Math.random() * options.length)];
 }
 
+function highlightExperienceCopy(paragraph: string, emphasis: readonly string[]) {
+  const escaped = emphasis.map((phrase) => phrase.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  return paragraph.split(new RegExp(`(${escaped.join("|")})`, "g"));
+}
+
 export default async function Home() {
   await connection();
 
@@ -247,14 +252,30 @@ export default async function Home() {
             title="I kept picking up problems until my job title had to catch up."
           />
           <div className="experience-list">
-            {experience.map(({ period, role, company, description }) => (
+            {experience.map(({ period, role, company, headline, paragraphs, emphasis, closing }) => (
               <div className="experience-row" key={period}>
                 <span className="experience-period">{period}</span>
                 <div className="experience-role">
                   <h3>{role}</h3>
                   <p>{company}</p>
                 </div>
-                <p className="experience-description">{description}</p>
+                <div className="experience-description">
+                  <p className="experience-headline">{headline}</p>
+                  <div className="experience-copy">
+                    {paragraphs.map((paragraph) => {
+                      const parts = highlightExperienceCopy(paragraph, emphasis);
+
+                      return (
+                        <p key={paragraph}>
+                          {parts.map((part, index) =>
+                            emphasis.includes(part) ? <strong key={`${part}-${index}`}>{part}</strong> : part,
+                          )}
+                        </p>
+                      );
+                    })}
+                    {closing ? <p className="experience-closing">{closing}</p> : null}
+                  </div>
+                </div>
               </div>
             ))}
           </div>

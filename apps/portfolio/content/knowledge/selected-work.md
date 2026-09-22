@@ -36,6 +36,32 @@ Public links:
 
 # Public website experience summary
 
-- Now: Chief of Staff at Gradly. Turns out if you keep solving problems outside your job description, eventually they change the job description.
-- 2023 — 25: Software Engineer → Product Lead at Gradly. Built products, internal systems, AI, claims infrastructure, integrations, and eventually the engineering team itself.
-- 2021 — 23: Founding Engineer at Gradly. Started as a contractor writing scripts to kill manual work. Kept going until there wasn’t much of the company I hadn’t touched.
+## Now — Chief of Staff · Gradly
+
+I kept picking up problems until my job title had to catch up.
+
+Today, the problems are bigger than the code. I work across company strategy, product, engineering, partnerships, operations, and whatever else refuses to fit neatly into a department.
+
+I lead a 10-person cross-functional team while staying close enough to the product to know where the bodies are buried.
+## 2023 — 25 — Software Engineer → Product Lead · Gradly
+
+I joined to build software. Somewhere along the way, I started building the team too.
+
+I owned products from problem to production: customer-facing experiences, internal tools, AI systems, claims and payments infrastructure, mobile apps, and carrier integrations.
+
+Engineering went from a one-person operation to a 5–6 person team. I interviewed 30+ people, hired 8, built EDI infrastructure for 2 insurance partners, and integrated 5 carrier partners.
+
+Turns out, shipping through a team is a very different sport from shipping alone.
+## 2021 — 23 — Founding Engineer · Gradly
+
+The job was supposed to be a few scripts. I got carried away.
+
+I came in as the only engineer, automating manual work that shouldn't have been manual in the first place.
+
+Then came the backend. Insurance integrations. Internal systems. An early AI prototype. One problem kept revealing another.
+
+What started with a few scripts became part of the foundation for a platform that would go on to serve 10,000+ members across 25+ U.S. universities.
+
+Eventually, I wasn't automating around the business anymore.
+
+I was building the machinery it ran on.

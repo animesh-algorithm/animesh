@@ -41,7 +41,7 @@ Focus: ${project.meta}.${
   const roles = experience
     .map(
       (item) =>
-        `- ${item.period}: ${item.role} at ${item.company}. ${item.description}`,
+        `## ${item.period} — ${item.role} · ${item.company}\n\n${item.headline}\n\n${item.paragraphs.join("\n\n")}${item.closing ? `\n\n${item.closing}` : ""}`,
     )
     .join("\n");
   return `# Selected work
