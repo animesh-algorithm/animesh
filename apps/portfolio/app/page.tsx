@@ -360,8 +360,14 @@ export default async function Home() {
             aside="Things I’ve learned from building software, breaking software, fixing operations, talking to users, and occasionally doing things the hard way."
           />
           <div className="notes-list">
-            {notes.map(({ title, description, readingTime }, index) => (
-              <a className="note-row" href="#contact" key={title}>
+            {notes.map(({ title, description, readingTime, href }, index) => (
+              <a
+                className="note-row"
+                href={href}
+                key={title}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <span className="note-index">0{index + 1}</span>
                 <h3>{title}</h3>
                 <p>{description}</p>

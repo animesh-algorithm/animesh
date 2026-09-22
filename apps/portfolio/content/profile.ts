@@ -250,18 +250,21 @@ export const notes = [
     description:
       "“I don’t have enough context” is useful for about five minutes.",
     readingTime: "4 min",
+    href: "https://blog.animesh.cc/context-is-something-you-acquire",
   },
   {
     title: "Prototype before architecture.",
     description:
       "Walk ten steps and check the map before walking a kilometre in the wrong direction.",
     readingTime: "5 min",
+    href: "https://blog.animesh.cc/prototype-before-architecture",
   },
   {
     title: "I don’t automate tasks. I automate roles.",
     description:
       "The interesting part of automation starts when you stop thinking in individual tasks.",
     readingTime: "6 min",
+    href: "https://blog.animesh.cc/i-dont-automate-tasks-i-automate-roles",
   },
 ] as const;
 
