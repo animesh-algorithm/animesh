@@ -17,6 +17,7 @@ const validRequest = {
   sessionToken: "b".repeat(43),
   consent: "no_store",
   consentVersion: "v1",
+  contact: { name: "Ada Visitor", email: "ada@example.com" },
   messages: [{ role: "user", text: "What did you build?" }],
 };
 

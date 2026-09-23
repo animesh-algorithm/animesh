@@ -1,7 +1,7 @@
-import type { ConsentMode } from "./types";
+import type { ConsentMode, VisitorContact } from "./types";
 
-export interface AskActivity {
-  question: string;
+export interface AskActivity extends VisitorContact {
+  question?: string;
   consent: ConsentMode;
   submittedAt: string;
 }
@@ -40,17 +40,20 @@ export function formatAskActivity(activity: AskActivity) {
     : "Chat history not saved";
 
   return {
-    subject: "New Ask Animesh question",
+    subject: activity.question === undefined ? "New Ask Animesh visitor" : "New Ask Animesh question",
     text: [
       `Submitted: ${activity.submittedAt}`,
       `Chat setting: ${storageLabel}`,
-      "Question:",
-      activity.question,
+      `Name: ${activity.name}`,
+      `Email: ${activity.email}`,
+      ...(activity.question === undefined ? [] : ["Question:", activity.question]),
     ].join("\n\n"),
     html: [
       `<p><strong>Submitted</strong><br>${escapeHtml(activity.submittedAt)}</p>`,
       `<p><strong>Chat setting</strong><br>${escapeHtml(storageLabel)}</p>`,
-      `<p><strong>Question</strong><br>${escapeHtml(activity.question).replaceAll("\n", "<br>")}</p>`,
+      `<p><strong>Name</strong><br>${escapeHtml(activity.name)}</p>`,
+      `<p><strong>Email</strong><br>${escapeHtml(activity.email)}</p>`,
+      ...(activity.question === undefined ? [] : [`<p><strong>Question</strong><br>${escapeHtml(activity.question).replaceAll("\n", "<br>")}</p>`]),
     ].join(""),
   };
 }
@@ -70,6 +73,7 @@ export async function sendAskActivityEmail(
     body: JSON.stringify({
       from: configuration.from,
       to: [configuration.to],
+      reply_to: activity.email,
       subject: message.subject,
       text: message.text,
       html: message.html,

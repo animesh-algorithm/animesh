@@ -1,4 +1,17 @@
 import { z } from "zod";
+
+export const visitorContactSchema = z.object({
+  name: z.string().trim().min(1).max(100),
+  email: z.string().trim().toLowerCase().email().max(254),
+});
+
+export const contactRequestSchema = z.object({
+  sessionId: z.string().regex(/^[A-Za-z0-9_-]{20,100}$/),
+  sessionToken: z.string().regex(/^[A-Za-z0-9_-]{32,160}$/),
+  consent: z.enum(["persist_30d", "no_store"]),
+  consentVersion: z.string().regex(/^v\d+(?:\.\d+)?$/).max(16),
+  contact: visitorContactSchema,
+});
 import {
   ASSISTANT_MESSAGE_MAX_LENGTH,
   HISTORY_MAX_CHARACTERS,
@@ -22,6 +35,7 @@ export const chatRequestSchema = z
     sessionToken: z.string().regex(/^[A-Za-z0-9_-]{32,160}$/),
     consent: z.enum(["persist_30d", "no_store"]),
     consentVersion: z.string().regex(/^v\d+(?:\.\d+)?$/).max(16),
+    contact: visitorContactSchema,
     messages: z.array(messageSchema).min(1).max(16),
   })
   .superRefine((value, context) => {

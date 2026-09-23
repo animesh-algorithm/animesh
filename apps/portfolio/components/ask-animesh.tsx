@@ -5,7 +5,8 @@ import {
   sanitizeClientHistory,
   type ClientHistoryMessage,
 } from "@/lib/chat/client-history";
-import type { ChatSource, ConsentMode } from "@/lib/chat/types";
+import type { ChatSource, ConsentMode, VisitorContact } from "@/lib/chat/types";
+import { visitorContactSchema } from "@/lib/chat/validation";
 import { ArrowUpRight, ChatBubble, Spark } from "@/components/icons";
 import { AskResponse } from "@/components/ask-response";
 import Link from "next/link";
@@ -37,6 +38,7 @@ type UiMessage = ClientHistoryMessage;
 interface SavedChat {
   identity: ReturnType<typeof newIdentity>;
   messages: unknown;
+  contact?: unknown;
 }
 
 interface AskContextValue {
@@ -211,11 +213,17 @@ export function ChatExperience({
   }, [variant]);
   const dialogRef = useRef<HTMLElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const contactNameRef = useRef<HTMLInputElement>(null);
   const [consent, setConsent] = useState<ConsentMode | null>(null);
   const [identity, setIdentity] = useState<ReturnType<
     typeof newIdentity
   > | null>(null);
   const [messages, setMessages] = useState<UiMessage[]>([]);
+  const [contact, setContact] = useState<VisitorContact | null>(null);
+  const [contactName, setContactName] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactError, setContactError] = useState<string | null>(null);
+  const [isSubmittingContact, setIsSubmittingContact] = useState(false);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -241,6 +249,8 @@ export function ChatExperience({
       }
       setIdentity(parsed.identity);
       setMessages(sanitizeClientHistory(parsed.messages));
+      const savedContact = visitorContactSchema.safeParse(parsed.contact);
+      setContact(savedContact.success ? savedContact.data : null);
       setConsent(mode);
       return true;
     } catch {
@@ -277,7 +287,7 @@ export function ChatExperience({
       }
       if (event.key !== "Tab") return;
       const focusable = panel.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
       );
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
@@ -298,8 +308,9 @@ export function ChatExperience({
   }, [onClose, variant]);
 
   useEffect(() => {
-    if (consent) inputRef.current?.focus();
-  }, [consent]);
+    if (consent && contact) inputRef.current?.focus();
+    else if (consent) contactNameRef.current?.focus();
+  }, [consent, contact]);
 
   const chooseConsent = (mode: ConsentMode) => {
     try {
@@ -309,6 +320,7 @@ export function ChatExperience({
     }
     setIdentity(newIdentity());
     setMessages([]);
+    setContact(null);
     setConsent(mode);
   };
 
@@ -321,16 +333,48 @@ export function ChatExperience({
         JSON.stringify({
           identity,
           messages: sanitizeClientHistory(messages),
+          contact,
         }),
       );
     } catch {
       // Browser storage is optional; keep the in-memory conversation working.
     }
-  }, [consent, identity, messages]);
+  }, [consent, identity, messages, contact]);
+
+  const submitContact = async (event: FormEvent) => {
+    event.preventDefault();
+    if (!consent || !identity || isSubmittingContact) return;
+    const parsed = visitorContactSchema.safeParse({ name: contactName, email: contactEmail });
+    if (!parsed.success) {
+      setContactError("Enter your name and a valid email address.");
+      return;
+    }
+    setContactError(null);
+    setIsSubmittingContact(true);
+    try {
+      const response = await fetch("/api/chat/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...identity, consent, consentVersion: CONSENT_VERSION, contact: parsed.data }),
+      });
+      if (!response.ok) {
+        const result = await response.json() as { error?: string };
+        throw new Error(result.error ?? "Your details could not be sent. Try again.");
+      }
+      setContact(parsed.data);
+      setContactName("");
+      setContactEmail("");
+      setAnnouncement("Details received. You can ask a question.");
+    } catch (caught) {
+      setContactError(caught instanceof Error ? caught.message : "Your details could not be sent. Try again.");
+    } finally {
+      setIsSubmittingContact(false);
+    }
+  };
 
   const submit = async (question = input) => {
     const text = question.trim();
-    if (!text || !consent || !identity || isStreaming) return;
+    if (!text || !consent || !identity || !contact || isStreaming) return;
     const outcome = interaction("ask_question_submitted", {
       placement: variant,
     });
@@ -358,6 +402,7 @@ export function ChatExperience({
           ...identity,
           consent,
           consentVersion: CONSENT_VERSION,
+          contact,
           messages: sanitizeClientHistory(nextMessages).map(
             ({ role, text: messageText }) => ({
               role,
@@ -438,8 +483,9 @@ export function ChatExperience({
       }
       localStorage.removeItem(storageKey("persist_30d"));
       setMessages([]);
+      setContact(null);
       setIdentity(newIdentity());
-      setAnnouncement("Saved chat deleted.");
+      setAnnouncement("Saved chat and browser contact details deleted.");
     } catch (caught) {
       setError(caught instanceof Error ? caught.message : "Delete failed.");
     }
@@ -506,6 +552,23 @@ export function ChatExperience({
             </button>
           </div>
         </div>
+      ) : !contact ? (
+        <form className="ask-consent ask-contact" onSubmit={(event) => void submitContact(event)} noValidate>
+          <span className="ask-consent-mark" aria-hidden="true">A.</span>
+          <h2>Before we chat.</h2>
+          <p>Share your name and email. I’ll receive these details now and with each question you ask.</p>
+          <div className="ask-contact-fields">
+            <label htmlFor={`${titleId}-name`}>Your name</label>
+            <input id={`${titleId}-name`} ref={contactNameRef} type="text" autoComplete="name" required maxLength={100} value={contactName} onChange={(event) => setContactName(event.target.value)} disabled={isSubmittingContact} />
+            <label htmlFor={`${titleId}-email`}>Your email</label>
+            <input id={`${titleId}-email`} type="email" autoComplete="email" required maxLength={254} value={contactEmail} onChange={(event) => setContactEmail(event.target.value)} disabled={isSubmittingContact} />
+          </div>
+          {contactError ? <p className="ask-error" role="alert">{contactError}</p> : null}
+          <div className="ask-consent-actions">
+            <button type="submit" disabled={isSubmittingContact}>{isSubmittingContact ? "Sending…" : "Continue"}</button>
+          </div>
+          <small>Your details and questions may stay in my inbox and Resend. <Link href="/privacy">Privacy details</Link></small>
+        </form>
       ) : (
         <div className="ask-conversation">
           <div className="ask-messages" aria-label="Conversation">

@@ -9,6 +9,7 @@ import type { ChatRequest, SseEvent } from "./types";
 import { chatRequestSchema } from "./validation";
 import { ASSISTANT_MESSAGE_MAX_LENGTH } from "./client-history";
 import type { AskActivityNotifier } from "./activity-mail";
+import type { VisitorContact } from "./types";
 
 export interface ChatDependencies {
   ai: AskOpenAI | null;
@@ -22,6 +23,7 @@ async function notifyAskActivity(
   notifier: AskActivityNotifier | null | undefined,
   question: string,
   consent: ChatRequest["consent"],
+  contact: VisitorContact,
 ) {
   if (!notifier) return;
 
@@ -30,6 +32,7 @@ async function notifyAskActivity(
     const result = await notifier.notify({
       question,
       consent,
+      ...contact,
       submittedAt: new Date().toISOString(),
     });
     if (!result.ok) {
@@ -146,6 +149,7 @@ export async function handleChat(
         dependencies.activityNotifier,
         latest,
         payload.consent,
+        payload.contact,
       ),
     ]);
     const classification = unsafe

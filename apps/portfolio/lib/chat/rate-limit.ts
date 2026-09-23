@@ -18,11 +18,13 @@ export function hashRateLimitIdentity(value: string, salt: string) {
 export class RateLimiter {
   constructor(private readonly redis: Redis) {}
 
-  async check(identityHash: string, now = Date.now()): Promise<RateLimitResult> {
+  async check(identityHash: string, now = Date.now(), scope: "question" | "contact" = "question"): Promise<RateLimitResult> {
     let retryAfterSeconds = 0;
     for (const window of windows) {
       const bucket = Math.floor(now / (window.seconds * 1000));
-      const key = `ask:rate:${window.name}:${bucket}:${identityHash}`;
+      const key = scope === "contact"
+        ? `ask:rate:contact:${window.name}:${bucket}:${identityHash}`
+        : `ask:rate:${window.name}:${bucket}:${identityHash}`;
       const count = await this.redis.incr(key);
       if (count === 1) await this.redis.expire(key, window.seconds + 2);
       if (count > window.limit) {

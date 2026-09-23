@@ -13,12 +13,18 @@ export interface ChatMessage {
   text: string;
 }
 
+export interface VisitorContact {
+  name: string;
+  email: string;
+}
+
 export interface ChatRequest {
   sessionId: string;
   sessionToken: string;
   consent: ConsentMode;
   messages: ChatMessage[];
   consentVersion: string;
+  contact: VisitorContact;
 }
 
 export interface ChatSource {

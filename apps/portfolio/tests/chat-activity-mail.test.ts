@@ -10,6 +10,8 @@ afterEach(() => {
 });
 
 const activity = {
+  name: "<Ada> & Co",
+  email: "ada@example.com",
   question: "Can you explain <Gradly> & the shortener?",
   consent: "no_store" as const,
   submittedAt: "2026-09-22T12:00:00.000Z",
@@ -36,6 +38,7 @@ describe("Ask activity email", () => {
     expect(message.text).toContain(activity.question);
     expect(message.text).toContain("Chat history not saved");
     expect(message.html).toContain("&lt;Gradly&gt; &amp; the shortener?");
+    expect(message.html).toContain("&lt;Ada&gt; &amp; Co");
     expect(message.html).not.toContain("<Gradly>");
   });
 
@@ -54,8 +57,16 @@ describe("Ask activity email", () => {
     expect(options.headers.Authorization).toBe("Bearer test-key");
     const body = JSON.parse(options.body);
     expect(body.to).toEqual(["owner@example.com"]);
+    expect(body.reply_to).toBe("ada@example.com");
     expect(body.text).toContain(activity.question);
     expect(body.text).not.toContain("assistant");
+  });
+
+  it("formats the contact notification without a question", () => {
+    const message = formatAskActivity({ name: "Ada", email: "ada@example.com", consent: "no_store", submittedAt: activity.submittedAt });
+    expect(message.subject).toBe("New Ask Animesh visitor");
+    expect(message.text).toContain("Email: ada@example.com");
+    expect(message.text).not.toContain("Question:");
   });
 
   it("returns the provider status for a rejected request", async () => {

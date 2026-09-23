@@ -4,16 +4,20 @@ The homepage remains dynamic; Ask APIs, streaming, retrieval, session deletion a
 
 ## Optional Ask activity email
 
-`lib/chat/activity-mail.ts` sends the latest validated, rate-limit-accepted user
-question to the configured owner through Resend. It never includes an answer,
+`lib/chat/activity-mail.ts` sends the visitor's validated name and email when
+provided, then includes them with every latest validated, rate-limit-accepted
+question to the configured owner through Resend. The visitor email is Reply-To.
+The contact endpoint has separate IP/session rate-limit buckets. Email never includes an answer,
 previous messages, IP address, session identifier or token. Delivery runs alongside
-moderation and is best-effort: missing configuration or a provider failure never
+moderation for questions and is best-effort: missing configuration or a provider failure never
 blocks the chat response.
 
 Enable it with the server-only `RESEND_API_KEY`, `ASK_ACTIVITY_FROM_EMAIL` and
 `ASK_ACTIVITY_TO_EMAIL` variables. All three are required. The visitor disclosure
-clarifies that this email is separate from the choice to retain chat history for
-30 days or only in the current browser tab.
+clarifies that these emails are separate from the choice to retain chat history for
+30 days or only in the current browser tab. Contact details follow that browser
+storage choice, are removed when a saved chat is deleted, and are excluded from
+OpenAI input and Redis transcripts.
 
 ## Optional PostHog analytics
 

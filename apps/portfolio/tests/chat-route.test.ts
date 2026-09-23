@@ -14,6 +14,7 @@ function request() {
       sessionToken: "b".repeat(43),
       consent: "no_store",
       consentVersion: "v1",
+      contact: { name: "Ada Visitor", email: "ada@example.com" },
       messages: [{ role: "user", text: "What did you build at Gradly?" }],
     }),
   });
@@ -61,6 +62,20 @@ describe("POST /api/chat core", () => {
     expect(notify).not.toHaveBeenCalled();
   });
 
+  it("requires valid contact details before questions can be accepted", async () => {
+    const notify = vi.fn();
+    const body = JSON.parse(await request().text());
+    delete body.contact;
+    const missingContact = new NextRequest("http://localhost/api/chat", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    const response = await handleChat(missingContact, dependencies({ activityNotifier: { notify } }));
+    expect(response.status).toBe(400);
+    expect(notify).not.toHaveBeenCalled();
+  });
+
   it("emails the latest question once for an accepted request", async () => {
     const notify = vi.fn().mockResolvedValue({ ok: true });
     const deps = dependencies({ activityNotifier: { notify } });
@@ -71,6 +86,8 @@ describe("POST /api/chat core", () => {
     expect(notify).toHaveBeenCalledWith(expect.objectContaining({
       question: "What did you build at Gradly?",
       consent: "no_store",
+      name: "Ada Visitor",
+      email: "ada@example.com",
     }));
     expect(notify.mock.calls[0][0]).not.toHaveProperty("sessionId");
     expect(notify.mock.calls[0][0]).not.toHaveProperty("messages");
@@ -103,6 +120,7 @@ describe("POST /api/chat core", () => {
         sessionToken: "b".repeat(43),
         consent: "no_store",
         consentVersion: "v1",
+        contact: { name: "Ada Visitor", email: "ada@example.com" },
         messages: [
           { role: "user", text: "First question" },
           { role: "assistant", text: "Earlier answer" },
@@ -137,6 +155,7 @@ describe("POST /api/chat core", () => {
         sessionToken: "b".repeat(43),
         consent: "persist_30d",
         consentVersion: "v1",
+        contact: { name: "Ada Visitor", email: "ada@example.com" },
         messages: [{ role: "user", text: "Tell me more." }],
       }),
     });
