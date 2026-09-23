@@ -91,14 +91,13 @@ interface Engagement {
 }
 
 interface Availability {
-  state: AvailabilityState;
-  label: string;
-  slots?: number;
-  nextStart?: string;
-  provisional: boolean;
+  activeProjects: number; // validated integer from 0 to 2
 }
 ```
 
+Derive AvailabilityState and its public label from activeProjects: 0 means
+Available, 1 means Limited availability, and 2 means Booked. Show the confirmed
+capacity of 1–2 projects per month; maintain the count manually in content.
 Do not model speculative fields until content needs them. Dedicated case-study
 routes can reuse `Project` later.
 
@@ -200,3 +199,12 @@ Failures never block product flows. Interaction annotations use fixed semantic
 labels, not link text. Ask chat-storage consent remains independent.
 
 Cloud setup and launch verification: see `POSTHOG.md`.
+
+## V2 route map
+
+`app/page.tsx` is the concise Home route. `app/work`, `app/services`,
+`app/pricing`, `app/about`, and `app/contact` render dedicated pages. The root
+layout owns persistent navigation and footer. Existing inquiry API, booking
+adapter, analytics/privacy boundary, and typed content remain app-local.
+Prices and exact availability values marked provisional in `CONTENT.md` stay in
+the content model for review but are omitted from rendered v2 pages.

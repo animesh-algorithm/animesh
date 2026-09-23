@@ -39,6 +39,14 @@ Suggested support:
 > Products, AI automation, and internal tools for teams whose important work has
 > outgrown spreadsheets, handoffs, and “we'll fix it later.”
 
+Approved Hire v2 homepage hero copy:
+
+- Eyebrow: **For founders who want to ship**
+- Headline A: **Got an idea sitting in a Notion doc?**
+- Headline B: **Your idea probably doesn’t need an agency.**
+- Support: **I work with founders to turn ideas, messy workflows, and unfinished products into software that ships.**
+- Actions: **Talk to Animesh** and **Show, don’t tell**
+
 Service areas:
 
 1. Product and MVP builds
@@ -71,11 +79,12 @@ Working scope boundaries are also provisional:
 Do not add timelines, hour allocations, revision counts, or guarantees until
 they are confirmed.
 
-## Availability — provisional
+## Availability
 
-- State: Limited availability
-- Project slots: 1
-- Next start: October 2026
+- Capacity: 1–2 projects per month.
+- Manually maintained active-project count: 1 by default.
+- Public status: 0 active projects → Available; 1 → Limited availability; 2 → Booked.
+- Show the capacity, but do not publish the active-project count or imply a guaranteed start date.
 
 Availability is manually maintained. Do not describe it as live, calendar-backed,
 or real-time until such an integration exists.
@@ -121,14 +130,39 @@ status, service fit, manually maintained availability, and booking fallback.
 - Unknown: measured completion-time reduction, usage, customers, revenue, and
   production scale
 
+### Gradly Health Insurance
+
+- The second Hire v2 project covers the core ecosystem: public insurance plan
+  discovery (`insurance.gradly.us`), member tools (`app.gradly.us`), and internal
+  operations (`dashboard.gradly.us`). The insurance and member screenshots are
+  captured from live surfaces and exclude account records. The operations image
+  is an illustrative concept inspired by the internal dashboard; its positive
+  figures and charts are fictional and are not Gradly results.
+- Verified in `apps/portfolio/public/resume.pdf`: Gradly's platform serves
+  10K+ members across 25+ U.S. universities. Animesh integrated 5 insurance
+  carrier partners. Across four sales cycles, annual premium volume grew from
+  $1.2M to $2.4M and net revenue margin from approximately 12% to 35%.
+- The premium and margin figures describe company outcomes during his tenure;
+  they are not attributed solely to the pictured software.
+
 ### AI Insurance Concierge
 
-- Title: Support that knows what's going on.
-- Summary: An AI support system that uses the customer, journey, insurance plan,
-  and conversation context before drafting a reply.
-- Areas: AI, retrieval, product
-- Demo: `https://www.loom.com/share/f3c7bff788054442a555f304c29c1b6d?sid=d834c1dc-8b63-4613-a4d2-51f9302517e6`
-- Unknown: response-time improvement, adoption, and support metrics
+- Hire v2 presents a scripted concept of a member-aware insurance chat in a
+  Gradly-inspired portal. The displayed member, plan, coverage date, and card
+  path are illustrative examples, not verified account records or a live lookup.
+- The portal mockup combines the existing Gradly member-tools capture with an
+  illustrative header, coverage summary, quick links, and document area based
+  on the user-provided dashboard reference. Personal details in that reference
+  are not reproduced.
+- The illustrative card uses Gradly Supreme Plus, a $0 deductible, 100%
+  coinsurance, a $5,000 out-of-pocket maximum, and an August 15, 2026 end date.
+  Hal Jordan is the example member name. These are scripted example values,
+  not verified member records or actual plan terms.
+- Example question: “When does my coverage end?”
+- Example reply: “Hi Hal, your Gradly Supreme Plus coverage ended on August 15,
+  2026. You can view your insurance card at link.gradly.us/card-123.”
+- A real version must verify the member identity, coverage record, and card
+  destination before answering. No production integration is claimed here.
 
 ### Gradly Links
 
@@ -141,6 +175,17 @@ status, service fit, manually maintained availability, and booking fallback.
 - Verified outcome: saved the company about $400 per month
 - Areas: internal tool, custom domains, engineering
 - Unknown: usage scale and current production status
+
+### Gradly Immigration
+
+- Public reference: `https://gradly.us/` describes one app for international
+  students moving to the U.S., from university selection through visa steps,
+  health plans, banking, housing, and arrival essentials.
+- The Hire visual uses a user-supplied screenshot of the Gradly Immigration
+  homepage and its student journey preview in a Mac-style browser window.
+- Unknown: Animesh's precise contribution to this product, measured product
+  outcomes, and current availability of individual features. The project story
+  describes the public product without assigning those claims to Animesh.
 
 ### AI Claims Adjudication
 
@@ -180,3 +225,21 @@ include a copy of the submitted brief for the sender's records.
 - [ ] Define inquiry response expectation
 - [ ] Configure and verify the public booking URL
 - [ ] Confirm legal/privacy copy required for form submissions
+
+## Hire v2 publication review (2026-09-23)
+
+V2 leads with product and MVP builds. Automation and internal systems remain
+service paths. The verified project descriptions above are reused on `/work`.
+The VisaFile public project link in `content/projects.ts` is part of the v1
+snapshot and remains in v2.
+
+The engagement names and scope descriptions remain working guidance. No starting
+price has been approved, so v2 omits all price amounts. The availability state
+is manually maintained in content, and v2 shows its derived status and confirmed
+monthly capacity. The site does not imply live calendar data. Service
+copy explains areas of work without claiming a delivery time or guaranteed result.
+Review these values before any later publication of exact numbers.
+
+The sidebar's "05 project stories" counts the five documented projects here;
+it does not claim a lifetime number of products shipped. "Scoped together"
+avoids publishing an unconfirmed timeline.

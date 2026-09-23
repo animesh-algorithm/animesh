@@ -2,10 +2,10 @@ import { AnalyticsProvider } from "@/components/analytics-provider";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
-import { AvailabilityDock } from "@/components/availability/availability-dock";
+import { SiteHeader } from "@/components/layout/site-header";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { MotionDirector } from "@/components/motion/motion-director";
 import { site } from "@/content/site";
-import { getBookingDestination } from "@/lib/booking";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
   robots: process.env.VERCEL_ENV === "preview" ? { index: false, follow: false } : { index: true, follow: true },
   title: {
-    default: `${site.name} — Product, automation, and internal tools`,
+    default: `${site.name} — Product studio for useful software`,
     template: `%s — ${site.name}`,
   },
   description: site.hero.support,
@@ -24,12 +24,12 @@ export const metadata: Metadata = {
     type: "website",
     siteName: site.name,
     url: "/",
-    title: `${site.name} — Product, automation, and internal tools`,
+    title: `${site.name} — Product studio for useful software`,
     description: site.hero.support,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} — Product, automation, and internal tools`,
+    title: `${site.name} — Product studio for useful software`,
     description: site.hero.support,
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Hire Animesh — From messy to shipped." }],
   },
@@ -37,7 +37,6 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  const booking = getBookingDestination();
   return (
     <html lang="en">
       <body>
@@ -46,8 +45,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
           Skip to content
         </a>
         <MotionDirector />
-        {children}
-        <AvailabilityDock bookingHref={booking.href} configured={booking.configured} />
+        <div className="v2-app-frame"><SiteHeader /><div className="v2-page-frame">{children}<SiteFooter /></div></div>
       </body>
     </html>
   );

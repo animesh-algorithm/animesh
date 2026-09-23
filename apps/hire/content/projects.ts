@@ -23,23 +23,49 @@ export const projects = [
     ],
   }),
   validateContent(projectSchema, {
-    slug: "ai-insurance-concierge",
-    name: "AI Insurance Concierge",
-    title: "Support that knows what’s going on.",
+    slug: "gradly-health",
+    name: "Gradly Health Insurance",
+    title: "One ecosystem for student health insurance.",
     summary:
-      "An AI support system that uses the customer, journey, insurance plan, and conversation context before drafting a reply.",
-    problem: "Support replies need more than the latest message.",
+      "I built Gradly’s customer-facing insurance experience, member app, and internal operations tools as the platform grew across U.S. universities.",
+    problem: "Plan discovery, member support, enrollment, and policy operations lived across separate workflows.",
     built:
-      "A drafting system grounded in customer, journey, plan, and conversation context.",
-    constraint: "Context comes before the drafted reply.",
-    areas: ["AI", "retrieval", "product"],
+      "Insurance plan discovery, a member dashboard, and an internal platform for enrollment, sales, policy administration, and payments; integrated 5 carrier partners.",
+    constraint: "Customer-facing journeys and internal operations had to stay aligned across carriers and payment providers.",
+    outcome:
+      "10K+ members served across 25+ U.S. universities. Across four sales cycles, annual premium volume grew from $1.2M to $2.4M and net revenue margin from ~12% to ~35%.",
+    areas: ["health insurance", "product", "internal tools"],
     accent: "lilac",
     links: [
-      {
-        label: "Watch demo",
-        href: "https://www.loom.com/share/f3c7bff788054442a555f304c29c1b6d?sid=d834c1dc-8b63-4613-a4d2-51f9302517e6",
-      },
+      { label: "Explore Gradly", href: "https://insurance.gradly.us/" },
     ],
+  }),
+  validateContent(projectSchema, {
+    slug: "gradly-immigration",
+    name: "Gradly Immigration",
+    title: "One journey, fewer loose ends.",
+    summary:
+      "Gradly brings the steps of moving to the U.S. into one guided experience for international students, from choosing a university to settling in.",
+    problem: "Visa steps, health requirements, banking, and housing are scattered across separate services.",
+    built:
+      "A single product journey that connects university decisions, visa applications, health plans, and arrival essentials.",
+    constraint:
+      "Each step has its own requirements; the experience has to make the next action clear without hiding them.",
+    areas: ["immigration", "product", "student experience"],
+    accent: "butter",
+    links: [{ label: "Explore Gradly", href: "https://gradly.us/" }],
+  }),
+  validateContent(projectSchema, {
+    slug: "ai-insurance-concierge",
+    name: "AI Insurance Concierge",
+    title: "A clearer answer, right when members need it.",
+    summary: "A member-aware insurance assistant concept that turns a coverage question into a direct answer with a card reference.",
+    problem: "Members need to find personal coverage details without searching through plan documents.",
+    built: "A chat experience that brings the member’s plan context into a simple coverage answer.",
+    constraint: "Coverage dates and card links must come from verified member records before a real assistant can respond.",
+    areas: ["insurance", "AI", "member experience"],
+    accent: "lilac",
+    links: [],
   }),
   validateContent(projectSchema, {
     slug: "gradly-links",

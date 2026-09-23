@@ -70,3 +70,12 @@ verified sender are supplied.
 - CMS or authenticated editing
 - CRM or persistent lead storage
 - Additional project stories and testimonials
+
+## Hire v2
+
+- [x] Archive the pre-v2 implementation, including the VisaFile edit, in the
+  `hire-v1` Git tag.
+- [x] Introduce six public routes and persistent desktop navigation.
+- [x] Keep provisional price and exact availability values off public pages.
+- [ ] Approve commercial figures and current availability before publishing them.
+- [ ] Validate live inquiry delivery and booking after deployment configuration.

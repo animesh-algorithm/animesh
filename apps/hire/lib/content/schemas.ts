@@ -12,14 +12,17 @@ export const siteSchema = z.object({
   bookingUrl: z.url(),
   positioning: z.string().min(1),
   hero: z.object({
-    heading: z.string().min(1),
+    headings: z.tuple([
+      z.tuple([z.string().min(1), z.string().min(1)]),
+      z.tuple([z.string().min(1), z.string().min(1)]),
+    ]),
     support: z.string().min(1),
     provisional: z.boolean(),
   }),
   navigation: z.array(
     z.object({
       label: z.string().min(1),
-      href: z.string().startsWith("#"),
+      href: z.string().regex(/^\/(?:[a-z-]*)?$/),
     }),
   ),
   socialLinks: z.array(linkSchema),
@@ -27,7 +30,7 @@ export const siteSchema = z.object({
 });
 
 export const projectSchema = z.object({
-  slug: z.enum(["visafile", "ai-insurance-concierge", "gradly-links", "ai-claims-adjudication"]),
+  slug: z.enum(["visafile", "gradly-health", "gradly-immigration", "gradly-links", "ai-claims-adjudication", "ai-insurance-concierge"]),
   name: z.string().min(1),
   title: z.string().min(1),
   summary: z.string().min(1),
@@ -73,11 +76,7 @@ export const faqSchema = z.object({
 });
 
 export const availabilitySchema = z.object({
-  state: z.enum(["available", "limited", "booked"]),
-  label: z.string().min(1),
-  slots: z.number().int().positive().optional(),
-  nextStart: z.string().min(1).optional(),
-  provisional: z.boolean(),
+  activeProjects: z.number().int().min(0).max(2),
 });
 
 export function validateContent<TSchema extends z.ZodType>(

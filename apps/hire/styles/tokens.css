@@ -12,14 +12,14 @@
   --color-warm-panel: #eeeae2;
   --color-work-panel: #f1eff8;
 
-  --font-sans: Arial, Helvetica, sans-serif;
-  --font-display: Arial, Helvetica, sans-serif;
+  --font-sans: "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif;
 
-  --text-display: clamp(3rem, 8vw, 7.5rem);
-  --text-h2: clamp(2.25rem, 5vw, 5rem);
-  --text-h3: clamp(1.5rem, 2.5vw, 2.5rem);
-  --text-lead: clamp(1.125rem, 1.6vw, 1.5rem);
-  --text-body: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  --text-display: clamp(2.75rem, 5.2vw, 4.5rem);
+  --text-h2: clamp(1.9rem, 3.5vw, 3.3rem);
+  --text-h3: clamp(1.4rem, 2.2vw, 2.1rem);
+  --text-lead: clamp(1.05rem, 1.3vw, 1.25rem);
+  --text-body: 1rem;
 
   --space-1: 0.5rem;
   --space-2: 1rem;

@@ -65,11 +65,7 @@ export const engagements = [
 ] as const;
 
 export const availability = validateContent(availabilitySchema, {
-  state: "limited",
-  label: "Limited availability",
-  slots: 1,
-  nextStart: "October 2026",
-  provisional: true,
+  activeProjects: 1,
 });
 
 export const comparisonRows = [
@@ -102,15 +98,15 @@ export const faqs = [
   }),
   validateContent(faqSchema, {
     question: "Are these fixed prices?",
-    answer: "They are starting prices. Final scope and price follow the actual problem, and every commercial value remains provisional until confirmed before launch.",
+    answer: "I quote after reviewing the problem and scope. Starting prices are being reviewed and are not published yet.",
   }),
   validateContent(faqSchema, {
     question: "What kinds of problems are a strong fit?",
     answer: "Product and MVP builds, AI and workflow automation, and internal tools or integrations—especially when important work has outgrown spreadsheets and handoffs.",
   }),
   validateContent(faqSchema, {
-    question: "Is the availability indicator live?",
-    answer: "No. It is manually maintained and should be treated as a current planning signal, not live calendar data.",
+    question: "How current is the availability information?",
+    answer: "No. Ask me about current availability; any status shown is maintained manually.",
   }),
   validateContent(faqSchema, {
     question: "How do I book a call?",

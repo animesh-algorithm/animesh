@@ -8,16 +8,21 @@ export const site = validateContent(siteSchema, {
   positioning:
     "Engineer, product person, automation obsessive, and problem solver.",
   hero: {
-    heading: "I build the systems your team keeps working around.",
+    headings: [
+      ["Got an idea sitting", "in a Notion doc?"],
+      ["Your idea probably", "doesn’t need an agency."],
+    ],
     support:
-      "Products, AI automation, and internal tools for teams whose important work has outgrown spreadsheets, handoffs, and ‘we’ll fix it later.’",
-    provisional: true,
+      "I work with founders to turn ideas, messy workflows, and unfinished products into software that ships.",
+    provisional: false,
   },
   navigation: [
-    { label: "Work", href: "#work" },
-    { label: "Services", href: "#services" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Home", href: "/" },
+    { label: "Work", href: "/work" },
+    { label: "Services", href: "/services" },
+    { label: "Pricing", href: "/pricing" },
+    { label: "About", href: "/about" },
+    { label: "Contact", href: "/contact" },
   ],
   socialLinks: [
     {

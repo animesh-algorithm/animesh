@@ -126,7 +126,9 @@ an ornamental separator; grain continues across both surfaces.
 
 ### Hero
 
-Suggested lead: **I build the systems your team keeps working around.**
+The Hire v2 homepage uses the approved founder-focused eyebrow, one of the two
+approved headline options in `CONTENT.md`, chosen randomly on each reload, the supplied support copy, and the
+actions “Talk to Animesh” and “Show, don’t tell.”
 
 Pair it with a short explanation for startup founders and operators, one primary
 inquiry action, one work link, and a large original workflow illustration. Show
@@ -134,7 +136,11 @@ availability as useful text, not only color.
 
 ### Work
 
-Present four verified projects as substantial editorial stories. Each needs:
+Use [WORK_SHOWCASE_DESIGN.md](WORK_SHOWCASE_DESIGN.md) for the detailed Home and
+Work project-media decisions, reusable assets, device frames, and current
+project-specific corrections.
+
+Present the documented projects as substantial editorial stories. Each needs:
 
 - the painful or manual starting condition
 - what was built
@@ -146,6 +152,26 @@ Present four verified projects as substantial editorial stories. Each needs:
 Use a different composition for featured and supporting stories. Do not repeat
 the same card component four times. Use a light lilac chapter surface so the
 work reads as a new editorial field rather than an extension of the hero.
+
+Hire v2 uses authentic Gradly captures for the public insurance hero and member
+self-service tools. The third visual is an illustrative operations dashboard
+concept with fictional example metrics. Present them as three Mac-style windows
+on a lilac drafting grid, and label the concept so its figures cannot be
+mistaken for actual results.
+
+Gradly Immigration shows the user-supplied website screenshot, including the
+student journey preview, in one Mac-style browser window on a cool drafting
+surface. Its caption identifies the photographed product interface.
+
+AI Insurance Concierge uses the existing Gradly member-app capture directly:
+a white and pale lavender canvas, navy type, generous rounded tool panels,
+pastel circular icons, and blue pill actions. The surrounding illustrative
+dashboard follows the supplied full-page reference with a Gradly logo, header,
+coverage summary, quick links, and plan documents. The chat sits at the lower
+right of a Mac-style window with a visible open/close toggle, begins with a member
+coverage question, shows brief progress states, and reveals a scripted answer.
+The caption identifies the example member details and card path as illustrative.
+Reduced-motion users see the complete answer immediately.
 
 ### Services and process
 
@@ -197,3 +223,36 @@ surface and may not rely on color alone.
 Reject a direction if it could plausibly be sold as a generic agency template,
 if every section is a card grid, if decoration overwhelms project proof, or if
 removing the accent colors makes every section structurally identical.
+
+## V2 multipage composition
+
+The existing logo, paper/ink/cobalt palette, type, diagrams, and project accent
+colors remain the visual system. Desktop navigation is a persistent left sidebar;
+smaller screens use the compact, keyboard-accessible disclosure menu. The pages
+are Home, Work, Services, Pricing, About, and Contact. Home carries the short
+product-build offer and two direct paths. The full project ledger now owns Work,
+service process owns Services, engagements and comparison own Pricing, and the
+inquiry form owns Contact. This route structure supersedes the single-page
+composition and header sections above. LaunchCraft informed navigation clarity
+and route structure only; its visual assets and claims are not used.
+
+## V2 visual refinement
+
+The persistent sidebar uses an ink surface against paper content, with navigation,
+direct booking and message actions, and concise project information. Exact
+availability is a manually maintained status derived from the active-project count;
+show the confirmed 1–2 projects per month capacity without publishing the count
+or a delivery date. The original
+HireAnimesh wordmark stays on one line in its Arial/Helvetica heavy face and keeps
+its amber pulsing dot at the upper right of the name; the pulse stops when reduced
+motion is preferred. Body and display typography use Avenir Next where available,
+then Segoe UI or system sans; the scale is smaller and calmer. Work uses neutral
+wireframe media placeholders where authentic project images are unavailable. VisaFile
+uses a capture of the public site's header and hero inside a Mac-style window
+on a drafting grid. Home
+previews work, services, engagement shapes, direct working style, FAQ, and contact
+so mobile visitors can evaluate the offer without opening the menu. The compact
+header keeps booking visible beside an icon-only navigation disclosure.
+Paper sections use a faint, static drafting grid in the page background to
+extend the wireframe language beyond Work media. Colored chapters cover the grid
+so the page retains its editorial rhythm and readable copy.

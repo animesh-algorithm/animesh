@@ -28,7 +28,7 @@ export function ServicesSection() {
       <div className="site-shell services-layout">
         <div className="section-heading section-heading--sticky" data-reveal>
           <p className="section-kicker">Ways to work together / 03</p>
-          <h2 id="services-title">Bring me the knot.</h2>
+          <h1 id="services-title">Bring me the knot.</h1>
           <p>I work across product, engineering, and operations to turn a fuzzy problem into something people can use.</p>
         </div>
         <ol className="service-list">
@@ -36,7 +36,7 @@ export function ServicesSection() {
             <li key={service.slug} data-reveal>
               <span className="service-number">0{index + 1}</span>
               <div>
-                <h3>{service.name}</h3>
+                <h2>{service.name}</h2>
                 <p className="service-question">{service.question}</p>
                 <p>{service.description}</p>
               </div>
