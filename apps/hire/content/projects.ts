@@ -8,12 +8,14 @@ export const projects = [
     summary:
       "The DS-160 can take hours of form-filling. VisaFile turns answers into an automated application run, stopping when user action is needed.",
     problem: "Hours of repetitive DS-160 form-filling.",
-    built: "A guided intake persists reviewed answers, then starts a separate Puppeteer worker to enter them in CEAC.",
-    constraint: "Browser checks, CAPTCHA, and CEAC corrections remain human-controlled checkpoints.",
+    built:
+      "A guided intake persists reviewed answers, then starts a separate Puppeteer worker to enter them in CEAC.",
+    constraint:
+      "Browser checks, CAPTCHA, and CEAC corrections remain human-controlled checkpoints.",
     areas: ["automation", "product", "engineering"],
     accent: "cobalt",
     links: [
-      { label: "Watch demo", href: "https://youtu.be/IomQnHifsFU" },
+      { label: "Watch demo", href: "https://visafile-phi.vercel.app/#demo" },
       {
         label: "View on GitHub",
         href: "https://github.com/animesh-algorithm/visafile",
@@ -27,7 +29,8 @@ export const projects = [
     summary:
       "An AI support system that uses the customer, journey, insurance plan, and conversation context before drafting a reply.",
     problem: "Support replies need more than the latest message.",
-    built: "A drafting system grounded in customer, journey, plan, and conversation context.",
+    built:
+      "A drafting system grounded in customer, journey, plan, and conversation context.",
     constraint: "Context comes before the drafted reply.",
     areas: ["AI", "retrieval", "product"],
     accent: "lilac",
@@ -45,8 +48,10 @@ export const projects = [
     summary:
       "An internal Rebrandly alternative with a custom Gradly domain for managing branded short links.",
     problem: "Branded links depended on an external paid tool.",
-    built: "An internal short-link manager that creates and resolves links on link.gradly.us.",
-    constraint: "Each branded path remains mapped to a manageable destination URL.",
+    built:
+      "An internal short-link manager that creates and resolves links on link.gradly.us.",
+    constraint:
+      "Each branded path remains mapped to a manageable destination URL.",
     outcome: "Saved the company about $400 per month.",
     areas: ["internal tool", "custom domains", "engineering"],
     accent: "butter",
@@ -58,7 +63,8 @@ export const projects = [
     title: "Upload the bill. We’ll handle the rest.",
     summary:
       "Users upload a medical bill and bank details; the app checks eligibility, sends reimbursement by ACH, and confirms it by email.",
-    problem: "A medical bill has to move through eligibility and reimbursement.",
+    problem:
+      "A medical bill has to move through eligibility and reimbursement.",
     built: "One flow from upload to eligibility, ACH, and email confirmation.",
     constraint: "Bank details and claim status stay part of the same handoff.",
     outcome: "Payment lands in 1–2 business days.",
