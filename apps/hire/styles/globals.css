@@ -1763,7 +1763,7 @@ main > section {
     linear-gradient(90deg, rgb(25 25 25 / 4%) 1px, transparent 1px),
     linear-gradient(rgb(25 25 25 / 3%) 1px, transparent 1px),
     linear-gradient(90deg, rgb(25 25 25 / 3%) 1px, transparent 1px);
-  background-size: 64px 64px, 64px 64px, 320px 320px, 320px 320px;
+  background-size: 48px 48px, 48px 48px, 240px 240px, 240px 240px;
 }
 .v2-hero {
   grid-template-columns: minmax(0, 1fr);
@@ -2529,6 +2529,9 @@ main > section {
     linear-gradient(var(--visual-grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--visual-grid-line) 1px, transparent 1px);
   background-size: 40px 40px;
+}
+.process-strip {
+  background-size: 30px 30px;
 }
 .project-media-placeholder__window {
   display: flex;
