@@ -2888,6 +2888,12 @@ html:has(.work-section) {
   box-shadow: 0 1.25rem 2.75rem rgb(24 42 92 / 30%), 0 .2rem .7rem rgb(24 42 92 / 18%);
 }
 @media (max-width: 37.5rem) {
+  .concierge-demo__app { min-height: 48rem; }
+  .concierge-demo__card { padding: 1rem; }
+  .concierge-demo__card-details { gap: .7rem; }
+  .concierge-demo__chat { width: 29rem; height: 24rem; }
+}
+@media (max-width: 37.5rem) {
   .gradly-product-images {
     grid-template-columns: minmax(0, 1fr);
   }

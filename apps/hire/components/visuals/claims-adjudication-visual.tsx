@@ -15,8 +15,27 @@ const steps = [
 ];
 
 function ClaimProcess() {
+  const processRef = useRef<HTMLDivElement>(null);
+  const [hasEntered, setHasEntered] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    const process = processRef.current;
+    if (!process) return;
+    if (typeof IntersectionObserver === "undefined") {
+      const timer = window.setTimeout(() => setHasEntered(true), 0);
+      return () => window.clearTimeout(timer);
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setHasEntered(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.25 });
+    observer.observe(process);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -27,7 +46,7 @@ function ClaimProcess() {
   }, []);
 
   useEffect(() => {
-    if (reduceMotion) return;
+    if (!hasEntered || reduceMotion) return;
     let timer: ReturnType<typeof setTimeout>;
     const advance = () => {
       if (document.hidden) return;
@@ -46,12 +65,12 @@ function ClaimProcess() {
     };
     document.addEventListener("visibilitychange", resume);
     return () => { clearTimeout(timer); document.removeEventListener("visibilitychange", resume); };
-  }, [activeStep, reduceMotion]);
+  }, [activeStep, hasEntered, reduceMotion]);
 
-  const visibleStep = reduceMotion ? steps.length : activeStep;
+  const visibleStep = reduceMotion ? steps.length : hasEntered ? activeStep : -1;
 
   return (
-    <div className="claims-process">
+    <div className="claims-process" ref={processRef}>
       <div className="claims-process__header">
         <span className="claims-process__dots" aria-hidden="true"><i /><i /><i /></span>
         <span>claim-review / live</span>
@@ -61,7 +80,7 @@ function ClaimProcess() {
         <span className="claims-process__eyebrow">AUTOMATED CLAIM REVIEW</span>
         <h3>Working on your claim<span className="claims-process__ellipsis" aria-hidden="true">…</span></h3>
         <ol aria-label="Claim review stages">
-          {steps.slice(0, visibleStep + (visibleStep < steps.length ? 1 : 0)).map((step, index) => {
+          {steps.slice(0, visibleStep < 0 ? 0 : visibleStep + (visibleStep < steps.length ? 1 : 0)).map((step, index) => {
             const complete = index < visibleStep;
             return (
               <li key={step} className={complete ? "is-complete" : "is-active"}>
@@ -74,6 +93,7 @@ function ClaimProcess() {
             );
           })}
         </ol>
+        <noscript><p>Processing · Bill received · Analyzing the bill · Checking member details · Reviewing claims eligibility · Verifying account information · Processing ACH · Claim processed</p></noscript>
         <div className="claims-process__footer">
           <span className="claims-process__pulse" aria-hidden="true" />
           {visibleStep === steps.length ? "Claim review complete" : "Secure workflow in progress"}
