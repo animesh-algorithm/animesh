@@ -37,12 +37,12 @@ export default function HomePage() {
     </div></section>
     <section className="v2-home-services" aria-labelledby="home-services-title"><div className="site-shell">
       <div className="v2-home-section-head"><div><p className="section-kicker">Services</p><h2 id="home-services-title">Ways I can help.</h2></div><Link className="text-link" href="/services">How I work →</Link></div>
-      <ol className="v2-home-service-list">{services.map((service, index) => <li key={service.slug}><span>0{index + 1}</span><div><h3>{service.name}</h3><p>{service.description}</p></div><span aria-hidden="true">↗</span></li>)}</ol>
+      <ol className="v2-home-service-list">{services.map((service, index) => <li key={service.slug}><span>0{index + 1}</span><div><h3>{service.name}</h3><p>{service.description}</p><Link className="text-link" href={`/services/${service.slug}`}>Explore {service.name} →</Link></div></li>)}</ol>
       <div className="v2-home-process"><span>01 / Understand the workflow</span><span>02 / Shape and build</span><span>03 / Put it in people’s hands</span></div>
     </div></section>
     <section className="v2-home-pricing" aria-labelledby="home-pricing-title"><div className="site-shell">
       <div className="v2-home-section-head"><div><p className="section-kicker">Engagements</p><h2 id="home-pricing-title">Start at the right scale.</h2></div><Link className="text-link" href="/pricing">Explore pricing and fit →</Link></div>
-      <p className="v2-home-section-intro">I scope the problem with you, then quote the work. Starting prices are under review.</p>
+      <p className="v2-home-section-intro">I scope the problem with you, then quote the work. These engagement starting prices are under review; a scoped MVP build starts at $2,000 USD.</p>
       <div className="v2-home-engagements">{engagements.map((engagement, index) => <article key={engagement.slug}><span>0{index + 1} / {engagement.featured ? "Core engagement" : "Starting point"}</span><h3>{engagement.name}</h3><p>{engagement.intent}</p><Link href="/pricing">See what’s included →</Link></article>)}</div>
     </div></section>
     <section className="v2-home-about" aria-labelledby="home-about-title"><div className="site-shell v2-home-about__layout"><div><p className="section-kicker">The person behind the work</p><h2 id="home-about-title">One person, close to the work.</h2></div><div><p>I’m Animesh Sharma. I work across product, engineering, and operations to turn an unclear problem into a useful system.</p><p>You work directly with the person shaping and building it. I keep the scope, constraints, and open questions visible.</p><Link className="text-link" href="/about">More about how I work →</Link></div></div></section>

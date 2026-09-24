@@ -110,6 +110,21 @@ desktop. Use semantic HTML, valid heading order, accessible names, visible focus
 states, sufficient contrast, meaningful alternative text, and touch targets that
 do not depend on hover. Respect `prefers-reduced-motion`.
 
+Hire should make prominent use of motion as visitors move through it. Give the
+hero, editorial chapters, project proof, service steps, and calls to action
+distinct entrance and scroll behavior, with staggered detail where it helps the
+story. Add tactile hover and focus feedback. Keep motion app-local, responsive,
+and purposeful; content must be visible without JavaScript and immediately
+visible when reduced motion is preferred. Keep a small amount of continuous
+motion in existing workflow illustrations and accents so the site feels alive
+even when idle; pause it when the tab is hidden. Avoid floating technology icons
+or movement that obscures copy and controls.
+New Hire pages and sections should inherit this motion system by default. Use
+semantic `main`, `section`, and `article` elements so the app-wide motion
+director can reveal them; use `data-reveal` for a smaller element that needs its
+own entrance. Check the new page at mobile and desktop widths with reduced
+motion before considering it complete.
+
 Do not make every section `heading + paragraph + cards + CTA`. Design the whole
 page as an editorial composition with rhythm, contrast, whitespace, imagery,
 and deliberate variation.

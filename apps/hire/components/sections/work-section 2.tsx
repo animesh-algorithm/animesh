@@ -14,14 +14,12 @@ export function WorkSection() {
   return (
     <section className="work-section" id="work" aria-labelledby="work-title">
       <div className="site-shell section-heading" data-reveal>
-        <div>
-          <p className="section-kicker">Selected work / {String(projects.length).padStart(2, "0")}</p>
-          <h1 id="work-title">Proof lives in the work.</h1>
-        </div>
+        <p className="section-kicker">Selected work / {String(projects.length).padStart(2, "0")}</p>
+        <h1 id="work-title">Proof lives in the work.</h1>
         <p>The kind of problems that don’t come with a spec.</p>
       </div>
 
-      <div className="site-shell project-ledger">
+      <div className="project-ledger">
         {[...projects, ...experiments].map((project, index) => (
           <Fragment key={project.slug}>
           {index === projects.length ? (
@@ -40,15 +38,25 @@ export function WorkSection() {
               </div>
               <h2>{project.title}</h2>
               <p className="project-summary">{project.summary}</p>
-              {project.outcome ? (
-                <div className="project-outcome">
-                  <span>{Array.isArray(project.outcome) ? "Known outcomes" : "Known outcome"}</span>
-                  {Array.isArray(project.outcome) ? (
-                    <ul>{project.outcome.map((outcome) => <li key={outcome}>{outcome}</li>)}</ul>
-                  ) : (
-                    <p>{project.outcome}</p>
-                  )}
+              <dl className="project-notes">
+                <div>
+                  <dt>Starting point</dt>
+                  <dd>{project.problem}</dd>
                 </div>
+                <div>
+                  <dt>Built</dt>
+                  <dd>{project.built}</dd>
+                </div>
+                <div>
+                  <dt>Guardrail</dt>
+                  <dd>{project.constraint}</dd>
+                </div>
+              </dl>
+              {project.outcome ? (
+                <p className="project-outcome">
+                  <span>Known outcome</span>
+                  {project.outcome}
+                </p>
               ) : null}
               <ul className="tag-list" aria-label="Project areas">
                 {project.areas.map((area) => (

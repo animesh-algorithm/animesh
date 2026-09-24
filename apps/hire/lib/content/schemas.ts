@@ -38,7 +38,7 @@ export const projectSchema = z.object({
   built: z.string().min(1),
   constraint: z.string().min(1),
   areas: z.array(z.string().min(1)).min(1),
-  outcome: z.string().min(1).optional(),
+  outcome: z.union([z.string().min(1), z.array(z.string().min(1)).min(2)]).optional(),
   accent: z.enum(["cobalt", "lilac", "butter", "coral"]),
   links: z.array(linkSchema),
 });

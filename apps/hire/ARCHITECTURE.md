@@ -203,8 +203,11 @@ Cloud setup and launch verification: see `POSTHOG.md`.
 ## V2 route map
 
 `app/page.tsx` is the concise Home route. `app/work`, `app/services`,
+`app/services/mvp-development`, `app/services/saas-web-apps`,
+`app/services/ai-products-features`, `app/services/mobile-apps`,
 `app/pricing`, `app/about`, and `app/contact` render dedicated pages. The root
 layout owns persistent navigation and footer. Existing inquiry API, booking
 adapter, analytics/privacy boundary, and typed content remain app-local.
-Prices and exact availability values marked provisional in `CONTENT.md` stay in
-the content model for review but are omitted from rendered v2 pages.
+Engagement prices and exact availability values marked provisional in `CONTENT.md`
+stay in the content model for review but are omitted from rendered v2 pages.
+The confirmed $2,000 USD scoped MVP service minimum is published separately.

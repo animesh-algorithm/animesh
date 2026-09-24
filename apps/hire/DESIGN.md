@@ -99,7 +99,8 @@ Initial responsive scale:
 - Shadows: hard offset or very soft elevation, never glowing.
 - Spacing follows an 8 px base with deliberate editorial exceptions expressed
   as named section tokens.
-- Page width should use a fluid shell with a readable maximum near 1440 px.
+- Page width should use a centered fluid shell with visible margins and a readable
+  maximum around 1216 px within the main content area.
 - Section curves overlap the outgoing surface instead of occupying a separate
   band. The global grain layer was removed in the Gradly Mobile App correction
   so supplied product screenshots remain clear.
@@ -140,14 +141,11 @@ Use [WORK_SHOWCASE_DESIGN.md](WORK_SHOWCASE_DESIGN.md) for the detailed Home and
 Work project-media decisions, reusable assets, device frames, and current
 project-specific corrections.
 
-Present the documented projects as substantial editorial stories. Each needs:
-
-- the painful or manual starting condition
-- what was built
-- a diagram or authentic product media
-- verified decisions or constraints
-- verified outcome only when available
-- relevant service connection
+Present the documented projects as concise editorial stories on `/work`: one
+paragraph summary, authentic product media or a clearly labeled concept, known
+outcomes when available, technical tags, and applicable demo or source links.
+Keep detailed project facts in the content model without repeating them in each
+visible card.
 
 Use a different composition for featured and supporting stories. Do not repeat
 the same card component four times. Use a light lilac chapter surface so the

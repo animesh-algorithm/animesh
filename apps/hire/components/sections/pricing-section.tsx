@@ -18,8 +18,10 @@ export function PricingSection() {
   return (
     <section className="pricing-section" id="pricing" aria-labelledby="pricing-title">
       <div className="site-shell pricing-header" data-reveal>
-        <p className="section-kicker">Simple pricing</p>
-        <h1 id="pricing-title">Ways to work together.<br /><em>Scope comes first.</em></h1>
+        <div>
+          <p className="section-kicker">Simple pricing</p>
+          <h1 id="pricing-title">Ways to work together.<br /><em>Scope comes first.</em></h1>
+        </div>
         <p>Choose an engagement shape. I define scope and quote the work after understanding the problem.</p>
       </div>
       <div className="site-shell pricing-grid">
@@ -54,7 +56,7 @@ export function PricingSection() {
         <div><span>03</span><strong>One working loop</strong><p>Product, engineering, and operations stay connected.</p></div>
         <div><span>04</span><strong>Honest handoff</strong><p>Known outcomes, constraints, and open questions remain visible.</p></div>
       </div>
-      <p className="site-shell provisional-note">Starting prices are under review. Ask for a quote based on your project.</p>
+      <p className="site-shell provisional-note">These engagement starting prices are under review. A scoped MVP build starts at $2,000 USD; ask for a quote based on your project.</p>
     </section>
   );
 }

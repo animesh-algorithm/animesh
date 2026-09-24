@@ -71,7 +71,6 @@ export function GradlyLinksIllustration() {
           </div>
         </div>
       </div>
-      <figcaption>Illustrative dashboard redraw using the observed Supreme Plus snapshot. Member links are masked; the traffic sparkline is illustrative.</figcaption>
     </figure>
   );
 }

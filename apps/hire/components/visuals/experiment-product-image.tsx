@@ -27,7 +27,6 @@ export function ExperimentProductImage({ project }: { project: keyof typeof capt
         </div>
         <Image src={capture.src} alt={capture.alt} width={1440} height={capture.height} sizes="(max-width: 768px) 100vw, 50vw" />
       </div>
-      <figcaption>Public homepage capture</figcaption>
     </figure>
   );
 }

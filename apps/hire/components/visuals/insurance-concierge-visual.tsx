@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { SparkIcon } from "./illustration-icons";
 
@@ -8,11 +8,32 @@ const answer =
   "Hi Hal, your Gradly Supreme Plus coverage ended on August 15, 2026. You can view your insurance card at link.gradly.us/card-123.";
 
 export function InsuranceConciergeVisual() {
+  const figureRef = useRef<HTMLElement>(null);
+  const [hasEntered, setHasEntered] = useState(false);
   const [chatOpen, setChatOpen] = useState(true);
   const [phase, setPhase] = useState(0);
   const [characters, setCharacters] = useState(0);
+  const [replay, setReplay] = useState(0);
 
   useEffect(() => {
+    const figure = figureRef.current;
+    if (!figure) return;
+    if (typeof IntersectionObserver === "undefined") {
+      const timer = window.setTimeout(() => setHasEntered(true), 0);
+      return () => window.clearTimeout(timer);
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setHasEntered(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.25 });
+    observer.observe(figure);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasEntered) return;
     const reducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
@@ -29,7 +50,7 @@ export function InsuranceConciergeVisual() {
       window.setTimeout(() => setPhase(3), 2900),
     ];
     return () => timers.forEach(window.clearTimeout);
-  }, []);
+  }, [hasEntered, replay]);
 
   useEffect(() => {
     if (phase !== 3 || characters >= answer.length) return;
@@ -43,13 +64,11 @@ export function InsuranceConciergeVisual() {
   const restart = () => {
     setPhase(0);
     setCharacters(0);
-    window.setTimeout(() => setPhase(1), 500);
-    window.setTimeout(() => setPhase(2), 1400);
-    window.setTimeout(() => setPhase(3), 2300);
+    setReplay((count) => count + 1);
   };
 
   return (
-    <figure className="concierge-demo">
+    <figure className="concierge-demo" ref={figureRef}>
       <div className="concierge-demo__window">
         <div className="concierge-demo__browser">
           <span className="concierge-demo__traffic" aria-hidden="true">

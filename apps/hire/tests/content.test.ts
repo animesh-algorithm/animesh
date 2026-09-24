@@ -23,15 +23,19 @@ describe("published content", () => {
     expect(projects.find((project) => project.slug === "gradly-links")?.built).toContain("link.gradly.us");
     expect(projects.find((project) => project.slug === "visafile")?.links).toHaveLength(2);
     const gradly = projects.find((project) => project.slug === "gradly-health");
-    expect(gradly?.outcome).toContain("10K+ members");
-    expect(gradly?.outcome).toContain("25+ U.S. universities");
+    expect(gradly?.outcome).toEqual([
+      "10K+ members served across 25+ U.S. universities.",
+      "Across four sales cycles, annual premium volume grew from $1.2M to $2.4M.",
+      "Across four sales cycles, net revenue margin grew from ~12% to ~35%.",
+    ]);
     expect(gradly?.built).toContain("5 carrier partners");
   });
 
-  it("marks every commercial value as provisional", () => {
+  it("distinguishes the confirmed MVP service from provisional commercial values", () => {
     expect(site.provisional).toBe(true);
     expect(site.hero.provisional).toBe(false);
-    expect(services.every((service) => service.provisional)).toBe(true);
+    expect(services.find((service) => service.slug === "mvp-development")?.provisional).toBe(false);
+    expect(services.filter((service) => service.slug !== "mvp-development").every((service) => service.provisional)).toBe(true);
     expect(engagements.every((engagement) => engagement.provisional)).toBe(true);
     expect(availability.activeProjects).toBe(1);
   });

@@ -15,11 +15,11 @@
   --font-sans: "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif;
   --font-display: "Avenir Next", Avenir, "Segoe UI", system-ui, sans-serif;
 
-  --text-display: clamp(2.75rem, 5.2vw, 4.5rem);
-  --text-h2: clamp(1.9rem, 3.5vw, 3.3rem);
-  --text-h3: clamp(1.4rem, 2.2vw, 2.1rem);
-  --text-lead: clamp(1.05rem, 1.3vw, 1.25rem);
-  --text-body: 1rem;
+  --text-display: clamp(2.15rem, 4.1vw, 3.5rem);
+  --text-h2: clamp(1.55rem, 2.7vw, 2.55rem);
+  --text-h3: clamp(1.2rem, 1.7vw, 1.65rem);
+  --text-lead: clamp(0.95rem, 1.05vw, 1.05rem);
+  --text-body: 0.9rem;
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -35,7 +35,7 @@
   --radius-large: 2.75rem;
   --border: 2px solid var(--color-ink);
   --shadow-hard: 0.45rem 0.45rem 0 var(--color-ink);
-  --shell: min(100% - 2rem, 90rem);
+  --shell: min(100% - clamp(2rem, 6vw, 6rem), 76rem);
   --measure: 66ch;
   --section-curve-height: clamp(2rem, 3.8vw, 3.75rem);
   --section-curve-height-compact: clamp(1.5rem, 2.5vw, 2.5rem);

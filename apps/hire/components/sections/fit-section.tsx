@@ -13,8 +13,10 @@ export function FitSection({ bookingHref, bookingConfigured, bookingEmbedHref }:
   return (
     <section className="fit-section" aria-labelledby="fit-title">
       <div className="site-shell fit-heading" data-reveal>
-        <p className="section-kicker">The fit test</p>
-        <h2 id="fit-title">A better fit when the problem needs a builder, not more handoffs.</h2>
+        <div>
+          <p className="section-kicker">The fit test</p>
+          <h2 id="fit-title">A better fit when the problem needs a builder, not more handoffs.</h2>
+        </div>
         <p>A larger partner can be the right answer. This is where an independent operator-builder is different.</p>
       </div>
       <div className="site-shell comparison-wrap" data-reveal>

@@ -12,7 +12,7 @@ export const projects = [
       "A guided intake persists reviewed answers, then starts a separate Puppeteer worker to enter them in CEAC.",
     constraint:
       "Browser checks, CAPTCHA, and CEAC corrections remain human-controlled checkpoints.",
-    areas: ["automation", "product", "engineering"],
+    areas: ["Next.js", "Puppeteer", "automation"],
     accent: "cobalt",
     links: [
       { label: "Watch demo", href: "https://visafile-phi.vercel.app/#demo" },
@@ -32,9 +32,12 @@ export const projects = [
     built:
       "Insurance plan discovery, a member dashboard, and an internal platform for enrollment, sales, policy administration, and payments; integrated 5 carrier partners.",
     constraint: "Customer-facing journeys and internal operations had to stay aligned across carriers and payment providers.",
-    outcome:
-      "10K+ members served across 25+ U.S. universities. Across four sales cycles, annual premium volume grew from $1.2M to $2.4M and net revenue margin from ~12% to ~35%.",
-    areas: ["health insurance", "product", "internal tools"],
+    outcome: [
+      "10K+ members served across 25+ U.S. universities.",
+      "Across four sales cycles, annual premium volume grew from $1.2M to $2.4M.",
+      "Across four sales cycles, net revenue margin grew from ~12% to ~35%.",
+    ],
+    areas: ["web app", "member portal", "internal tools", "integrations"],
     accent: "lilac",
     links: [
       { label: "Explore Gradly", href: "https://insurance.gradly.us/" },
@@ -48,7 +51,7 @@ export const projects = [
     problem: "Students need a clear place to find coverage and follow their next insurance task.",
     built: "A compact three-screen showcase with the supplied Home and Find Providers SVGs and an illustrative Sign In redraw.",
     constraint: "The artwork is a design reference; its account details, store badges, and testimonial are not verified live app data or measured outcomes.",
-    areas: ["mobile app", "health insurance", "product design"],
+    areas: ["mobile UI", "product design"],
     accent: "cobalt",
     links: [],
   }),
@@ -63,7 +66,7 @@ export const projects = [
       "A single product journey that connects university decisions, visa applications, health plans, and arrival essentials.",
     constraint:
       "Each step has its own requirements; the experience has to make the next action clear without hiding them.",
-    areas: ["immigration", "product", "student experience"],
+    areas: ["web app", "product design"],
     accent: "butter",
     links: [{ label: "Explore Gradly", href: "https://gradly.us/" }],
   }),
@@ -75,7 +78,7 @@ export const projects = [
     problem: "Members need to find personal coverage details without searching through plan documents.",
     built: "A chat experience that brings the member’s plan context into a simple coverage answer.",
     constraint: "Coverage dates and card links must come from verified member records before a real assistant can respond.",
-    areas: ["insurance", "AI", "member experience"],
+    areas: ["AI assistant", "conversational UI"],
     accent: "lilac",
     links: [],
   }),
@@ -91,7 +94,7 @@ export const projects = [
     constraint:
       "Each branded path remains mapped to a manageable destination URL.",
     outcome: "Saved the company about $400 per month.",
-    areas: ["internal tool", "custom domains", "engineering"],
+    areas: ["short links", "custom domains", "internal tool"],
     accent: "butter",
     links: [],
   }),
@@ -106,7 +109,7 @@ export const projects = [
     built: "One flow from upload to eligibility, ACH, and email confirmation.",
     constraint: "Bank details and claim status stay part of the same handoff.",
     outcome: "Payment lands in 1–2 business days.",
-    areas: ["AI", "automation", "payments"],
+    areas: ["AI workflow", "automation", "ACH payments"],
     accent: "coral",
     links: [
       {
@@ -126,7 +129,7 @@ export const projects = [
       "A product homepage with a direct plan-finding action and separate paths for each audience.",
     constraint:
       "Plan details and eligibility depend on the visitor’s situation; the showcase captures the public hero only.",
-    areas: ["health insurance", "website", "product"],
+    areas: ["web development", "responsive UI"],
     accent: "butter",
     links: [{ label: "Explore FivePoints", href: "https://five-points.netlify.app/" }],
   }),
@@ -141,7 +144,7 @@ export const experiments = [
     problem: "Liked songs accumulate faster than they get played again.",
     built: "A music organizer that brings saved tracks together into reviewable playlist suggestions.",
     constraint: "The public hero shows the product direction; it does not demonstrate a completed Spotify import or playlist publish.",
-    areas: ["music", "product experiment", "web app"],
+    areas: ["web app", "music library"],
     accent: "lilac",
     links: [{ label: "Explore Sortify", href: "https://sortifi.vercel.app/" }],
   }),
@@ -153,7 +156,7 @@ export const experiments = [
     problem: "Saved posts are easy to collect and hard to find later.",
     built: "A guided path from an Instagram export to a library people can search and review.",
     constraint: "The showcase captures the public homepage hero, not a signed-in library or live import.",
-    areas: ["personal library", "product experiment", "web app"],
+    areas: ["web app", "search"],
     accent: "butter",
     links: [{ label: "Explore Crate", href: "https://crate-nu-lilac.vercel.app/" }],
   }),

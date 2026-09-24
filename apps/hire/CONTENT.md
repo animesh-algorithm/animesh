@@ -55,6 +55,20 @@ Service areas:
 
 These are initial framing, not final promises or exhaustive service definitions.
 
+### MVP development — confirmed service offer
+
+- Primary audience: nontechnical founders taking an idea to a usable first product.
+- I provide product direction, agree a scoped first version, build and launch a web or mobile product as appropriate, and hand over its source code.
+- The client provides UI designs. If needed, I can refer an independent designer; UI design is not included in my MVP build.
+- The scoped MVP service starts at **$2,000 USD**. Final price depends on the agreed features and platform. This is a service minimum, distinct from the provisional End-to-End Build engagement price below.
+- Later changes and ongoing support are scoped and quoted separately. No delivery timeline or revision count is promised.
+
+### Other service pages — provisional copy
+
+- `/services/saas-web-apps`, `/services/ai-products-features`, and `/services/mobile-apps` use editable working copy in `content/service-pages.ts`.
+- Their fit, process, deliverables, FAQ, and handoff descriptions are illustrative scope discussions, not fixed inclusions or commercial commitments.
+- No starting price, delivery timeline, or revision count is published for these services. Final scope, responsibilities, third-party costs, and quote are agreed for each inquiry.
+
 ## Engagements — provisional
 
 | Engagement | Starting price | Initial intent |

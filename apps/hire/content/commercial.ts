@@ -98,7 +98,7 @@ export const faqs = [
   }),
   validateContent(faqSchema, {
     question: "Are these fixed prices?",
-    answer: "I quote after reviewing the problem and scope. Starting prices are being reviewed and are not published yet.",
+    answer: "I quote after reviewing the problem and scope. A scoped MVP starts at $2,000 USD; the separate engagement starting prices are still under review and are not published yet.",
   }),
   validateContent(faqSchema, {
     question: "What kinds of problems are a strong fit?",
