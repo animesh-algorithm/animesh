@@ -15,6 +15,8 @@ Read the nearest application-level `AGENTS.md` and its referenced design, conten
 
 ## Architectural rules
 
+- Use bounded SVG or CSS icons for interface decoration across all apps. Do not use emoji or Unicode pictographs as UI icons. Give icons explicit width and height, prevent flex stretching or shrinking, and check their rendered size on mobile and desktop. Preserve emoji that are intentional user-authored content or test data.
+
 - Preserve the two applications as independent products. Do not merge their package names, React versions, Next.js configurations, content models, visual systems, or deployment settings.
 - Do not extract shared UI, styling, Ask infrastructure, authentication, CMS, data storage, or speculative future applications.
 - A root change may orchestrate existing app commands, but must not alter product behavior.

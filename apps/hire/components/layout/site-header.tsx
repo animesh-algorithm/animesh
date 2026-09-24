@@ -83,7 +83,7 @@ export function SiteHeader() {
             </p>
             {/* <p>
               <span>Work shown</span>
-              <strong>05 project stories</strong>
+              <strong>07 project stories</strong>
             </p> */}
           </div>
           <div className="mobile-header-actions">

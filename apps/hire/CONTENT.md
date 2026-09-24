@@ -164,6 +164,13 @@ status, service fit, manually maintained availability, and booking fallback.
 - A real version must verify the member identity, coverage record, and card
   destination before answering. No production integration is claimed here.
 
+### Gradly Mobile App showcase
+
+- The user supplied an eight-screen visual reference for a student health insurance mobile app. Its screen sequence includes splash, onboarding, sign-in, home, claim filing, claim status, provider search, and help.
+- The Hire showcase uses the user-supplied Home and Find Providers SVGs and redraws Sign In in the supplied visual language. The original eight-screen artwork remains available as a reference; neither the supplied artwork nor the redraw establishes live account data or shipped status.
+- The reference's numerical claims, testimonial, app-store availability, and plan details are not independently verified for this showcase and are not published as results.
+- Unknown: Animesh's precise contribution to this specific mobile app, shipped status, usage, and measured outcomes.
+
 ### Gradly Links
 
 - Title: The useful kind of short story.

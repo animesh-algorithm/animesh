@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { CheckIcon, MailIcon } from "./illustration-icons";
 
 const steps = [
   "Processing",
@@ -67,7 +68,7 @@ function ClaimProcess() {
                 <span className="claims-process__step">{String(index + 1).padStart(2, "0")}</span>
                 <span>{step}</span>
                 <span className="claims-process__indicator" aria-label={complete ? "Complete" : "In progress"}>
-                  {complete ? <span aria-hidden="true">✓</span> : <span className="claims-process__spinner" aria-hidden="true" />}
+                  {complete ? <CheckIcon /> : <span className="claims-process__spinner" aria-hidden="true" />}
                 </span>
               </li>
             );
@@ -155,7 +156,7 @@ export function ClaimsAdjudicationVisual() {
                   <svg viewBox="0 0 24 24" fill="none"><path d="M7 3.5h7l4 4V20H7V3.5Z" stroke="currentColor" strokeWidth="1.7" strokeLinejoin="round"/><path d="M14 3.5V8h4M10 13h5M10 16h5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round"/></svg>
                 </span>
                 <strong>medical-bill.pdf</strong>
-                <small>Bill uploaded ✓</small>
+                <small>Bill uploaded <CheckIcon /></small>
               </div>
               <span className="claims-fields-title">BANK DETAILS</span>
               <div className="claims-field">
@@ -190,7 +191,7 @@ export function ClaimsAdjudicationVisual() {
             </div>
             <div className="claims-phone__content claims-phone__content--success">
               <div className="claims-success-icon" aria-hidden="true">
-                ✓
+                <CheckIcon />
               </div>
               <span className="claims-phone__eyebrow">CLAIM COMPLETE</span>
               <h3>Claim processed.</h3>
@@ -208,7 +209,7 @@ export function ClaimsAdjudicationVisual() {
                 </div>
               </div>
               <div className="claims-email">
-                <span aria-hidden="true">✉</span>
+                <MailIcon />
                 <span>
                   A payment tracking receipt has been sent to your email.
                 </span>
@@ -220,10 +221,6 @@ export function ClaimsAdjudicationVisual() {
         </div>
       </div>
       </div>
-      <figcaption>
-        Concept flow · Sample name, account, amount, and timing shown for
-        illustration.
-      </figcaption>
     </figure>
   );
 }

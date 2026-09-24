@@ -101,8 +101,8 @@ Initial responsive scale:
   as named section tokens.
 - Page width should use a fluid shell with a readable maximum near 1440 px.
 - Section curves overlap the outgoing surface instead of occupying a separate
-  band, and one global normal-blend grain layer keeps texture density consistent
-  across light, dark, and colored chapters.
+  band. The global grain layer was removed in the Gradly Mobile App correction
+  so supplied product screenshots remain clear.
 
 ### Motion
 
@@ -122,7 +122,7 @@ Initial responsive scale:
 Keep it compact and calm: wordmark, Work, Services, Pricing, availability, and
 one “Start a conversation” action. Collapse to an accessible menu only when the
 links no longer fit. The paper header should flow directly into the hero without
-an ornamental separator; grain continues across both surfaces.
+an ornamental separator.
 
 ### Hero
 

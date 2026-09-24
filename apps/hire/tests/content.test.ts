@@ -8,7 +8,7 @@ import { getAvailabilityStatus } from "@/lib/content/availability";
 
 describe("published content", () => {
   it("keeps verified project claims and links auditable", () => {
-    expect(projects).toHaveLength(6);
+    expect(projects).toHaveLength(7);
     expect(projects.find((project) => project.slug === "ai-insurance-concierge")?.constraint).toContain("verified member records");
     expect(projects.find((project) => project.slug === "gradly-immigration")?.links[0]?.href).toBe("https://gradly.us/");
     expect(projects.find((project) => project.slug === "gradly-links")?.outcome).toBe(

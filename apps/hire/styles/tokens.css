@@ -37,9 +37,6 @@
   --shadow-hard: 0.45rem 0.45rem 0 var(--color-ink);
   --shell: min(100% - 2rem, 90rem);
   --measure: 66ch;
-  --texture-grain: url("/noise-grain.svg");
-  --texture-grain-size: 256px 256px;
-  --texture-grain-opacity: 0.15;
   --section-curve-height: clamp(2rem, 3.8vw, 3.75rem);
   --section-curve-height-compact: clamp(1.5rem, 2.5vw, 2.5rem);
   --transition-control: 180ms ease;

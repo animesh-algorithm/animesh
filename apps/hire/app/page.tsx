@@ -3,9 +3,6 @@ import { SiteShell } from "@/components/layout/site-shell";
 import { PrototypeIllustration } from "@/components/visuals/prototype-illustration";
 import { VisaFileProductImage } from "@/components/visuals/visafile-product-image";
 import { GradlyProductImages } from "@/components/visuals/gradly-product-images";
-import { GradlyImmigrationIllustration } from "@/components/visuals/gradly-immigration-illustration";
-import { ClaimsAdjudicationVisual } from "@/components/visuals/claims-adjudication-visual";
-import { InsuranceConciergeVisual } from "@/components/visuals/insurance-concierge-visual";
 import { projects } from "@/content/projects";
 import { services } from "@/content/services";
 import { engagements, faqs } from "@/content/commercial";
@@ -18,9 +15,10 @@ export const metadata = { alternates: { canonical: "/" } };
 
 export default function HomePage() {
   const booking = getBookingDestination();
-  const projectEntries = projects.map((project, index) => ({ project, index }));
-  const renderProject = ({ project, index }: (typeof projectEntries)[number]) => <article className={`v2-home-project v2-home-project--${project.slug}`} key={project.slug} style={{ order: index }}>
-    {project.slug === "visafile" ? <VisaFileProductImage /> : project.slug === "gradly-health" ? <GradlyProductImages /> : project.slug === "gradly-immigration" ? <GradlyImmigrationIllustration /> : project.slug === "ai-claims-adjudication" ? <ClaimsAdjudicationVisual /> : project.slug === "ai-insurance-concierge" ? <InsuranceConciergeVisual /> : <div className="project-media-placeholder" aria-label={`Placeholder for ${project.name} project image`}><div className="project-media-placeholder__window"><span /><span /><span /></div><div className="project-media-placeholder__canvas"><span /><span /><span /></div><p>Project image to come</p></div>}
+  const featuredProjects = projects.filter((project) => project.slug === "visafile" || project.slug === "gradly-health");
+  const projectEntries = featuredProjects.map((project, index) => ({ project, index }));
+  const renderProject = ({ project, index }: (typeof projectEntries)[number]) => <article className="v2-home-project" key={project.slug}>
+    {project.slug === "visafile" ? <VisaFileProductImage /> : <GradlyProductImages />}
     <div className="v2-home-project__copy"><span>0{index + 1} / {project.areas.join(" · ")}</span><h3>{project.name}</h3><p>{project.summary}</p>{project.slug === "gradly-health" ? <p className="v2-home-project__proof">10K+ members served · 25+ U.S. universities</p> : null}<Link href="/work">Read the project story →</Link></div>
   </article>;
   return <main id="main-content">
@@ -34,8 +32,8 @@ export default function HomePage() {
       <PrototypeIllustration />
     </SiteShell>
     <section className="v2-home-work" aria-labelledby="home-work-title"><div className="site-shell">
-      <div className="v2-home-section-head"><div><p className="section-kicker">Selected work / {String(projects.length).padStart(2, "0")}</p><h2 id="home-work-title">Proof in the work.</h2></div><Link className="text-link" href="/work">Explore project stories →</Link></div>
-      <div className="v2-home-work-grid">{([0, 1] as const).map((column) => <div className="v2-home-work-column" key={column}>{projectEntries.filter(({ index }) => index % 2 === column).map(renderProject)}</div>)}</div>
+      <div className="v2-home-section-head"><div><p className="section-kicker">Selected work / {String(featuredProjects.length).padStart(2, "0")}</p><h2 id="home-work-title">Proof in the work.</h2></div><Link className="text-link" href="/work">Explore project stories →</Link></div>
+      <div className="v2-home-work-grid">{projectEntries.map(renderProject)}</div>
     </div></section>
     <section className="v2-home-services" aria-labelledby="home-services-title"><div className="site-shell">
       <div className="v2-home-section-head"><div><p className="section-kicker">Services</p><h2 id="home-services-title">Ways I can help.</h2></div><Link className="text-link" href="/services">How I work →</Link></div>

@@ -30,7 +30,7 @@ export const siteSchema = z.object({
 });
 
 export const projectSchema = z.object({
-  slug: z.enum(["visafile", "gradly-health", "gradly-immigration", "gradly-links", "ai-claims-adjudication", "ai-insurance-concierge"]),
+  slug: z.enum(["visafile", "gradly-health", "gradly-mobile-app", "gradly-immigration", "gradly-links", "ai-claims-adjudication", "ai-insurance-concierge"]),
   name: z.string().min(1),
   title: z.string().min(1),
   summary: z.string().min(1),

@@ -1,6 +1,6 @@
 # Work showcase design decisions
 
-This is the working reference for project visuals on Hire v2 Home (`/`) and Work (`/work`). It records the user's decisions across the recent VisaFile, Gradly Health Insurance, Gradly Immigration, AI Claims Adjudication, and AI Insurance Concierge work. The separate Gradly mobile app showcase discussion is outside this document. Read this with `AGENTS.md`, `DESIGN.md`, and `CONTENT.md`; the latter remains the authority for published facts and example values.
+This is the working reference for project visuals on Hire v2 Home (`/`) and Work (`/work`). It records the user's decisions across the recent VisaFile, Gradly Health Insurance, Gradly Mobile App, Gradly Immigration, AI Claims Adjudication, and AI Insurance Concierge work. Read this with `AGENTS.md`, `DESIGN.md`, and `CONTENT.md`; the latter remains the authority for published facts and example values.
 
 ## Shared visual language
 
@@ -9,7 +9,7 @@ This is the working reference for project visuals on Hire v2 Home (`/`) and Work
 - Frame desktop web interfaces inside a compact Mac-style browser window: rounded window, narrow title/address bar, and red/yellow/green window controls. Keep the product header and enough screen content visible to recognize the product. Set the window on a fine drafting grid when it helps the visual read as a designed showcase.
 - Frame mobile app flows inside proportionate Apple iPhone-style devices, with a consistent screen ratio, restrained status/island and home-indicator details, and enough room for the actual workflow. Use a Mac-style window for a processing terminal. Do not stretch phone screens to fill a card.
 - Keep the media beside the story copy on `/work` where space allows. The compact Home treatment is a useful size reference: visuals should not become a full-page infographic or consume far more space than VisaFile. Stack naturally at narrower widths. Details inside a scaled screenshot may become small; preserving the whole composition matters more than making every small label readable.
-- Home shows **all** projects as visually separated masonry cards. The first two projects begin side by side on desktop; mobile follows numbered project order. Each card has a white surface, dark outline, and small project-color accent. Avoid inner shadows that make media look detached from its card. A complex, three-part claims flow can span the full card width so its parts remain inline on desktop.
+- Home features only VisaFile and Gradly Health Insurance as open editorial previews on the lilac chapter surface. They sit side by side on wide desktop screens and stack in numbered order on narrower screens. Space and numbered labels separate them without color markers or another frame around the product media. `/work` retains the full project list and its project-specific visuals, including the three-part claims flow.
 - Keep responsive behavior intentional at 375, 768, 1024, and 1440 CSS px. Check both document and body for horizontal overflow, legibility of the main idea, keyboard focus, and reduced motion. Animation should explain a state change; reduced-motion users should see the completed information.
 
 ## Brand and asset reuse
@@ -18,10 +18,13 @@ Use saved source assets instead of typing or redrawing a near-match logo. Keep b
 
 | Asset | Use |
 | --- | --- |
-| `public/images/gradly-logo-reference.png` | Gradly member portal/dashboard header in the Concierge visual. This is the user-supplied reference mark with the yellow flourish. |
-| `public/images/gradly-logo-card.png` | Saved user-supplied compact Gradly mark, retained for reuse. **Do not put it on the Concierge plan card**; the user explicitly removed that placement. |
+| `public/images/gradly.svg` | Official Gradly SVG from `https://app.gradly.us/logo/gradly.svg`; use for Gradly marks in drawn product UI, including the Concierge header and Mobile App showcase. |
+| `public/images/gradly-logo-card.png` | Historical reference asset. **Do not put it on the Concierge plan card**; the user explicitly removed that placement. |
 | `public/images/gradly-immigration-home.png` | User-supplied Gradly Immigration website image; use the current single Mac-window presentation. |
 | `public/images/gradly-insurance-hero.png` | User-supplied public insurance homepage screenshot, including its full header/hero, in the Health collage. |
+| `public/images/gradly-mobile-reference.png` | User-supplied eight-screen Mobile App artwork. Use its design language and screen content to guide the remaining redraws. |
+| `public/images/gradly-mobile-home.png` | User-supplied Home screen artwork; show this directly in the middle phone. |
+| `public/images/gradly-mobile-providers.svg` | User-supplied Find Providers screen SVG; show this directly in the third phone. |
 | `public/images/gradly-member.jpg` | Member tools capture, reused in the Health collage and Concierge dashboard. |
 | `public/images/gradly-operations-concept.png` | **Illustrative** operations dashboard with positive example figures and rising charts. Never present those figures as measured Gradly results. |
 | `public/images/visafile-hero.jpg` | VisaFile website capture in its Mac window. |
@@ -68,3 +71,7 @@ This is a **scripted concept**. Hal, the plan terms, date, and card path are exa
 2. Identify whether the visual is a capture, user-supplied reference, or illustrative concept. Caption it accordingly; do not invent metrics, account records, or outcomes.
 3. Reuse the correct saved brand asset and the relevant product's inner design system. Preserve the Hire outer frame and project-specific composition.
 4. Check the rendered result on **both** routes at the four responsive widths above. Confirm the essential story, images, window/device proportions, animation states, focus, reduced motion, and lack of horizontal overflow.
+
+### Gradly Mobile App (2026-09-24 correction)
+
+The eight-screen user-supplied artwork at `public/images/gradly-mobile-reference.png` guides this showcase. The latest supplied Home and Find Providers assets at `public/images/gradly-mobile-home.png` and `public/images/gradly-mobile-providers.svg` supersede their earlier versions: show both directly and retain the illustrative Sign In redraw. Keep the three complete screens inside a compact side-by-side Work visual, with a link to the full reference. Restore the subtle drafting grid behind the devices without adding noise grain. Match the iPhone frame, status island, system indicators, and home indicator to the Claim Journey illustration. Use the official locally saved `public/images/gradly.svg` for Gradly marks. Treat sample account details and claim timing as illustrative; do not publish the artwork's figures, testimonial, or store badges as verified outcomes.

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { SparkIcon } from "./illustration-icons";
 
 const answer =
   "Hi Hal, your Gradly Supreme Plus coverage ended on August 15, 2026. You can view your insurance card at link.gradly.us/card-123.";
@@ -62,20 +63,20 @@ export function InsuranceConciergeVisual() {
           <header className="concierge-demo__dashboard-header">
             <Image
               className="concierge-demo__brand"
-              src="/images/gradly-logo-reference.png"
+              src="/images/gradly.svg"
               alt="Gradly"
               width={109}
               height={66}
             />
-            <strong>Dashboard</strong>
+            <strong></strong>
             <span className="concierge-demo__support">Support</span>
-            <span className="concierge-demo__member-name">Hal Jordan</span>
-            <span
+            {/* <span className="concierge-demo__member-name">Hal Jordan</span> */}
+            {/* <span
               className="concierge-demo__profile"
               aria-label="Example member Hal Jordan"
             >
               HJ
-            </span>
+            </span> */}
           </header>
           <div className="concierge-demo__dashboard-layout">
             <div className="concierge-demo__side-rail" aria-hidden="true">
@@ -160,7 +161,7 @@ export function InsuranceConciergeVisual() {
             <div className="concierge-demo__chat">
               <div className="concierge-demo__chat-head">
                 <span className="concierge-demo__chat-icon" aria-hidden="true">
-                  ✳
+                  <SparkIcon />
                 </span>
                 <div>
                   <strong>Insurance Concierge</strong>
@@ -183,7 +184,7 @@ export function InsuranceConciergeVisual() {
                     className="concierge-demo__assistant"
                     aria-hidden="true"
                   >
-                    ✳
+                    <SparkIcon />
                   </span>
                   <div>
                     {phase < 3 ? (
@@ -251,10 +252,6 @@ export function InsuranceConciergeVisual() {
           </button>
         </div>
       </div>
-      <figcaption>
-        Illustrative conversation with example member details and card URL.
-        Replay the response in the chat window.
-      </figcaption>
     </figure>
   );
 }

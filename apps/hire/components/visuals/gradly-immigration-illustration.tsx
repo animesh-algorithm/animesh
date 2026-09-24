@@ -18,7 +18,6 @@ export function GradlyImmigrationIllustration() {
           sizes="(max-width: 1120px) 100vw, 50vw"
         />
       </div>
-      <figcaption>Gradly Immigration website and student journey preview</figcaption>
     </figure>
   );
 }

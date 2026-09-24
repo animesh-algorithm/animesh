@@ -51,10 +51,6 @@ export function GradlyProductImages() {
           />
         </div>
       ))}
-      <figcaption className="gradly-product-images__caption">
-        Insurance plans <span>·</span> Member app <span>·</span> Illustrative
-        operations concept
-      </figcaption>
     </figure>
   );
 }

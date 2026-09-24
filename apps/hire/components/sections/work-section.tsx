@@ -1,5 +1,6 @@
 import { projects } from "@/content/projects";
 import { VisaFileProductImage } from "@/components/visuals/visafile-product-image";
+import { GradlyMobileVisual } from "@/components/visuals/gradly-mobile-visual";
 import { GradlyProductImages } from "@/components/visuals/gradly-product-images";
 import { GradlyImmigrationIllustration } from "@/components/visuals/gradly-immigration-illustration";
 import { ClaimsAdjudicationVisual } from "@/components/visuals/claims-adjudication-visual";
@@ -62,6 +63,7 @@ export function WorkSection() {
                           {
                             visafile: "visafile",
                             "gradly-health": "gradly-health",
+                            "gradly-mobile-app": "gradly-mobile-app",
                             "gradly-immigration": "gradly-immigration",
                             "gradly-links": "gradly-links",
                             "ai-claims-adjudication": "claims",
@@ -87,6 +89,8 @@ export function WorkSection() {
               <VisaFileProductImage />
             ) : project.slug === "gradly-health" ? (
               <GradlyProductImages />
+            ) : project.slug === "gradly-mobile-app" ? (
+              <GradlyMobileVisual />
             ) : project.slug === "gradly-immigration" ? (
               <GradlyImmigrationIllustration />
             ) : project.slug === "ai-claims-adjudication" ? (
