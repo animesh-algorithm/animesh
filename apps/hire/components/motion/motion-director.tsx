@@ -1,9 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export function MotionDirector() {
+  const pathname = usePathname();
+  const isWorkPage = pathname === "/work";
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [nextWorkTarget, setNextWorkTarget] = useState<string | null>(null);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -50,6 +54,19 @@ export function MotionDirector() {
         const range = document.documentElement.scrollHeight - window.innerHeight;
         root.style.setProperty("--hire-scroll-progress", String(range > 0 ? Math.min(1, window.scrollY / range) : 1));
         setShowScrollTop(window.scrollY > 500);
+        if (isWorkPage) {
+          const projects = Array.from(document.querySelectorAll<HTMLElement>(".work-section .project-story"));
+          const contact = document.getElementById("work-contact");
+          if (contact && contact.getBoundingClientRect().top <= window.innerHeight * 0.55) {
+            setNextWorkTarget(null);
+          } else if (projects.length) {
+            let currentIndex = 0;
+            projects.forEach((project, index) => {
+              if (project.getBoundingClientRect().top <= window.innerHeight * 0.5) currentIndex = index;
+            });
+            setNextWorkTarget(projects[currentIndex + 1]?.id ?? "work-contact");
+          }
+        }
         if (!preference.matches) document.querySelectorAll<HTMLElement>(floatingMediaSelector).forEach((element) => {
           const frame = element.parentElement?.getBoundingClientRect();
           if (!frame || frame.bottom < 0 || frame.top > window.innerHeight) return;
@@ -86,11 +103,20 @@ export function MotionDirector() {
       root.classList.remove("is-tab-hidden");
       root.style.removeProperty("--hire-scroll-progress");
     };
-  }, []);
+  }, [isWorkPage]);
 
   return <>
     <div className="hire-scroll-progress" aria-hidden="true" />
-    {showScrollTop && <button
+    {isWorkPage && nextWorkTarget && <a
+      className="hire-scroll-top hire-scroll-next"
+      href={`#${nextWorkTarget}`}
+      aria-label={nextWorkTarget === "work-contact" ? "Scroll to contact" : "Scroll to next project"}
+    >
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 20 20" fill="none">
+        <path d="M10 4v12m0 0-5-5m5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    </a>}
+    {!isWorkPage && showScrollTop && <button
       className="hire-scroll-top"
       type="button"
       aria-label="Scroll to top"

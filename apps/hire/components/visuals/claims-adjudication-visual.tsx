@@ -95,7 +95,15 @@ function PhoneFrame({
       <div className="claims-phone__island" aria-hidden="true" />
       <div className="claims-phone__status">
         <span>9:41</span>
-        <span aria-hidden="true">● ▰</span>
+        <span className="claims-phone__system-icons" aria-hidden="true">
+          <svg viewBox="0 0 38 14" fill="none">
+            <path d="M1 12V9h2v3zm4 0V7h2v5zm4 0V5h2v7zm4 0V2h2v10z" fill="currentColor" />
+            <path d="M19 5c2.5-2.5 6.5-2.5 9 0m-7 2.5c1.5-1.5 4-1.5 5.5 0M24 10h.1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <rect x="31" y="3" width="5" height="9" rx="1.5" stroke="currentColor" />
+            <rect x="32" y="4" width="3" height="7" rx=".5" fill="currentColor" />
+            <path d="M37 6v3" stroke="currentColor" strokeLinecap="round" />
+          </svg>
+        </span>
       </div>
       {children}
       <div className="claims-phone__home" aria-hidden="true" />
@@ -137,7 +145,7 @@ export function ClaimsAdjudicationVisual() {
         <span>ILLUSTRATIVE UI</span>
       </div>
       <div className="claims-visual__frame" ref={frameRef} style={sceneSize.height ? { height: sceneSize.height } : undefined}>
-      <div className="claims-visual__scene" ref={sceneRef} style={{ transform: `scale(${sceneSize.scale})` }}>
+      <div className="claims-visual__scene" ref={sceneRef} role="region" aria-label="Three-step claim journey" tabIndex={0} style={{ transform: `scale(${sceneSize.scale})` }}>
         <div className="claims-visual__station">
           <PhoneFrame label="File a claim screen">
             <div className="claims-phone__app">
@@ -221,6 +229,7 @@ export function ClaimsAdjudicationVisual() {
         </div>
       </div>
       </div>
+      <p className="claims-visual__hint">Swipe or scroll through the claim journey</p>
     </figure>
   );
 }

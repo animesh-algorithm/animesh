@@ -57,9 +57,12 @@ export function ServicesSection() {
               <span className="service-number">0{index + 1}</span>
               <div>
                 <h2>{service.name}</h2>
-                <p className="service-question">{service.question}</p>
+                {/* <p className="service-question">{service.question}</p> */}
                 <p>{service.description}</p>
-                <Link className="service-detail-link" href={`/services/${service.slug}`}>
+                <Link
+                  className="service-detail-link"
+                  href={`/services/${service.slug}`}
+                >
                   Explore {service.name} →
                 </Link>
               </div>

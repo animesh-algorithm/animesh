@@ -8,9 +8,10 @@ import { InsuranceConciergeVisual } from "@/components/visuals/insurance-concier
 import { GradlyLinksIllustration } from "@/components/visuals/gradly-links-illustration";
 import { FivePointsProductImage } from "@/components/visuals/fivepoints-product-image";
 import { ExperimentProductImage } from "@/components/visuals/experiment-product-image";
-import { Fragment } from "react";
 
 export function WorkSection() {
+  const allProjects = [...projects, ...experiments];
+
   return (
     <section className="work-section" id="work" aria-labelledby="work-title">
       <div className="site-shell section-heading" data-reveal>
@@ -18,22 +19,25 @@ export function WorkSection() {
           <p className="section-kicker">Selected work / {String(projects.length).padStart(2, "0")}</p>
           <h1 id="work-title">Proof lives in the work.</h1>
         </div>
-        <p>The kind of problems that don’t come with a spec.</p>
+        <div className="work-intro">
+          <p>The kind of problems that don’t come with a spec.</p>
+        </div>
       </div>
 
       <div className="site-shell project-ledger">
-        {[...projects, ...experiments].map((project, index) => (
-          <Fragment key={project.slug}>
-          {index === projects.length ? (
-            <div className="experiments-heading" aria-labelledby="experiments-title">
-              <p className="section-kicker">Experiments / 02</p>
-              <h2 id="experiments-title">Ideas in motion.</h2>
-              <p>Smaller products exploring how a familiar task could feel simpler.</p>
-            </div>
-          ) : null}
+        {allProjects.map((project, index) => (
           <article
+            key={project.slug}
+            id={`project-${project.slug}`}
             className={`project-story project-story--${project.accent} project-story--${project.slug}`}
           >
+            {index === projects.length ? (
+              <div className="experiments-heading" aria-labelledby="experiments-title">
+                <p className="section-kicker">Experiments / 02</p>
+                <h2 id="experiments-title">Ideas in motion.</h2>
+                <p>Smaller products exploring how a familiar task could feel simpler.</p>
+              </div>
+            ) : null}
             <div className="project-copy" data-reveal>
               <div className="project-index">
                 {index < projects.length ? `0${index + 1}` : `Experiment 0${index - projects.length + 1}`} / {project.name}
@@ -134,7 +138,6 @@ export function WorkSection() {
               </div>
             )}
           </article>
-          </Fragment>
         ))}
       </div>
     </section>

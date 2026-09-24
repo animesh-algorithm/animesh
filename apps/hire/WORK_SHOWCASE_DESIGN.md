@@ -23,6 +23,7 @@ Use saved source assets instead of typing or redrawing a near-match logo. Keep b
 | `public/images/gradly-immigration-home.png` | User-supplied Gradly Immigration website image; use the current single Mac-window presentation. |
 | `public/images/gradly-insurance-hero.png` | User-supplied public insurance homepage screenshot, including its full header/hero, in the Health collage. |
 | `public/images/gradly-mobile-reference.png` | User-supplied eight-screen Mobile App artwork. Use its design language and screen content to guide the remaining redraws. |
+| `public/images/gradly-mobile-signin.svg` | User-supplied Sign In screen SVG; show this directly in the first phone. |
 | `public/images/gradly-mobile-home.png` | User-supplied Home screen artwork; show this directly in the middle phone. |
 | `public/images/gradly-mobile-providers.svg` | User-supplied Find Providers screen SVG; show this directly in the third phone. |
 | `public/images/gradly-member.jpg` | Member tools capture, reused in the Health collage and Concierge dashboard. |
@@ -78,4 +79,4 @@ This is a **scripted concept**. Hal, the plan terms, date, and card path are exa
 
 ### Gradly Mobile App (2026-09-24 correction)
 
-The eight-screen user-supplied artwork at `public/images/gradly-mobile-reference.png` guides this showcase. The latest supplied Home and Find Providers assets at `public/images/gradly-mobile-home.png` and `public/images/gradly-mobile-providers.svg` supersede their earlier versions: show both directly and retain the illustrative Sign In redraw. Keep the three complete screens inside a compact side-by-side Work visual, with a link to the full reference. Restore the subtle drafting grid behind the devices without adding noise grain. Match the iPhone frame, status island, system indicators, and home indicator to the Claim Journey illustration. Use the official locally saved `public/images/gradly.svg` for Gradly marks. Treat sample account details and claim timing as illustrative; do not publish the artwork's figures, testimonial, or store badges as verified outcomes.
+The eight-screen user-supplied artwork at `public/images/gradly-mobile-reference.png` guides this showcase. Show the supplied Sign In, Home, and Find Providers assets directly in the three phones; the Sign In SVG replaces the illustrative redraw. Keep the three complete screens inside a compact side-by-side Work visual. Restore the subtle drafting grid behind the devices without adding noise grain. Match the iPhone frame, status island, system indicators, and home indicator to the Claim Journey illustration. Treat sample account details and claim timing as illustrative; do not publish the artwork's figures, testimonial, or store badges as verified outcomes.

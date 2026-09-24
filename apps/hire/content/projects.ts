@@ -49,7 +49,7 @@ export const projects = [
     title: "Health coverage, in your pocket.",
     summary: "The supplied Gradly mobile design brings insurance details, claims, care discovery, and support into one student-facing flow.",
     problem: "Students need a clear place to find coverage and follow their next insurance task.",
-    built: "A compact three-screen showcase with the supplied Home and Find Providers SVGs and an illustrative Sign In redraw.",
+    built: "A compact three-screen showcase with the supplied Sign In, Home, and Find Providers artwork.",
     constraint: "The artwork is a design reference; its account details, store badges, and testimonial are not verified live app data or measured outcomes.",
     areas: ["mobile UI", "product design"],
     accent: "cobalt",
