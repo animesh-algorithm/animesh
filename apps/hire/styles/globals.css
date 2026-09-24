@@ -3241,7 +3241,7 @@ html:has(.work-section) {
 .gradly-phone { position: relative; width: 100%; max-width: 10.5rem; aspect-ratio: 1 / 2; overflow: hidden; border: 1px solid #29334b; border-radius: 1.4rem; background: #fff; color: #111c3b; container-type: inline-size; font-family: Arial, Helvetica, sans-serif; font-size: clamp(4px, 4.4cqi, 8px); line-height: 1.25; box-shadow: 0 .3rem .9rem rgb(27 54 111 / 11%); }
 .gradly-phone__island { position: absolute; z-index: 1; top: 0; left: 50%; width: 38%; height: 2.5%; transform: translateX(-50%); border-radius: 0 0 .55rem .55rem; background: #212024; }
 .gradly-phone__indicator { position: absolute; bottom: 1.4%; left: 50%; width: 38%; height: 2px; transform: translateX(-50%); border-radius: 1rem; background: #212024; }
-.gradly-phone--artwork { background: #1924e1; }
+.gradly-phone--artwork { aspect-ratio: 375 / 836; background: #1924e1; }
 .gradly-phone--artwork > img { object-fit: cover; }
 .gradly-mobile-visual figcaption { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .25rem 1rem; margin-top: .65rem; color: #3c4965; font-size: .68rem; line-height: 1.4; }
 .gradly-mobile-visual figcaption a { color: #1742e7; font-weight: 700; text-underline-offset: .2em; }
@@ -3545,6 +3545,25 @@ main > div.motion-visible > h2,
   background: #293854;
   content: "";
 }
+.gradly-phone__status {
+  position: absolute;
+  z-index: 2;
+  top: 1.7%;
+  right: 8%;
+  left: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #16213d;
+  font-size: clamp(7px, 4.7cqi, 14px);
+  font-weight: 700;
+  line-height: 1;
+}
+.gradly-phone__status svg {
+  display: block;
+  width: 13%;
+  height: auto;
+}
 .gradly-phone__indicator,
 .claims-phone__home {
   z-index: 2;
@@ -3583,12 +3602,7 @@ main > div.motion-visible > h2,
 .gradly-mobile-visual__item:first-child .gradly-phone--artwork::before {
   height: 4%;
 }
-.gradly-mobile-visual__item:last-child .gradly-phone--artwork::before {
-  height: 22%;
-  background:
-    linear-gradient(#fff, #fff) bottom / 100% 9% no-repeat,
-    linear-gradient(to right, #fff 0 5%, transparent 5% 95%, #fff 95%) top / 100% 91% no-repeat;
-}
+.gradly-mobile-visual__item:last-child .gradly-phone--artwork::before { content: none; }
 .work-section .project-story :is(
   .visafile-product-image,
   .gradly-product-images,
@@ -3688,7 +3702,7 @@ main > div.motion-visible > h2,
 .work-section .project-story--ai-claims-adjudication > figure { order: 1; max-width: 42rem; }
 .claims-visual__hint { display: none; }
 .work-section .gradly-mobile-visual__screens {
-  max-width: 52rem;
+  max-width: 48rem;
   gap: clamp(0.75rem, 2vw, 1.5rem);
 }
 .work-section .project-story--gradly-mobile-app {
@@ -3722,22 +3736,19 @@ main > div.motion-visible > h2,
     gap: 0.5rem;
   }
   .work-section .gradly-mobile-visual__screens {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     width: 100%;
     max-width: none;
     gap: 0.75rem;
-    overflow-x: auto;
-    overscroll-behavior-inline: contain;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
+    overflow: visible;
   }
   .work-section .gradly-mobile-visual__screens:focus-visible {
     outline: 3px solid var(--color-cobalt);
     outline-offset: 3px;
   }
   .work-section .gradly-mobile-visual__item {
-    flex: 0 0 100%;
-    scroll-snap-align: center;
+    min-width: 0;
   }
   .work-section .gradly-phone {
     max-width: min(14.75rem, calc((100svh - 24rem) * 0.5));
@@ -3745,13 +3756,7 @@ main > div.motion-visible > h2,
   .work-section .gradly-mobile-visual__open {
     max-width: min(14.75rem, calc((100svh - 24rem) * 0.5));
   }
-  .gradly-mobile-visual__hint {
-    display: block;
-    margin: 0.5rem 0 0;
-    color: var(--color-muted-ink);
-    font-size: 0.75rem;
-    text-align: center;
-  }
+  .gradly-mobile-visual__hint { display: none; }
 }
 @media (max-width: 70rem) {
   .work-section .project-story--ai-claims-adjudication {
@@ -3837,7 +3842,8 @@ main > div.motion-visible > h2,
   }
 }
 
-/* Keep the complete Work illustrations in view on narrow phone screens. */
+/* On phones, give each illustration the available width instead of scaling
+   several complete screens down into one narrow row. */
 @media (max-width: 38rem) {
   .work-section .project-story--gradly-health,
   .work-section .project-story--gradly-links {
@@ -3848,21 +3854,29 @@ main > div.motion-visible > h2,
     padding: 0.5rem 0.65rem;
   }
   .work-section .project-story > figure[class] {
-    width: min(100%, 21rem);
+    width: 100%;
     padding: 0.35rem;
   }
-  .work-section .project-story--gradly-mobile-app > figure[class],
-  .work-section .project-story--ai-claims-adjudication > figure[class] {
-    width: 100%;
+  .work-section .project-story--gradly-health > .gradly-product-images {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
   }
-  .work-section .project-story--gradly-health > figure[class] {
-    zoom: 0.35;
+  .work-section .project-story--gradly-health > .gradly-product-images:focus-visible {
+    outline: 3px solid var(--color-cobalt);
+    outline-offset: 3px;
   }
-  .work-section .project-story--ai-insurance-concierge > figure[class] {
-    zoom: 0.55;
+  .work-section .project-story--gradly-health .gradly-product-images__window {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
   }
-  .work-section .project-story--gradly-links > figure[class] {
-    zoom: 0.4;
+  .work-section .project-story--gradly-health .gradly-product-images__window:first-child {
+    grid-column: auto;
+  }
+  .work-section .project-story--gradly-health .gradly-product-images__caption {
+    display: none;
   }
   .work-section .gradly-mobile-visual__screens {
     display: grid;
@@ -3873,36 +3887,50 @@ main > div.motion-visible > h2,
   }
   .work-section .gradly-mobile-visual__item {
     min-width: 0;
+    scroll-snap-align: none;
   }
-  .work-section .gradly-phone,
   .work-section .gradly-mobile-visual__open {
-    max-width: min(100%, calc((100svh - 27rem) * 0.5));
+    width: 100%;
+    max-width: none;
   }
-  .work-section .claims-visual__frame {
-    height: auto;
-  }
-  .work-section .claims-visual__scene {
-    position: absolute;
-    display: grid;
-    width: max(100%, 42rem);
-    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.35fr) minmax(0, 0.92fr);
-    gap: 0.5rem;
-    padding-block: 0.5rem;
-    overflow: visible;
-    scroll-snap-type: none;
-  }
-  .work-section .claims-visual__station {
-    flex: none;
-    width: auto;
+  .work-section .gradly-phone {
+    max-width: none;
+    border-width: 2px;
+    border-radius: 1rem;
   }
   .work-section .claims-phone {
-    max-width: 13rem;
+    border-width: 3px;
+    border-radius: 1rem;
+  }
+  .work-section .claims-visual__frame {
+    height: auto !important;
+  }
+  .work-section .claims-visual__scene {
+    position: relative;
+    display: flex;
+    width: 100%;
+    gap: 0;
+    padding-block: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    transform: none !important;
+  }
+  .work-section .claims-visual__station {
+    flex: 0 0 100%;
+    width: 100%;
+    scroll-snap-align: center;
+  }
+  .work-section .claims-phone {
+    max-width: min(100%, 20rem, calc((100svh - 9rem) * 0.5));
   }
   .work-section .claims-visual__station--process .claims-process {
-    width: 100%;
+    width: min(100%, 20rem);
   }
-  .gradly-mobile-visual__hint,
-  .claims-visual__hint {
-    display: none;
+  .work-section .claims-phone__content {
+    zoom: 0.75;
+  }
+  .work-section .gradly-mobile-visual__hint { display: none; }
+  .work-section .claims-visual__hint {
+    display: block;
   }
 }

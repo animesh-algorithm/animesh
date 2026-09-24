@@ -9,6 +9,18 @@ function ArtworkScreen({ name, src }: { name: string; src: string }) {
         aria-label={`${name} screen supplied as Gradly artwork`}
       >
         <Image src={src} alt="" fill sizes="216px" unoptimized />
+        {name === "Sign in" ? (
+          <div className="gradly-phone__status" aria-hidden="true">
+            <span>9:41</span>
+            <svg viewBox="0 0 38 14" fill="none">
+              <path d="M1 12V9h2v3zm4 0V7h2v5zm4 0V5h2v7zm4 0V2h2v10z" fill="currentColor" />
+              <path d="M19 5c2.5-2.5 6.5-2.5 9 0m-7 2.5c1.5-1.5 4-1.5 5.5 0M24 10h.1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+              <rect x="31" y="3" width="5" height="9" rx="1.5" stroke="currentColor" />
+              <rect x="32" y="4" width="3" height="7" rx=".5" fill="currentColor" />
+              <path d="M37 6v3" stroke="currentColor" strokeLinecap="round" />
+            </svg>
+          </div>
+        ) : null}
         <div className="gradly-phone__island" aria-hidden="true" />
         <div className="gradly-phone__indicator" aria-hidden="true" />
       </div>

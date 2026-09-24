@@ -29,6 +29,7 @@ export function GradlyProductImages() {
     <figure
       className="gradly-product-images"
       aria-label="Three Gradly product screenshots"
+      tabIndex={0}
     >
       {surfaces.map((surface) => (
         <div className="gradly-product-images__window" key={surface.src}>
