@@ -180,19 +180,26 @@ four-step timeline.
 ### Pricing
 
 Use three vertically structured engagement panels with strong typographic prices,
-one clearly emphasized core engagement, fit cues, a supporting principles strip,
-and a separate fit comparison. The inspiration is the scannable sequence on
-Launchcraft's pricing page, including its plan -> principles -> comparison -> FAQ
--> booking rhythm. Keep Animesh's own prices, scope boundaries, voice, and visual
+one clearly emphasized core engagement, fit cues, and a separate fit comparison.
+The pricing cards fit together in a desktop viewport and give the scope lists
+room to breathe. The page then moves to comparison, FAQ, and booking. Keep
+Animesh's own prices, scope boundaries, voice, and visual
 identity rather than importing another studio's claims or plan details.
 
 ### Fit, FAQ, and booking
 
-Follow pricing with a candid situational comparison, editorial FAQ rows, and a
-high-contrast booking panel. The persistent availability control should remain
+Follow pricing with a six-row fit comparison on a quiet white surface. Give
+the comparison its own viewport and place the FAQ in the next viewport. On
+phones, present the comparison as compact labeled rows without horizontal
+scrolling. Give the full-width booking calendar, About, and Contact their own
+viewport stops, with the down-scroll control visiting each in order. The persistent availability control should remain
 visible at every scroll position and connect directly to the booking path. When
-a public Cal.com event URL is configured, the schedule may be embedded below the
-booking panel; keep an external-calendar link and email fallback visible.
+a public Cal.com event URL is configured, show a simple heading and the schedule
+across the booking viewport on Home and Pricing, with an external-calendar link.
+When it is not configured, show the direct-email call request and email fallback.
+Alternate the drafting grid through these viewport stops: the comparison has a
+solid surface, FAQ reveals the grid, booking uses a solid surface, About reveals
+the grid again, and Contact returns to a solid surface.
 
 ### Availability and inquiry
 
@@ -228,9 +235,9 @@ The existing logo, paper/ink/cobalt palette, type, diagrams, and project accent
 colors remain the visual system. Desktop navigation is a persistent left sidebar;
 smaller screens use the compact, keyboard-accessible disclosure menu. The pages
 are Home, Work, Services, Pricing, About, and Contact. Home carries the short
-product-build offer and two direct paths. The full project ledger now owns Work,
-service process owns Services, engagements and comparison own Pricing, and the
-inquiry form owns Contact. This route structure supersedes the single-page
+product-build offer and two direct paths. Home presents the same Work, Services,
+Pricing, fit, About, and Contact content as the dedicated routes, with in-page
+anchors for a continuous mobile reading path. This route structure supersedes the single-page
 composition and header sections above. LaunchCraft informed navigation clarity
 and route structure only; its visual assets and claims are not used.
 

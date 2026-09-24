@@ -36,7 +36,9 @@ describe("published content", () => {
     expect(site.hero.provisional).toBe(false);
     expect(services.find((service) => service.slug === "mvp-development")?.provisional).toBe(false);
     expect(services.filter((service) => service.slug !== "mvp-development").every((service) => service.provisional)).toBe(true);
-    expect(engagements.every((engagement) => engagement.provisional)).toBe(true);
+    expect(engagements.map((engagement) => [engagement.name, engagement.startingPriceUsd])).toEqual([
+      ["Ship a Page", 500], ["Build a Product", 2000], ["Monthly Retainer", 1500],
+    ]);
     expect(availability.activeProjects).toBe(1);
   });
 
@@ -54,11 +56,11 @@ describe("published content", () => {
   });
 
   it("keeps the expanded commercial guidance auditable", () => {
-    expect(engagements.every((engagement) => engagement.fit.length >= 2)).toBe(true);
+    expect(engagements.every((engagement) => engagement.audience.length > 0)).toBe(true);
     expect(engagements.every((engagement) => engagement.included.length >= 2)).toBe(true);
-    expect(engagements.every((engagement) => engagement.notIncluded.length >= 1)).toBe(true);
+    expect(engagements.every((engagement) => engagement.cta.length > 0)).toBe(true);
     expect(engagements.filter((engagement) => engagement.featured)).toHaveLength(1);
-    expect(comparisonRows).toHaveLength(4);
+    expect(comparisonRows).toHaveLength(6);
     expect(faqs.length).toBeGreaterThanOrEqual(5);
   });
 });

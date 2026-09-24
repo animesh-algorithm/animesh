@@ -6,8 +6,9 @@ import { usePathname } from "next/navigation";
 export function MotionDirector() {
   const pathname = usePathname();
   const isWorkPage = pathname === "/work";
+  const isHomePage = pathname === "/";
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [nextWorkTarget, setNextWorkTarget] = useState<string | null>(null);
+  const [nextTarget, setNextTarget] = useState<string | null>(null);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -53,18 +54,26 @@ export function MotionDirector() {
       frame = requestAnimationFrame(() => {
         const range = document.documentElement.scrollHeight - window.innerHeight;
         root.style.setProperty("--hire-scroll-progress", String(range > 0 ? Math.min(1, window.scrollY / range) : 1));
-        setShowScrollTop(window.scrollY > 500);
-        if (isWorkPage) {
+        const atBottom = range > 0 && range - window.scrollY <= 96;
+        setShowScrollTop(isWorkPage || isHomePage ? atBottom : window.scrollY > 500);
+        if (isWorkPage || isHomePage) {
           const projects = Array.from(document.querySelectorAll<HTMLElement>(".work-section .project-story"));
           const contact = document.getElementById("work-contact");
-          if (contact && contact.getBoundingClientRect().top <= window.innerHeight * 0.55) {
-            setNextWorkTarget(null);
+          if (atBottom) {
+            setNextTarget(null);
+          } else if (isHomePage) {
+            const targetIds = ["work", ...projects.map((project) => project.id), "services", "pricing", "fit", "faq", "book", "about", "inquiry"];
+            const targets = targetIds.map((id) => document.getElementById(id)).filter((target): target is HTMLElement => target !== null);
+            const next = targets.find((target) => target.getBoundingClientRect().top > window.innerHeight * 0.5);
+            setNextTarget(next?.id ?? null);
+          } else if (contact && contact.getBoundingClientRect().top <= window.innerHeight * 0.55) {
+            setNextTarget(null);
           } else if (projects.length) {
             let currentIndex = 0;
             projects.forEach((project, index) => {
               if (project.getBoundingClientRect().top <= window.innerHeight * 0.5) currentIndex = index;
             });
-            setNextWorkTarget(projects[currentIndex + 1]?.id ?? "work-contact");
+            setNextTarget(projects[currentIndex + 1]?.id ?? "work-contact");
           }
         }
         if (!preference.matches) document.querySelectorAll<HTMLElement>(floatingMediaSelector).forEach((element) => {
@@ -99,30 +108,32 @@ export function MotionDirector() {
       observer?.disconnect();
       cancelAnimationFrame(frame);
       cancelAnimationFrame(scanFrame);
-      showAll();
+      // React may rerun this effect in development. Clear stale hidden state so
+      // the next scan can observe off-screen sections and animate them on entry.
+      document.querySelectorAll(".motion-pending").forEach((element) => element.classList.remove("motion-pending"));
       root.classList.remove("is-tab-hidden");
       root.style.removeProperty("--hire-scroll-progress");
     };
-  }, [isWorkPage]);
+  }, [isHomePage, isWorkPage]);
 
   return <>
     <div className="hire-scroll-progress" aria-hidden="true" />
-    {isWorkPage && nextWorkTarget && <a
+    {(isWorkPage || isHomePage) && !showScrollTop && nextTarget && <a
       className="hire-scroll-top hire-scroll-next"
-      href={`#${nextWorkTarget}`}
-      aria-label={nextWorkTarget === "work-contact" ? "Scroll to contact" : "Scroll to next project"}
+      href={`#${nextTarget}`}
+      aria-label={nextTarget === "work-contact" || nextTarget === "inquiry" ? "Scroll to contact" : isHomePage ? "Scroll to next section" : "Scroll to next project"}
     >
       <svg aria-hidden="true" width="26" height="26" viewBox="0 0 20 20" fill="none">
         <path d="M10 4v12m0 0-5-5m5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </a>}
-    {!isWorkPage && showScrollTop && <button
-      className="hire-scroll-top"
+    {showScrollTop && <button
+      className={`hire-scroll-top${isWorkPage || isHomePage ? " hire-scroll-up" : ""}`}
       type="button"
       aria-label="Scroll to top"
       onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })}
     >
-      <svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 20 20" fill="none">
         <path d="M10 16V4m0 0-5 5m5-5 5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </button>}

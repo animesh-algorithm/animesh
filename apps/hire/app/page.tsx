@@ -1,52 +1,37 @@
 import Link from "next/link";
 import { SiteShell } from "@/components/layout/site-shell";
 import { PrototypeIllustration } from "@/components/visuals/prototype-illustration";
-import { VisaFileProductImage } from "@/components/visuals/visafile-product-image";
-import { GradlyProductImages } from "@/components/visuals/gradly-product-images";
-import { projects } from "@/content/projects";
-import { services } from "@/content/services";
-import { engagements, faqs } from "@/content/commercial";
+import { WorkSection } from "@/components/sections/work-section";
+import { ServicesSection } from "@/components/sections/services-section";
+import { PricingSection } from "@/components/sections/pricing-section";
+import { FitSection } from "@/components/sections/fit-section";
+import { AboutSection } from "@/components/sections/about-section";
+import { InquirySection } from "@/components/sections/inquiry-section";
+import { ContactOptions } from "@/components/sections/contact-options";
 import { site } from "@/content/site";
 import { getBookingDestination } from "@/lib/booking";
-import { FaqAccordion } from "@/components/faq/faq-accordion";
 import { HeroHeadline } from "@/components/sections/hero-headline";
 
 export const metadata = { alternates: { canonical: "/" } };
 
 export default function HomePage() {
   const booking = getBookingDestination();
-  const featuredProjects = projects.filter((project) => project.slug === "visafile" || project.slug === "gradly-health");
-  const projectEntries = featuredProjects.map((project, index) => ({ project, index }));
-  const renderProject = ({ project, index }: (typeof projectEntries)[number]) => <article className="v2-home-project" key={project.slug}>
-    {project.slug === "visafile" ? <VisaFileProductImage /> : <GradlyProductImages />}
-    <div className="v2-home-project__copy"><span>0{index + 1} / {project.areas.join(" · ")}</span><h3>{project.name}</h3><p>{project.summary}</p>{project.slug === "gradly-health" ? <p className="v2-home-project__proof">10K+ members served · 25+ U.S. universities</p> : null}<Link href="/work">Read the project story →</Link></div>
-  </article>;
-  return <main id="main-content">
+  return <main className="home-page" id="main-content">
     <SiteShell className="hero v2-hero">
       <div>
         <p className="eyebrow">For founders who want to ship</p>
         <HeroHeadline />
         <p className="hero-copy">{site.hero.support}</p>
-        <div className="hero-actions"><a className="button" href={booking.href} rel={booking.configured ? "noreferrer" : undefined} target={booking.configured ? "_blank" : undefined}>Talk to Animesh</a><Link className="text-link" href="/work">Show, don’t tell</Link></div>
+        <div className="hero-actions"><a className="button" href="#inquiry">Talk to Animesh</a><Link className="text-link" href="#work">Show, don’t tell</Link></div>
       </div>
       <PrototypeIllustration />
     </SiteShell>
-    <section className="v2-home-work" aria-labelledby="home-work-title"><div className="site-shell">
-      <div className="v2-home-section-head"><div><p className="section-kicker">Selected work / {String(featuredProjects.length).padStart(2, "0")}</p><h2 id="home-work-title">Proof in the work.</h2></div><Link className="text-link" href="/work">Explore project stories →</Link></div>
-      <div className="v2-home-work-grid">{projectEntries.map(renderProject)}</div>
-    </div></section>
-    <section className="v2-home-services" aria-labelledby="home-services-title"><div className="site-shell">
-      <div className="v2-home-section-head"><div><p className="section-kicker">Services</p><h2 id="home-services-title">Ways I can help.</h2></div><Link className="text-link" href="/services">How I work →</Link></div>
-      <ol className="v2-home-service-list">{services.map((service, index) => <li key={service.slug}><span>0{index + 1}</span><div><h3>{service.name}</h3><p>{service.description}</p><Link className="text-link" href={`/services/${service.slug}`}>Explore {service.name} →</Link></div></li>)}</ol>
-      <div className="v2-home-process"><span>01 / Understand the workflow</span><span>02 / Shape and build</span><span>03 / Put it in people’s hands</span></div>
-    </div></section>
-    <section className="v2-home-pricing" aria-labelledby="home-pricing-title"><div className="site-shell">
-      <div className="v2-home-section-head"><div><p className="section-kicker">Engagements</p><h2 id="home-pricing-title">Start at the right scale.</h2></div><Link className="text-link" href="/pricing">Explore pricing and fit →</Link></div>
-      <p className="v2-home-section-intro">I scope the problem with you, then quote the work. These engagement starting prices are under review; a scoped MVP build starts at $2,000 USD.</p>
-      <div className="v2-home-engagements">{engagements.map((engagement, index) => <article key={engagement.slug}><span>0{index + 1} / {engagement.featured ? "Core engagement" : "Starting point"}</span><h3>{engagement.name}</h3><p>{engagement.intent}</p><Link href="/pricing">See what’s included →</Link></article>)}</div>
-    </div></section>
-    <section className="v2-home-about" aria-labelledby="home-about-title"><div className="site-shell v2-home-about__layout"><div><p className="section-kicker">The person behind the work</p><h2 id="home-about-title">One person, close to the work.</h2></div><div><p>I’m Animesh Sharma. I work across product, engineering, and operations to turn an unclear problem into a useful system.</p><p>You work directly with the person shaping and building it. I keep the scope, constraints, and open questions visible.</p><Link className="text-link" href="/about">More about how I work →</Link></div></div></section>
-    <section className="v2-home-faq" aria-labelledby="home-faq-title"><div className="site-shell v2-home-faq__layout"><div><p className="section-kicker">FAQ</p><h2 id="home-faq-title">Good questions.<br />Straight answers.</h2></div><FaqAccordion items={faqs.filter((faq) => faq.question !== "How current is the availability information?")} /></div></section>
-    <section className="v2-home-close"><div className="site-shell"><p className="section-kicker">Have a rough brief?</p><h2>Bring the early version.</h2><p>Tell me what you need to build or untangle. I work directly across product and engineering.</p><div className="hero-actions"><a className="button button--light" href={booking.href} rel={booking.configured ? "noreferrer" : undefined} target={booking.configured ? "_blank" : undefined}>{booking.configured ? "Book a call" : "Request a call"}</a><Link className="text-link" href="/contact">Send a message →</Link></div></div></section>
+    <WorkSection home />
+    <div className="v2-services-page"><ServicesSection home /></div>
+    <PricingSection home />
+    <FitSection bookingHref={booking.href} bookingConfigured={booking.configured} bookingEmbedHref={booking.embedHref} />
+    <AboutSection home />
+    <InquirySection home />
+    <ContactOptions />
   </main>;
 }

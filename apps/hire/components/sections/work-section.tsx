@@ -9,7 +9,7 @@ import { GradlyLinksIllustration } from "@/components/visuals/gradly-links-illus
 import { FivePointsProductImage } from "@/components/visuals/fivepoints-product-image";
 import { ExperimentProductImage } from "@/components/visuals/experiment-product-image";
 
-export function WorkSection() {
+export function WorkSection({ home = false }: { home?: boolean }) {
   const allProjects = [...projects, ...experiments];
 
   return (
@@ -17,7 +17,7 @@ export function WorkSection() {
       <div className="site-shell section-heading" data-reveal>
         <div>
           <p className="section-kicker">Selected work / {String(projects.length).padStart(2, "0")}</p>
-          <h1 id="work-title">Proof lives in the work.</h1>
+          {home ? <h2 id="work-title">Proof in the work.</h2> : <h1 id="work-title">Proof lives in the work.</h1>}
         </div>
         <div className="work-intro">
           <p>The kind of problems that don’t come with a spec.</p>

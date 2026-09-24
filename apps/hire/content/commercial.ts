@@ -8,59 +8,49 @@ import {
 
 export const engagements = [
   validateContent(engagementSchema, {
-    slug: "sprint",
-    name: "Focused Sprint",
-    startingPriceUsd: 2500,
-    intent: "Discovery, prototype, or technical direction",
-    fit: ["Discovery", "Prototype", "Technical direction"],
+    slug: "page",
+    name: "Ship a Page",
+    startingPriceUsd: 500,
+    promise: "A polished page, built and live.",
+    audience: "For founders who already know what they want and need someone to ship it properly.",
     included: [
-      "Problem framing and scope definition",
-      "Prototype or technical direction",
-      "A decision-ready next-step recommendation",
+      "Landing page or marketing site", "Built from Figma or an existing direction",
+      "Responsive across devices", "Animations & interactions", "Forms, analytics & integrations",
+      "Performance & SEO basics", "Production deployment", "Source code handed over",
     ],
-    notIncluded: [
-      "Full production implementation",
-      "Ongoing delivery after the sprint",
-    ],
+    cta: "Ship my page",
     featured: false,
-    provisional: true,
   }),
   validateContent(engagementSchema, {
     slug: "build",
-    name: "End-to-End Build",
-    startingPriceUsd: 8000,
-    intent: "Scoped product, automation, or internal system",
-    fit: ["Scoped product", "Workflow automation", "Internal system"],
+    name: "Build a Product",
+    startingPriceUsd: 2000,
+    promise: "Give me the problem. I’ll help turn it into software.",
+    audience: "For MVPs and products where you need more than someone converting designs into code.",
     included: [
-      "A defined product, automation, or internal system",
-      "Product and engineering execution",
-      "A working handoff with known constraints",
+      "Product scoping & technical decisions", "Web, SaaS, AI or mobile product",
+      "Frontend + backend", "Authentication & permissions", "Database & APIs",
+      "Payments & third-party integrations", "AI/LLM features where useful",
+      "Admin/internal tooling", "Production deployment", "Post-launch fixes",
     ],
-    notIncluded: [
-      "An open-ended backlog without a scoped boundary",
-      "Ongoing embedded support after handoff",
-    ],
+    cta: "Build my product",
     featured: true,
-    provisional: true,
   }),
   validateContent(engagementSchema, {
-    slug: "embedded",
-    name: "Embedded Support",
-    startingPriceUsd: 4000,
-    priceSuffix: "/month",
-    intent: "Ongoing product and engineering support",
-    fit: ["Ongoing product support", "Engineering support", "Embedded collaboration"],
+    slug: "retainer",
+    name: "Monthly Retainer",
+    startingPriceUsd: 1500,
+    priceSuffix: "/mo",
+    promise: "A product engineer on your team without another full-time hire.",
+    audience: "For founders with an existing product who need someone who can own work instead of waiting for tickets.",
     included: [
-      "Ongoing product and engineering execution",
-      "Priority shaping within the engagement",
-      "Direct embedded collaboration",
+      "Feature development", "Product iteration", "AI features & integrations",
+      "Bugs & technical debt", "Performance improvements", "Infrastructure & deployment",
+      "Direct founder communication", "Weekly shipping/progress updates",
+      "Flexible priorities month to month",
     ],
-    notIncluded: [
-      "A separate multi-person delivery team",
-      "Unbounded work outside agreed priorities",
-    ],
+    cta: "Work with me",
     featured: false,
-    provisional: true,
   }),
 ] as const;
 
@@ -70,35 +60,45 @@ export const availability = validateContent(availabilitySchema, {
 
 export const comparisonRows = [
   validateContent(comparisonRowSchema, {
-    topic: "Best when",
-    largerPartner: "You need a large, parallel delivery team.",
-    independentBuilder: "You need one senior operator-builder on a focused problem.",
+    topic: "Delivery",
+    largerPartner: "Multiple handoffs",
+    independentBuilder: "Direct from idea to production",
   }),
   validateContent(comparisonRowSchema, {
-    topic: "Working style",
-    largerPartner: "Specialists coordinate across roles and handoffs.",
-    independentBuilder: "Product, engineering, and operations stay in one working loop.",
+    topic: "Cost",
+    largerPartner: "Agency overhead",
+    independentBuilder: "Starting from $500",
   }),
   validateContent(comparisonRowSchema, {
-    topic: "Problem shape",
-    largerPartner: "The brief is already defined for a larger team.",
-    independentBuilder: "The messy workflow still needs to become a clear system.",
+    topic: "Who builds it",
+    largerPartner: "A team you rarely meet",
+    independentBuilder: "The person you talk to",
   }),
   validateContent(comparisonRowSchema, {
     topic: "Communication",
-    largerPartner: "A delivery structure manages multiple contributors.",
-    independentBuilder: "You speak directly with the person shaping and building the work.",
+    largerPartner: "Through a PM",
+    independentBuilder: "Direct with me",
+  }),
+  validateContent(comparisonRowSchema, {
+    topic: "Product thinking",
+    largerPartner: "You bring the spec",
+    independentBuilder: "You bring the problem",
+  }),
+  validateContent(comparisonRowSchema, {
+    topic: "Code ownership",
+    largerPartner: "Depends on the contract",
+    independentBuilder: "Yours. 100%. From day one.",
   }),
 ] as const;
 
 export const faqs = [
   validateContent(faqSchema, {
     question: "Which engagement should I start with?",
-    answer: "Choose a Focused Sprint for discovery, a prototype, or technical direction; an End-to-End Build for a scoped product or system; and Embedded Support for ongoing product and engineering work.",
+    answer: "Ship a Page is for an established direction that needs to go live. Build a Product covers a scoped MVP or product. Monthly Retainer is for ongoing ownership of an existing product.",
   }),
   validateContent(faqSchema, {
     question: "Are these fixed prices?",
-    answer: "I quote after reviewing the problem and scope. A scoped MVP starts at $2,000 USD; the separate engagement starting prices are still under review and are not published yet.",
+    answer: "These are starting prices in USD: Ship a Page from $500, Build a Product from $2,000, and Monthly Retainer from $1,500 per month. I quote the final price after reviewing scope and priorities.",
   }),
   validateContent(faqSchema, {
     question: "What kinds of problems are a strong fit?",

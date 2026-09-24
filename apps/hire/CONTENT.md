@@ -120,9 +120,10 @@ Verified public event URL: `https://cal.com/meet-animesh/30min`
 
 ## Fit comparison and FAQ — provisional
 
-The comparison should explain when an independent senior operator-builder is a
-better fit than a larger delivery partner. It must remain situational and must
-not make unsupported claims about agencies, teams, speed, guarantees, or cost.
+The user supplied the fit-test heading and six comparison rows on 2026-09-24.
+They compare typical agency process with working directly with Animesh, using
+the approved $500 starting price. Present these as positioning, not measured
+agency-wide outcomes or delivery guarantees.
 
 FAQ answers may clarify the three engagement starting points, starting-price
 status, service fit, manually maintained availability, and booking fallback.
@@ -271,6 +272,14 @@ is manually maintained in content, and v2 shows its derived status and confirmed
 monthly capacity. The site does not imply live calendar data. Service
 copy explains areas of work without claiming a delivery time or guaranteed result.
 Review these values before any later publication of exact numbers.
+
+## Pricing update (2026-09-24)
+
+The user supplied three public offers and starting prices for the pricing section:
+Ship a Page from $500, Build a Product from $2,000, and Monthly Retainer from
+$1,500 per month, in USD. The supplied offer copy and scope lists replace the
+earlier provisional engagement examples above for public pricing. Final scope
+and quote are agreed per inquiry; the starting prices are not fixed quotes.
 
 The sidebar's "05 project stories" counts the five documented projects here;
 it does not claim a lifetime number of products shipped. "Scoped together"

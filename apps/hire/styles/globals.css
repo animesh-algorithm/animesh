@@ -54,6 +54,14 @@ dd {
 section {
   scroll-margin-top: 1rem;
 }
+@media (max-width: 56rem) {
+  section[id],
+  #fit,
+  #faq,
+  #book {
+    scroll-margin-top: 4.5rem;
+  }
+}
 main > .hero,
 main > section {
   position: relative;
@@ -562,7 +570,7 @@ html:has(.work-section) {
 }
 
 /* Work keeps the editorial hierarchy at a calmer scale beside product media. */
-.work-section .section-heading h1 {
+.work-section .section-heading :is(h1, h2) {
   font-size: clamp(1.6rem, 2.5vw, 2.3rem);
 }
 .work-section .project-copy h2 {
@@ -676,7 +684,7 @@ html:has(.work-section) {
   color: var(--color-butter);
   font-weight: 900;
 }
-.service-list h2 {
+.service-list :is(h2, h3) {
   margin-bottom: var(--space-2);
   font-size: var(--text-h3);
   line-height: 1;
@@ -695,6 +703,57 @@ html:has(.work-section) {
   color: var(--color-butter);
   font-weight: 800;
   text-underline-offset: 0.25rem;
+}
+.v2-services-page .services-section {
+  display: flex;
+  min-height: 100svh;
+  align-items: center;
+  padding-block: clamp(2rem, 5vh, 4rem);
+}
+.v2-services-page .services-layout {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vh, 2.5rem);
+}
+.v2-services-page .section-heading--sticky {
+  position: static;
+  max-width: 42rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.v2-services-page .section-heading--sticky :is(h1, h2) {
+  margin-block: 0.5rem;
+  font-size: var(--text-h2);
+}
+.v2-services-page .section-heading--sticky > p:last-child {
+  margin-inline: auto;
+  font-size: 0.95rem;
+}
+.v2-services-page .service-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+.v2-services-page .service-list li {
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.75rem;
+  padding: clamp(1rem, 1.7vw, 1.5rem);
+}
+.v2-services-page .service-list :is(h2, h3) {
+  font-size: var(--text-h3);
+  line-height: 1.12;
+}
+.v2-services-page .service-list p,
+.v2-services-page .service-detail-link {
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+@media (max-width: 38rem) {
+  .v2-services-page .services-section {
+    min-height: calc(100svh - 4.5rem);
+  }
+  .v2-services-page .service-list {
+    grid-template-columns: 1fr;
+  }
 }
 .process-strip {
   display: grid;
@@ -815,7 +874,7 @@ html:has(.work-section) {
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.pricing-card h2 {
+.pricing-card :is(h2, h3) {
   margin: var(--space-4) 0 var(--space-2);
   font-size: var(--text-h3);
   line-height: 1;
@@ -922,86 +981,56 @@ html:has(.work-section) {
 .button--light:hover {
   background: var(--color-butter);
 }
-.pricing-principles {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: var(--space-6);
-}
-.pricing-principles > div {
-  min-height: 10rem;
-  padding: 1.15rem;
-  border: 1px solid var(--color-ink);
-  border-radius: 1.5rem 2.75rem 2rem 2.25rem / 2rem 1.5rem 2.5rem 1.75rem;
-  background: var(--color-paper);
-}
-.pricing-principles > div:nth-child(even) {
-  border-radius: 2.75rem 1.5rem 2.25rem 1.75rem / 1.5rem 2.5rem 1.75rem 2.25rem;
-}
-.pricing-principles span {
-  display: block;
-  margin-bottom: var(--space-3);
-  color: var(--color-coral);
-  font-size: 0.72rem;
-  font-weight: 900;
-}
-.pricing-principles strong {
-  display: block;
-  margin-bottom: 0.35rem;
-}
-.pricing-principles p {
-  margin: 0;
-  color: var(--color-muted-ink);
-  font-size: 0.9rem;
-}
-.provisional-note {
-  margin-top: var(--space-3);
-  color: var(--color-muted-ink);
-  font-size: 0.85rem;
-}
-
 .fit-section {
-  padding-block: var(--space-section);
+  padding: 0 0 var(--space-section);
+}
+.home-page > .fit-section {
+  padding-bottom: 0;
+}
+.fit-comparison-stage {
+  background: var(--color-white);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+  padding-block: clamp(2rem, 5vh, 3.5rem);
 }
 .fit-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(16rem, 0.9fr);
-  gap: clamp(1rem, 3vw, 3rem);
-  align-items: end;
-  margin-bottom: clamp(2rem, 4vw, 4rem);
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
 }
 .fit-heading h2,
 .faq-heading h2,
-.booking-panel h2 {
+.booking-stage h2 {
   margin: 0;
   font-size: var(--text-h2);
-  font-weight: 900;
-  letter-spacing: -0.065em;
-  line-height: 0.94;
+  font-weight: 650;
+  letter-spacing: -0.05em;
+  line-height: 1;
 }
-.fit-heading > p:last-child {
-  margin: 0;
-  color: var(--color-muted-ink);
+.fit-heading h2 em {
+  color: var(--color-cobalt-dark);
+  font-weight: inherit;
 }
 .comparison-wrap {
-  overflow-x: auto;
-  border: var(--border);
-  border-radius: 2.25rem 4rem 2rem 3rem / 3rem 2rem 3.5rem 2.25rem;
-  box-shadow: var(--shadow-hard);
+  flex: none;
+  height: min(70svh, 44rem);
+  overflow: hidden;
+  border: 1px solid #d9d6d0;
+  border-radius: var(--radius-medium);
 }
 .comparison-table {
   width: 100%;
-  min-width: 48rem;
+  height: 100%;
   border-collapse: collapse;
   background: var(--color-white);
 }
 .comparison-table th,
 .comparison-table td {
-  padding: 1.3rem;
-  border-right: 1px solid var(--color-ink);
-  border-bottom: 1px solid var(--color-ink);
+  padding: clamp(0.7rem, 1.35vw, 1.05rem);
+  border-right: 1px solid #e7e4df;
+  border-bottom: 1px solid #e7e4df;
   text-align: left;
-  vertical-align: top;
+  vertical-align: middle;
 }
 .comparison-table th:last-child,
 .comparison-table td:last-child {
@@ -1011,35 +1040,127 @@ html:has(.work-section) {
   border-bottom: 0;
 }
 .comparison-table thead th {
-  background: var(--color-ink);
-  color: var(--color-white);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
+  background: var(--color-white);
+  color: var(--color-muted-ink);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 .comparison-table thead th:last-child {
-  background: var(--color-cobalt);
+  color: var(--color-cobalt-dark);
 }
 .comparison-table tbody th {
-  width: 18%;
-  font-size: 0.78rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  width: 22%;
+  color: var(--color-muted-ink);
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 .comparison-table tbody td {
-  width: 41%;
+  width: 39%;
   color: var(--color-muted-ink);
+  font-size: clamp(0.88rem, 1.15vw, 1rem);
 }
 .comparison-table tbody td:last-child {
-  background: #eef3ff;
+  background: #f8faff;
   color: var(--color-ink);
   font-weight: 800;
+}
+@media (max-width: 56rem) {
+  .fit-comparison-stage {
+    min-height: calc(100svh - 4.5rem);
+  }
+  .comparison-wrap {
+    height: min(62svh, 39rem);
+  }
+}
+@media (max-width: 38rem) {
+  .home-page > .v2-about {
+    padding-block: 2.5rem;
+  }
+  .home-page .v2-about .v2-lead {
+    margin-block: 1.5rem 2rem;
+  }
+  .home-page .v2-about-grid {
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+@media (max-width: 38rem) {
+  .fit-comparison-stage {
+    padding-block: 1.25rem;
+  }
+  .fit-heading {
+    margin-bottom: 0.8rem;
+  }
+  .comparison-table,
+  .comparison-table tr {
+    display: block;
+  }
+  .comparison-table tbody {
+    display: grid;
+    min-height: 100%;
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+  }
+  .comparison-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+  .comparison-table tbody tr {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-bottom: 1px solid #e7e4df;
+  }
+  .comparison-table tbody tr:last-child {
+    border-bottom: 0;
+  }
+  .comparison-table tbody th,
+  .comparison-table tbody td {
+    display: block;
+    width: auto;
+    padding: 0.45rem 0.6rem;
+    border-bottom: 0;
+    font-size: 0.73rem;
+    line-height: 1.25;
+  }
+  .comparison-table tbody th {
+    grid-column: 1 / -1;
+    padding-bottom: 0;
+    border-right: 0;
+    font-size: 0.69rem;
+  }
+  .comparison-table tbody td::before {
+    display: block;
+    margin-bottom: 0.1rem;
+    color: var(--color-muted-ink);
+    content: attr(data-label);
+    font-size: 0.57rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+}
+@media (max-width: 38rem) and (max-height: 44rem) {
+  .fit-comparison-stage {
+    padding-bottom: 4.5rem;
+  }
+  .comparison-wrap {
+    height: calc(100svh - 14.5rem);
+  }
+  .comparison-table tbody th,
+  .comparison-table tbody td {
+    padding-block: 0.15rem;
+  }
 }
 .faq-layout {
   display: grid;
   grid-template-columns: 0.7fr 1.3fr;
   gap: clamp(3rem, 8vw, 8rem);
-  margin-top: var(--space-section);
+  min-height: 100svh;
+  padding-block: var(--space-section);
 }
 .faq-heading h2 {
   margin-top: var(--space-3);
@@ -1105,39 +1226,67 @@ html:has(.work-section) {
   grid-template-rows: 1fr;
   opacity: 1;
 }
-.booking-panel {
-  display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
-  gap: var(--space-6);
-  align-items: end;
-  margin-top: var(--space-section);
-  padding: clamp(1.5rem, 5vw, 4rem);
-  border: 3px solid var(--color-ink);
-  border-radius: 3rem 5rem 2rem 4rem / 4rem 2.5rem 4.5rem 2.75rem;
-  background: var(--color-ink);
-  color: var(--color-white);
-  box-shadow: 0.7rem 0.7rem 0 var(--color-coral);
+.booking-stage {
+  background: #fff5d8;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100svh;
+  min-height: 0;
+  padding-block: clamp(2rem, 5vh, 3.5rem);
 }
-.booking-panel h2 {
+.home-page > .v2-about,
+.home-page > .inquiry-section {
+  display: flex;
+  align-items: center;
+  min-height: 100svh;
+}
+@media (max-width: 56rem) {
+  .home-page > .v2-about,
+  .home-page > .inquiry-section {
+    min-height: calc(100svh - 4.5rem);
+  }
+  .booking-stage {
+    height: calc(100svh - 4.5rem);
+    padding-block: clamp(1.25rem, 3vh, 2rem);
+  }
+}
+.booking-stage__calendar {
+  width: var(--shell);
+  height: 100%;
+  min-height: 0;
+  margin-inline: auto;
+}
+.booking-stage .cal-booking {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+.booking-stage .cal-booking__heading {
+  padding: 0 0 clamp(0.75rem, 2vh, 1.5rem);
+  border-radius: 0;
+  background: transparent;
+}
+.booking-stage .cal-booking iframe {
+  flex: 1;
+  min-height: 0;
+  margin-top: 0;
+  border: 2px solid var(--color-ink);
+  border-radius: var(--radius-medium);
+}
+.booking-fallback h2 {
   margin-block: var(--space-2);
 }
-.booking-panel p:last-child {
-  max-width: 50rem;
-  margin-bottom: 0;
-  color: #c9c7c1;
-}
-.booking-actions {
-  display: grid;
-  gap: var(--space-2);
-  align-items: start;
-}
-.booking-actions > a:not(.button) {
-  color: var(--color-white);
-  font-weight: 800;
-  word-break: break-word;
-}
-.booking-actions small {
-  color: #c9c7c1;
+.booking-fallback > a {
+  margin-right: var(--space-2);
 }
 .cal-booking {
   margin-top: var(--space-6);
@@ -1157,9 +1306,8 @@ html:has(.work-section) {
   border-radius: 1.55rem 3.45rem 1.25rem 2.55rem / 2rem 1.55rem 2.4rem 1.2rem;
   background: #fff5d8;
 }
-.cal-booking__heading h3 {
+.cal-booking__heading h2 {
   margin: 0.35rem 0 0;
-  font-size: var(--text-h3);
 }
 .cal-booking__heading a {
   font-weight: 900;
@@ -1449,9 +1597,6 @@ html:has(.work-section) {
   .pricing-card {
     padding: 1.25rem;
   }
-  .pricing-principles {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 @media (max-width: 56rem) {
   .work-section .project-story {
@@ -1531,8 +1676,7 @@ html:has(.work-section) {
   .pricing-card--featured:hover {
     transform: translateY(-0.45rem);
   }
-  .faq-layout,
-  .booking-panel {
+  .faq-layout {
     grid-template-columns: 1fr;
   }
   .cal-booking__heading {
@@ -1606,9 +1750,6 @@ html:has(.work-section) {
   .service-list li {
     grid-template-columns: 2.5rem 1fr;
     gap: var(--space-2);
-  }
-  .pricing-principles {
-    grid-template-columns: 1fr;
   }
   .comparison-wrap {
     border-radius: var(--radius-medium);
@@ -1943,7 +2084,7 @@ html:has(.work-section) {
 :is(main, .site-footer) a:not(.button):not(.wordmark):is(:hover, :focus-visible) {
   background-size: 100% 2px;
 }
-:is(.services-section, .v2-home-close, .mvp-close, .booking-panel, .pricing-card--featured, .site-footer) a:not(.button):not(.wordmark):is(:hover, :focus-visible) {
+:is(.services-section, .v2-home-close, .mvp-close, .pricing-card--featured, .site-footer) a:not(.button):not(.wordmark):is(:hover, :focus-visible) {
   color: var(--color-butter);
 }
 .v2-hero .prototype-illustration {
@@ -2392,7 +2533,7 @@ html:has(.work-section) {
 .v2-about {
   padding-block: clamp(4rem, 9vw, 9rem);
 }
-.v2-about h1 {
+.v2-about :is(h1, h2) {
   max-width: 12ch;
   font-size: var(--text-display);
   line-height: 0.95;
@@ -2409,7 +2550,7 @@ html:has(.work-section) {
   gap: clamp(2rem, 6vw, 7rem);
   margin-bottom: 4rem;
 }
-.v2-about-grid h2 {
+.v2-about-grid :is(h2, h3) {
   font-size: var(--text-h3);
   margin-bottom: 1rem;
 }
@@ -2429,21 +2570,21 @@ html:has(.work-section) {
   }
 }
 
-.section-heading h1,
-.pricing-header h1,
-.inquiry-intro h1 {
+.section-heading :is(h1, h2),
+.pricing-header :is(h1, h2),
+.inquiry-intro :is(h1, h2) {
   margin: 0;
   font-size: var(--text-h2);
   font-weight: 900;
   letter-spacing: -0.065em;
   line-height: 0.94;
 }
-.pricing-header h1 em {
+.pricing-header :is(h1, h2) em {
   color: var(--color-muted-ink);
   font-family: Georgia, serif;
   font-weight: 400;
 }
-.inquiry-intro h1 {
+.inquiry-intro :is(h1, h2) {
   margin-block: var(--space-3);
 }
 
@@ -3031,10 +3172,10 @@ html:has(.work-section) {
   }
 }
 .hero h1,
-.section-heading h1,
-.pricing-header h1,
-.inquiry-intro h1,
-.v2-about h1,
+.section-heading :is(h1, h2),
+.pricing-header :is(h1, h2),
+.inquiry-intro :is(h1, h2),
+.v2-about :is(h1, h2),
 .v2-home-proof h2,
 .v2-home-close h2,
 .v2-page-tail h2,
@@ -3348,11 +3489,19 @@ html:has(.work-section) {
 .hire-scroll-next svg {
   animation: hire-next-arrow 1.45s ease-in-out infinite;
 }
+.hire-scroll-up svg {
+  animation: hire-up-arrow 1.45s ease-in-out infinite;
+}
 @keyframes hire-next-arrow {
   0%, 100% { transform: translateY(-4px); }
   50% { transform: translateY(6px); }
 }
-.is-tab-hidden .hire-scroll-next svg {
+@keyframes hire-up-arrow {
+  0%, 100% { transform: translateY(4px); }
+  50% { transform: translateY(-6px); }
+}
+.is-tab-hidden .hire-scroll-next svg,
+.is-tab-hidden .hire-scroll-up svg {
   animation-play-state: paused;
 }
 .v2-home-project.motion-pending:nth-child(even),
@@ -3456,6 +3605,7 @@ main > div.motion-visible > h2,
 }
 @media (prefers-reduced-motion: reduce) {
   .hire-scroll-progress { display: none; }
+  .hire-scroll-next svg, .hire-scroll-up svg { animation: none; }
   .motion-visible *, .motion-pending * { animation: none !important; }
   .v2-home-project:hover :is(.visafile-product-image, .gradly-product-images),
   .v2-home-project:focus-within :is(.visafile-product-image, .gradly-product-images),
@@ -3986,4 +4136,63 @@ main > div.motion-visible > h2,
   .work-section .claims-process { zoom: 1; }
   .work-section .gradly-mobile-visual__hint { display: none; }
   .work-section .claims-visual__hint { display: none; }
+}
+
+/* Pricing offers: aligned editorial panels with one ink-led product build. */
+.pricing-grid { gap: clamp(0.75rem, 1.5vw, 1.25rem); }
+.pricing-card,
+.pricing-card:nth-child(3) {
+  min-height: 0;
+  padding: clamp(1.25rem, 2vw, 2rem);
+  border-radius: 1.8rem 2.4rem 1.7rem 2.2rem;
+  box-shadow: none;
+}
+.pricing-card--featured,
+.pricing-card--featured:hover { transform: none; box-shadow: 0.35rem 0.35rem 0 var(--color-coral); }
+.pricing-card__topline { color: var(--color-muted-ink); }
+.pricing-card--featured .pricing-card__topline { color: #c9c7c1; }
+.pricing-card :is(h2, h3) { margin: 1.25rem 0 0.7rem; line-height: 1.08; }
+.pricing-card .price { margin-bottom: 1.2rem; font-size: clamp(2.25rem, 3.1vw, 3.4rem); }
+.pricing-card .price small { font-size: 0.35em; letter-spacing: 0; }
+.pricing-promise { margin: 0 0 0.5rem; font-size: 1.05rem; font-weight: 800; line-height: 1.35; }
+.pricing-audience { min-height: 5.5rem; margin: 0 0 1.5rem; color: var(--color-muted-ink); font-size: 0.9rem; line-height: 1.5; }
+.pricing-card--featured .pricing-audience { color: #d0cec9; }
+.pricing-card .pricing-scope-list { gap: 0.8rem; margin: 0 0 2rem; padding-top: 1.35rem; border-top: 1px solid currentColor; }
+.pricing-card .pricing-scope-list li { grid-template-columns: 1.2rem minmax(0, 1fr); font-size: 0.9rem; line-height: 1.35; }
+.pricing-card .pricing-scope-list svg { width: 1.1rem; height: 1.1rem; margin-top: 0.1rem; padding: 0; border: 0; border-radius: 0; color: var(--color-coral); background: none; stroke-width: 2.5; }
+.pricing-card--featured .pricing-scope-list svg { color: var(--color-butter); }
+.pricing-card .button { justify-content: space-between; width: 100%; }
+@media (max-width: 56rem) {
+  .pricing-card { min-height: 0; }
+  .pricing-audience { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pricing-card, .pricing-card:hover { transition: none; transform: none; }
+}
+@media (max-width: 70rem) {
+  .pricing-grid { grid-template-columns: 1fr; }
+  .pricing-card { min-height: 0; }
+  .pricing-audience { min-height: 0; }
+}
+
+/* Keep the three desktop offers and their actions visible together. */
+@media (min-width: 70.01rem) {
+  .pricing-section { padding-block: clamp(1.25rem, 3vh, 2rem); }
+  .pricing-header { margin-bottom: clamp(0.8rem, 2vh, 1.25rem); }
+  .pricing-header :is(h1, h2) { font-size: clamp(2rem, 3.1vw, 2.8rem); }
+  .pricing-grid { gap: 0.75rem; }
+  .pricing-card,
+  .pricing-card:nth-child(3) {
+    min-height: min(40rem, calc(100svh - 13.75rem));
+    padding: clamp(1.1rem, 1.5vw, 1.4rem);
+  }
+  .pricing-card__topline { padding-bottom: 0; font-size: 0.58rem; }
+  .pricing-card :is(h2, h3) { margin: 0.9rem 0 0.45rem; font-size: clamp(1.25rem, 1.7vw, 1.6rem); }
+  .pricing-card .price { margin-bottom: 0.85rem; font-size: clamp(2rem, 2.5vw, 2.6rem); }
+  .pricing-promise { margin-bottom: 0.4rem; font-size: 0.98rem; line-height: 1.3; }
+  .pricing-audience { min-height: 0; margin-bottom: 0.9rem; font-size: 0.83rem; line-height: 1.4; }
+  .pricing-card .pricing-scope-list { gap: 0.55rem; margin-bottom: 1.2rem; padding-top: 0.9rem; }
+  .pricing-card .pricing-scope-list li { grid-template-columns: 1rem minmax(0, 1fr); gap: 0.5rem; font-size: 0.84rem; line-height: 1.3; }
+  .pricing-card .pricing-scope-list svg { width: 0.9rem; height: 0.9rem; margin-top: 0.1rem; }
+  .pricing-card .button { min-height: 2.8rem; padding-block: 0.65rem; }
 }

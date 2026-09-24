@@ -52,16 +52,15 @@ export const serviceSchema = z.object({
 });
 
 export const engagementSchema = z.object({
-  slug: z.enum(["sprint", "build", "embedded"]),
+  slug: z.enum(["page", "build", "retainer"]),
   name: z.string().min(1),
   startingPriceUsd: z.number().int().positive(),
   priceSuffix: z.string().min(1).optional(),
-  intent: z.string().min(1),
-  fit: z.array(z.string().min(1)).min(2),
+  promise: z.string().min(1),
+  audience: z.string().min(1),
   included: z.array(z.string().min(1)).min(2),
-  notIncluded: z.array(z.string().min(1)).min(1),
+  cta: z.string().min(1),
   featured: z.boolean(),
-  provisional: z.boolean(),
 });
 
 export const comparisonRowSchema = z.object({

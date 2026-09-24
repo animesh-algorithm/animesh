@@ -12,37 +12,32 @@ interface FitSectionProps {
 export function FitSection({ bookingHref, bookingConfigured, bookingEmbedHref }: FitSectionProps) {
   return (
     <section className="fit-section" aria-labelledby="fit-title">
-      <div className="site-shell fit-heading" data-reveal>
-        <div>
+      <div className="fit-comparison-stage" id="fit">
+        <div className="site-shell fit-heading" data-reveal>
           <p className="section-kicker">The fit test</p>
-          <h2 id="fit-title">A better fit when the problem needs a builder, not more handoffs.</h2>
+          <h2 id="fit-title">Less process. <em>More shipping.</em></h2>
         </div>
-        <p>A larger partner can be the right answer. This is where an independent operator-builder is different.</p>
-      </div>
-      <div className="site-shell comparison-wrap" data-reveal>
-        <table className="comparison-table">
-          <caption className="sr-only">Comparison between a larger delivery partner and working directly with Animesh</caption>
-          <thead><tr><th scope="col">Decision</th><th scope="col">Larger delivery partner</th><th scope="col">Working with Animesh</th></tr></thead>
-          <tbody>
-            {comparisonRows.map((row) => <tr key={row.topic}><th scope="row">{row.topic}</th><td>{row.largerPartner}</td><td>{row.independentBuilder}</td></tr>)}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="site-shell faq-layout" id="faq">
-        <div className="faq-heading" data-reveal><p className="section-kicker">FAQ</p><h2>Good questions.<br /><em>Straight answers.</em></h2></div>
-        <FaqAccordion items={faqs} />
-      </div>
-
-      <div className="site-shell booking-panel" id="book" data-reveal>
-        <div><p className="section-kicker">Start with a conversation</p><h2>Not sure which way in?</h2><p>Bring the rough version. I’ll help identify the right starting point.</p></div>
-        <div className="booking-actions">
-          <a className="button button--light" data-analytics-event="booking_clicked" data-analytics-placement="booking" data-analytics-category="calendar" href={bookingHref} rel={bookingConfigured ? "noreferrer" : undefined} target={bookingConfigured ? "_blank" : undefined}>{bookingConfigured ? "Book a call" : "Request a call"}</a>
-          <a data-analytics-event="contact_link_clicked" data-analytics-placement="footer" data-analytics-category="email" href={`mailto:${site.email}`}>{site.email}</a>
-          {!bookingConfigured ? <small>A scheduling URL has not been configured yet, so this opens a direct email request.</small> : null}
+        <div className="site-shell comparison-wrap" data-reveal>
+          <table className="comparison-table">
+            <caption className="sr-only">Typical agency compared with working directly with Animesh</caption>
+            <thead><tr><th scope="col"><span className="sr-only">Comparison point</span></th><th scope="col">Typical agency</th><th scope="col">Work with me</th></tr></thead>
+            <tbody>
+              {comparisonRows.map((row) => <tr key={row.topic}><th scope="row">{row.topic}</th><td data-label="Typical agency">{row.largerPartner}</td><td data-label="Work with me">{row.independentBuilder}</td></tr>)}
+            </tbody>
+          </table>
         </div>
       </div>
-      {bookingConfigured && bookingEmbedHref ? <div className="site-shell"><CalBooking embedHref={bookingEmbedHref} externalHref={bookingHref} /></div> : null}
+
+      <div className="faq-stage" id="faq">
+        <div className="site-shell faq-layout">
+          <div className="faq-heading" data-reveal><p className="section-kicker">FAQ</p><h2>Good questions.<br /><em>Straight answers.</em></h2></div>
+          <FaqAccordion items={faqs} />
+        </div>
+      </div>
+
+      <div className="booking-stage" id="book">
+        {bookingConfigured && bookingEmbedHref ? <div className="booking-stage__calendar"><CalBooking embedHref={bookingEmbedHref} externalHref={bookingHref} /></div> : <div className="site-shell booking-fallback" data-reveal><p className="section-kicker">Start with a conversation</p><h2>Book a call.</h2><p>Bring the rough version. I’ll help identify the right starting point.</p><a className="button" href={bookingHref}>Request a call</a><a href={`mailto:${site.email}`}>{site.email}</a></div>}
+      </div>
     </section>
   );
 }

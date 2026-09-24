@@ -35,7 +35,7 @@ function ProcessCurve({ direction }: { direction: "loose" | "ordered" }) {
   );
 }
 
-export function ServicesSection() {
+export function ServicesSection({ home = false }: { home?: boolean }) {
   return (
     <section
       className="services-section"
@@ -45,7 +45,7 @@ export function ServicesSection() {
       <div className="site-shell services-layout">
         <div className="section-heading section-heading--sticky" data-reveal>
           <p className="section-kicker">Services / 04</p>
-          <h1 id="services-title">Here&apos;s what I do.</h1>
+          {home ? <h2 id="services-title">Here&apos;s what I do.</h2> : <h1 id="services-title">Here&apos;s what I do.</h1>}
           <p>
             I work across product, engineering, and operations to turn a fuzzy
             problem into something people can use.
@@ -56,7 +56,7 @@ export function ServicesSection() {
             <li key={service.slug} data-reveal>
               <span className="service-number">0{index + 1}</span>
               <div>
-                <h2>{service.name}</h2>
+                {home ? <h3>{service.name}</h3> : <h2>{service.name}</h2>}
                 {/* <p className="service-question">{service.question}</p> */}
                 <p>{service.description}</p>
                 <Link
