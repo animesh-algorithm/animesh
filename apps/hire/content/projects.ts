@@ -115,4 +115,46 @@ export const projects = [
       },
     ],
   }),
+  validateContent(projectSchema, {
+    slug: "fivepoints",
+    name: "FivePoints",
+    title: "A clearer front door to health plans.",
+    summary:
+      "A public website that introduces FivePoints health plans for individuals, families, students, and employer groups.",
+    problem: "Visitors need to find the plan path that fits them.",
+    built:
+      "A product homepage with a direct plan-finding action and separate paths for each audience.",
+    constraint:
+      "Plan details and eligibility depend on the visitor’s situation; the showcase captures the public hero only.",
+    areas: ["health insurance", "website", "product"],
+    accent: "butter",
+    links: [{ label: "Explore FivePoints", href: "https://five-points.netlify.app/" }],
+  }),
+] as const;
+
+export const experiments = [
+  validateContent(projectSchema, {
+    slug: "sortify",
+    name: "Sortify",
+    title: "Find a new way back to old favorites.",
+    summary: "An experiment in turning a large saved music library into playlists worth revisiting.",
+    problem: "Liked songs accumulate faster than they get played again.",
+    built: "A music organizer that brings saved tracks together into reviewable playlist suggestions.",
+    constraint: "The public hero shows the product direction; it does not demonstrate a completed Spotify import or playlist publish.",
+    areas: ["music", "product experiment", "web app"],
+    accent: "lilac",
+    links: [{ label: "Explore Sortify", href: "https://sortifi.vercel.app/" }],
+  }),
+  validateContent(projectSchema, {
+    slug: "crate",
+    name: "Crate",
+    title: "Find what you saved for a reason.",
+    summary: "An experiment in making Instagram saves searchable and useful in a private library.",
+    problem: "Saved posts are easy to collect and hard to find later.",
+    built: "A guided path from an Instagram export to a library people can search and review.",
+    constraint: "The showcase captures the public homepage hero, not a signed-in library or live import.",
+    areas: ["personal library", "product experiment", "web app"],
+    accent: "butter",
+    links: [{ label: "Explore Crate", href: "https://crate-nu-lilac.vercel.app/" }],
+  }),
 ] as const;

@@ -33,6 +33,10 @@ These paths are relative to `apps/hire`. The images under `public/images` are re
 
 ## Project-specific decisions
 
+### Experiments: Sortify and Crate
+
+Place these in a clearly labeled Experiments chapter after the main Work stories. Use settled captures of each public site's full header and hero inside the shared compact Mac window. Sortify's lavender music illustration and Crate's cream, purple, and photo collage remain their own product designs; Hire supplies only the outer drafting surface and editorial story. Identify each image as a public homepage capture. Do not infer results or completed signed-in workflows from the hero.
+
 ### VisaFile
 
 Show the actual website header and hero, including the product message and sample intake surface, inside one Mac window on a drafting grid. Keep it compact next to its story on `/work`. It is the size/composition reference for other desktop product visuals.
@@ -47,7 +51,7 @@ Use the supplied website image in **one** Mac-style window, matching the pattern
 
 ### Gradly Links
 
-Keep its project story in the same Home and Work system. The current visual is a neutral wireframe placeholder because no approved product capture or specific replacement design was supplied in these discussions. When replacing it, show the real short-link management workflow and use the verified examples in `CONTENT.md`; do not invent dashboard metrics or a new Gradly logo.
+Keep its project story in the same Home and Work system. The Work visual is an illustrative redraw of the public Supreme Plus analytics view inside a Mac-style window. Give the geographic map, country and city breakdowns, and click metrics visual priority; keep the link list as narrow context. Mask member-link paths and identifying details. The public `link.gradly.us/usc-supreme-plus` path may remain visible. Use the saved Gradly logo, label the observed figures as a snapshot, and identify any invented chart data as illustrative rather than a measured outcome.
 
 ### AI Claims Adjudication
 

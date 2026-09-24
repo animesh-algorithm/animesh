@@ -1,14 +1,20 @@
 import { describe, expect, it } from "vitest";
 
 import { availability, comparisonRows, engagements, faqs } from "@/content/commercial";
-import { projects } from "@/content/projects";
+import { experiments, projects } from "@/content/projects";
 import { services } from "@/content/services";
 import { site } from "@/content/site";
 import { getAvailabilityStatus } from "@/lib/content/availability";
 
 describe("published content", () => {
   it("keeps verified project claims and links auditable", () => {
-    expect(projects).toHaveLength(7);
+    expect(projects).toHaveLength(8);
+    expect(experiments.map((project) => project.slug)).toEqual(["sortify", "crate"]);
+    expect(experiments.map((project) => project.links[0]?.href)).toEqual([
+      "https://sortifi.vercel.app/",
+      "https://crate-nu-lilac.vercel.app/",
+    ]);
+    expect(projects.find((project) => project.slug === "fivepoints")?.links[0]?.href).toBe("https://five-points.netlify.app/");
     expect(projects.find((project) => project.slug === "ai-insurance-concierge")?.constraint).toContain("verified member records");
     expect(projects.find((project) => project.slug === "gradly-immigration")?.links[0]?.href).toBe("https://gradly.us/");
     expect(projects.find((project) => project.slug === "gradly-links")?.outcome).toBe(

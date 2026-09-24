@@ -115,6 +115,17 @@ status, service fit, manually maintained availability, and booking fallback.
 
 ## Projects — verified
 
+### Experiments on Work
+
+- Sortify and Crate appear in a separate Experiments chapter on `/work`, after the main project ledger.
+- Their Mac-window images are captures of the public homepage heroes at `https://sortifi.vercel.app/` and `https://crate-nu-lilac.vercel.app/`, taken on 2026-09-24.
+- Sortify presents a music-library and playlist direction; Crate presents a searchable private library for Instagram saves. The captures do not verify authenticated flows, imports, playlist publishing, or measured results.
+
+### FivePoints public website showcase
+
+- The public homepage at `https://five-points.netlify.app/` presents health plan paths for individuals, families, students, and employer groups. Its header and hero were captured for the Hire Work showcase in September 2026.
+- The hero copy and design are shown as a site capture. This entry does not claim measured outcomes, current plan terms, or Animesh's specific contribution to the FivePoints product.
+
 ### VisaFile
 
 - Title: DS-160, minus the suffering.

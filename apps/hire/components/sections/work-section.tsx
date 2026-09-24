@@ -1,10 +1,14 @@
-import { projects } from "@/content/projects";
+import { experiments, projects } from "@/content/projects";
 import { VisaFileProductImage } from "@/components/visuals/visafile-product-image";
 import { GradlyMobileVisual } from "@/components/visuals/gradly-mobile-visual";
 import { GradlyProductImages } from "@/components/visuals/gradly-product-images";
 import { GradlyImmigrationIllustration } from "@/components/visuals/gradly-immigration-illustration";
 import { ClaimsAdjudicationVisual } from "@/components/visuals/claims-adjudication-visual";
 import { InsuranceConciergeVisual } from "@/components/visuals/insurance-concierge-visual";
+import { GradlyLinksIllustration } from "@/components/visuals/gradly-links-illustration";
+import { FivePointsProductImage } from "@/components/visuals/fivepoints-product-image";
+import { ExperimentProductImage } from "@/components/visuals/experiment-product-image";
+import { Fragment } from "react";
 
 export function WorkSection() {
   return (
@@ -16,14 +20,21 @@ export function WorkSection() {
       </div>
 
       <div className="site-shell project-ledger">
-        {projects.map((project, index) => (
+        {[...projects, ...experiments].map((project, index) => (
+          <Fragment key={project.slug}>
+          {index === projects.length ? (
+            <div className="experiments-heading" aria-labelledby="experiments-title">
+              <p className="section-kicker">Experiments / 02</p>
+              <h2 id="experiments-title">Ideas in motion.</h2>
+              <p>Smaller products exploring how a familiar task could feel simpler.</p>
+            </div>
+          ) : null}
           <article
             className={`project-story project-story--${project.accent} project-story--${project.slug}`}
-            key={project.slug}
           >
             <div className="project-copy" data-reveal>
               <div className="project-index">
-                0{index + 1} / {project.name}
+                {index < projects.length ? `0${index + 1}` : `Experiment 0${index - projects.length + 1}`} / {project.name}
               </div>
               <h2>{project.title}</h2>
               <p className="project-summary">{project.summary}</p>
@@ -68,6 +79,9 @@ export function WorkSection() {
                             "gradly-links": "gradly-links",
                             "ai-claims-adjudication": "claims",
                             "ai-insurance-concierge": "ai-insurance-concierge",
+                            fivepoints: "fivepoints",
+                            sortify: "sortify",
+                            crate: "crate",
                           } as Record<string, string>
                         )[project.slug]
                       }
@@ -85,7 +99,11 @@ export function WorkSection() {
                 </div>
               ) : null}
             </div>
-            {project.slug === "visafile" ? (
+            {project.slug === "sortify" || project.slug === "crate" ? (
+              <ExperimentProductImage project={project.slug} />
+            ) : project.slug === "fivepoints" ? (
+              <FivePointsProductImage />
+            ) : project.slug === "visafile" ? (
               <VisaFileProductImage />
             ) : project.slug === "gradly-health" ? (
               <GradlyProductImages />
@@ -97,6 +115,8 @@ export function WorkSection() {
               <ClaimsAdjudicationVisual />
             ) : project.slug === "ai-insurance-concierge" ? (
               <InsuranceConciergeVisual />
+            ) : project.slug === "gradly-links" ? (
+              <GradlyLinksIllustration />
             ) : (
               <div
                 className="project-media-placeholder"
@@ -122,6 +142,7 @@ export function WorkSection() {
               </div>
             )}
           </article>
+          </Fragment>
         ))}
       </div>
     </section>
