@@ -3892,6 +3892,18 @@ main > div.motion-visible > h2,
 /* On phones, give each illustration the available width instead of scaling
    several complete screens down into one narrow row. */
 @media (max-width: 38rem) {
+  .work-section .project-story--gradly-links .gradly-links__window {
+    width: 760px;
+    max-width: none;
+    zoom: calc(100cqw / 760px);
+  }
+  .work-section .project-story--gradly-links .gradly-links__analytics {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, .85fr);
+  }
+  .work-section .project-story--gradly-links .gradly-links__map-card,
+  .work-section .project-story--gradly-links .gradly-links__flow {
+    grid-column: auto;
+  }
   .work-section .project-story--gradly-health,
   .work-section .project-story--gradly-links {
     padding-block: 1rem;
