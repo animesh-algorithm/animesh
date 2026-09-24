@@ -87,21 +87,15 @@ export function InsuranceConciergeVisual() {
               width={109}
               height={66}
             />
-            <strong></strong>
             <span className="concierge-demo__support">Support</span>
-            {/* <span className="concierge-demo__member-name">Hal Jordan</span> */}
-            {/* <span
+            <span
               className="concierge-demo__profile"
               aria-label="Example member Hal Jordan"
             >
               HJ
-            </span> */}
+            </span>
           </header>
           <div className="concierge-demo__dashboard-layout">
-            <div className="concierge-demo__side-rail" aria-hidden="true">
-              <span>◫</span>
-              <span>›</span>
-            </div>
             <div className="concierge-demo__dashboard-main">
               <div className="concierge-demo__dashboard-top">
                 <section

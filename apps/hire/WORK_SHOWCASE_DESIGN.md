@@ -62,7 +62,7 @@ The app screens follow the supplied Gradly mobile UI reference: white screens, n
 
 ### AI Insurance Concierge
 
-Use the **member portal dashboard reference**, not a generic insurance landing page. The Mac window should expose the Gradly logo in the dashboard header, the “Dashboard” heading, support/profile area, side rail, coverage summary, compact plan card, quick links, member tools, and plan documents. Follow the supplied member-portal palette and geometry: pale lavender background, white generous rounded panels, navy text, blue pill actions, and pastel accents. The example member name **Hal Jordan** appears in the UI.
+Use the **member portal dashboard reference**, not a generic insurance landing page. The Mac window should expose the Gradly logo in the dashboard header, support/profile area, coverage summary, compact plan card, quick links, member tools, and plan documents. Keep the side rail hidden so the dashboard content has more space, and keep the "Dashboard" heading out of the illustration. Follow the supplied member-portal palette and geometry: pale lavender background, white generous rounded panels, navy text, blue pill actions, and pastel accents. The example member name **Hal Jordan** appears in the UI.
 
 The small plan card sits inline with the coverage summary. It contains **Gradly Supreme Plus**, **$0 deductible**, **100% coinsurance**, **$5,000 out-of-pocket maximum**, and **valid till Aug 15, 2026**. The Gradly mark is in the dashboard header, **not on the card**. The member portal screenshot remains a supporting part of the dashboard.
 

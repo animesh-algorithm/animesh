@@ -2851,37 +2851,41 @@ html:has(.work-section) {
 .concierge-demo__card { gap: .3rem; padding: .7rem; }
 .concierge-demo__card-details { gap: .35rem; }
 @container (max-width: 26rem) { .concierge-demo__dashboard-top { grid-template-columns: 1fr; }.concierge-demo__card { min-height: 8rem; } }
-@media (max-width: 38rem) {
-  .project-story--ai-insurance-concierge .concierge-demo__window {
-    width: 600px;
-    zoom: min(
-      calc((100vw - 4.5rem) / 600px),
-      calc((100svh - 22.1rem) / 600px)
-    );
-  }
-  .project-story--ai-insurance-concierge .concierge-demo__dashboard-top {
-    grid-template-columns: 1.1fr .95fr .95fr;
-  }
-  .project-story--ai-insurance-concierge .concierge-demo__quick-links {
-    display: grid;
-  }
-  .project-story--ai-insurance-concierge .concierge-demo__dashboard-bottom {
-    grid-template-columns: 2.05fr .95fr;
-  }
-  .project-story--ai-insurance-concierge .concierge-demo__documents {
-    display: block;
-  }
-  .project-story--ai-insurance-concierge .concierge-demo__chat {
-    width: min(47%, 22rem);
-  }
+.concierge-demo__window {
+  width: 760px;
+  max-width: none;
+  zoom: calc(100cqw / 760px);
 }
-@media (max-width: 23.4rem) {
-  .project-story--ai-insurance-concierge .concierge-demo__window {
-    zoom: min(
-      calc((100vw - 4.5rem) / 600px),
-      calc((100svh - 23.6rem) / 600px)
-    );
-  }
+.concierge-demo__app {
+  min-height: 30rem;
+  padding-bottom: 0;
+}
+.concierge-demo__dashboard-header {
+  min-height: 3.75rem;
+  padding-inline: 1rem;
+}
+.concierge-demo__support { margin-left: auto; }
+.concierge-demo__dashboard-layout {
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0 .75rem .75rem;
+}
+.concierge-demo__dashboard-top {
+  grid-template-columns: 1.1fr .95fr .85fr;
+  min-height: 12rem;
+}
+.concierge-demo__dashboard-bottom {
+  grid-template-columns: 2.05fr .95fr;
+}
+.concierge-demo__quick-links { display: grid; align-content: start; }
+.concierge-demo__documents { display: block; }
+.concierge-demo__coverage { min-height: 0; }
+.concierge-demo__chat {
+  right: 1rem;
+  bottom: 3.8rem;
+  width: 21rem;
+  max-width: none;
+  height: 18rem;
+  box-shadow: 0 1.25rem 2.75rem rgb(24 42 92 / 30%), 0 .2rem .7rem rgb(24 42 92 / 18%);
 }
 @media (max-width: 37.5rem) {
   .gradly-product-images {
