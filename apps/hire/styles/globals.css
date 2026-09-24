@@ -2851,6 +2851,38 @@ html:has(.work-section) {
 .concierge-demo__card { gap: .3rem; padding: .7rem; }
 .concierge-demo__card-details { gap: .35rem; }
 @container (max-width: 26rem) { .concierge-demo__dashboard-top { grid-template-columns: 1fr; }.concierge-demo__card { min-height: 8rem; } }
+@media (max-width: 38rem) {
+  .project-story--ai-insurance-concierge .concierge-demo__window {
+    width: 600px;
+    zoom: min(
+      calc((100vw - 4.5rem) / 600px),
+      calc((100svh - 22.1rem) / 600px)
+    );
+  }
+  .project-story--ai-insurance-concierge .concierge-demo__dashboard-top {
+    grid-template-columns: 1.1fr .95fr .95fr;
+  }
+  .project-story--ai-insurance-concierge .concierge-demo__quick-links {
+    display: grid;
+  }
+  .project-story--ai-insurance-concierge .concierge-demo__dashboard-bottom {
+    grid-template-columns: 2.05fr .95fr;
+  }
+  .project-story--ai-insurance-concierge .concierge-demo__documents {
+    display: block;
+  }
+  .project-story--ai-insurance-concierge .concierge-demo__chat {
+    width: min(47%, 22rem);
+  }
+}
+@media (max-width: 23.4rem) {
+  .project-story--ai-insurance-concierge .concierge-demo__window {
+    zoom: min(
+      calc((100vw - 4.5rem) / 600px),
+      calc((100svh - 23.6rem) / 600px)
+    );
+  }
+}
 @media (max-width: 37.5rem) {
   .gradly-product-images {
     grid-template-columns: minmax(0, 1fr);
@@ -3103,8 +3135,10 @@ html:has(.work-section) {
 @container (max-width: 38rem) {
   .claims-phone h3 { font-size: 1rem; }
   .claims-phone p { font-size: 0.55rem; }
-  .claims-process li { font-size: 0.62rem; }
-  .claims-process__header, .claims-process__footer { font-size: 0.55rem; }
+  .claims-process h3 { font-size: 0.85rem; }
+  .claims-process__eyebrow { font-size: 0.42rem; }
+  .claims-process li { font-size: 0.5rem; }
+  .claims-process__header, .claims-process__footer { font-size: 0.46rem; }
 }
 
 /* Gradly member-app treatment from the supplied mobile UI reference. */
@@ -3681,18 +3715,17 @@ main > div.motion-visible > h2,
   }
 }
 
-/* Give the Work phone journeys enough room to show their actual screens. */
-.work-section .project-story--gradly-mobile-app {
-  grid-template-columns: minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vh, 3rem);
-}
-.work-section .project-story--gradly-mobile-app .project-copy {
-  order: 0;
-  max-width: 48rem;
-}
-.work-section .project-story--gradly-mobile-app > figure {
-  order: 1;
-  max-width: 68rem;
+/* Keep the complete three-screen flow beside its story on wider Work layouts. */
+@media (min-width: 56.01rem) {
+  .work-section .project-story--gradly-mobile-app {
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+  .work-section .project-story--gradly-mobile-app .project-copy { order: 0; }
+  .work-section .project-story--gradly-mobile-app > figure {
+    order: 1;
+    max-width: 42rem;
+  }
 }
 .work-section .project-story--ai-claims-adjudication {
   grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
@@ -3731,6 +3764,10 @@ main > div.motion-visible > h2,
   zoom: 0.75;
 }
 @media (max-width: 70rem) {
+  .work-section .project-story--ai-insurance-concierge {
+    padding-block: 1rem;
+    gap: 0.5rem;
+  }
   .work-section .project-story--gradly-mobile-app {
     padding-block: 1rem;
     gap: 0.5rem;
@@ -3758,7 +3795,7 @@ main > div.motion-visible > h2,
   }
   .gradly-mobile-visual__hint { display: none; }
 }
-@media (max-width: 70rem) {
+@media (max-width: 56rem) {
   .work-section .project-story--ai-claims-adjudication {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.5rem;
@@ -3902,35 +3939,29 @@ main > div.motion-visible > h2,
     border-width: 3px;
     border-radius: 1rem;
   }
-  .work-section .claims-visual__frame {
-    height: auto !important;
-  }
   .work-section .claims-visual__scene {
-    position: relative;
-    display: flex;
-    width: 100%;
-    gap: 0;
-    padding-block: 0.5rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    transform: none !important;
+    position: absolute;
+    display: grid;
+    width: 42rem;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.35fr) minmax(0, 0.92fr);
+    gap: 0.75rem;
+    padding-block: 1rem;
+    overflow: visible;
+    scroll-snap-type: none;
   }
   .work-section .claims-visual__station {
-    flex: 0 0 100%;
-    width: 100%;
-    scroll-snap-align: center;
+    flex: initial;
+    width: auto;
+    scroll-snap-align: none;
   }
   .work-section .claims-phone {
-    max-width: min(100%, 20rem, calc((100svh - 9rem) * 0.5));
+    max-width: 13rem;
   }
   .work-section .claims-visual__station--process .claims-process {
     width: min(100%, 20rem);
   }
-  .work-section .claims-phone__content {
-    zoom: 0.75;
-  }
+  .work-section .claims-phone__content { zoom: 0.75; }
+  .work-section .claims-process { zoom: 1; }
   .work-section .gradly-mobile-visual__hint { display: none; }
-  .work-section .claims-visual__hint {
-    display: block;
-  }
+  .work-section .claims-visual__hint { display: none; }
 }
