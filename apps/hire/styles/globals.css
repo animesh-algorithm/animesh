@@ -3359,18 +3359,8 @@ main > section {
   .project-story--ai-insurance-concierge { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* Hire motion pass: scroll position, chapter entrances, and tactile proof. */
+/* Hire motion pass: chapter entrances and tactile proof. */
 .v2-home-work { overflow-x: clip; }
-.hire-scroll-progress {
-  position: fixed;
-  z-index: 90;
-  inset: 0 0 auto;
-  height: 4px;
-  background: var(--color-cobalt);
-  pointer-events: none;
-  transform: scaleX(var(--hire-scroll-progress, 0));
-  transform-origin: left;
-}
 .hire-scroll-top {
   position: fixed;
   z-index: 51;
@@ -3519,7 +3509,6 @@ main > div.motion-visible > h2,
   to { opacity: 1; transform: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hire-scroll-progress { display: none; }
   .hire-scroll-next svg, .hire-scroll-up svg { animation: none; }
   .motion-visible *, .motion-pending * { animation: none !important; }
   .v2-home-project:hover :is(.visafile-product-image, .gradly-product-images),

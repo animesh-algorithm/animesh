@@ -64,7 +64,6 @@ export function MotionDirector() {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         const range = document.documentElement.scrollHeight - window.innerHeight;
-        root.style.setProperty("--hire-scroll-progress", String(range > 0 ? Math.min(1, window.scrollY / range) : 1));
         const atBottom = range > 0 && range - window.scrollY <= 96;
         setShowScrollTop(atBottom);
         const main = document.getElementById("main-content");
@@ -107,12 +106,10 @@ export function MotionDirector() {
       // the next scan can observe off-screen sections and animate them on entry.
       document.querySelectorAll(".motion-pending").forEach((element) => element.classList.remove("motion-pending"));
       root.classList.remove("is-tab-hidden");
-      root.style.removeProperty("--hire-scroll-progress");
     };
   }, [pathname]);
 
   return <>
-    <div className="hire-scroll-progress" aria-hidden="true" />
     {!showScrollTop && nextTarget && <button
       className="hire-scroll-top hire-scroll-next"
       type="button"
