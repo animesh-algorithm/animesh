@@ -6,12 +6,12 @@ import { AskAnimeshLink } from "./ask-animesh";
 
 const navItems = [
   { href: "#work", label: "Work" },
-  { href: "#about", label: "About" },
+  { href: "/about", label: "About" },
   { href: "#notes", label: "Notes" },
   { href: "https://blog.animesh.cc", label: "Blog" },
 ];
 
-export function SiteHeader() {
+export function SiteHeader({ home = true }: { home?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -30,13 +30,13 @@ export function SiteHeader() {
   return (
     <header className="site-header">
       <div className="site-header-inner shell">
-        <a className="monogram" href="#top" aria-label="Animesh, back to top">
+        <a className="monogram" href={home ? "#top" : "/"} aria-label={home ? "Animesh, back to top" : "Animesh, home"}>
           <span>A</span>
           <span className="monogram-dot" />
         </a>
         <nav className="main-nav" aria-label="Main navigation">
           {navItems.map((item) => (
-            <a href={item.href} key={item.href}>{item.label}</a>
+            <a href={home || !item.href.startsWith("#") ? item.href : `/${item.href}`} key={item.href}>{item.label}</a>
           ))}
           <a data-analytics-event="resume_clicked" data-analytics-placement="header" data-analytics-category="resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
         </nav>
@@ -62,7 +62,7 @@ export function SiteHeader() {
         <div className="mobile-menu" data-open={menuOpen ? "true" : "false"} id="mobile-navigation">
           <nav aria-label="Mobile navigation">
             {navItems.map((item) => (
-              <a href={item.href} key={item.href} onClick={closeMenu}>{item.label}</a>
+              <a href={home || !item.href.startsWith("#") ? item.href : `/${item.href}`} key={item.href} onClick={closeMenu}>{item.label}</a>
             ))}
             <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" onClick={closeMenu}>Résumé</a>
           </nav>

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { AskAnimeshProvider } from "@/components/ask-animesh";
 import "./globals.css";
 
-const homepageDescription = "Animesh Sharma is a product engineer building software, AI products, and automation. Explore his projects, engineering work, and approach to solving complex problems.";
+const homepageDescription = "Animesh Sharma is a product engineer building AI products, full-stack software, and automation. Explore selected projects and the thinking behind them.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.animesh.cc"),

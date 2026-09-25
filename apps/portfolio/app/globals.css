@@ -4163,3 +4163,54 @@ body.dialog-open {
     display: none;
   }
 }
+/* Dedicated profile page */
+.profile-page .eyebrow { font-size: 11px; font-weight: 800; letter-spacing: .14em; }
+.profile-hero { padding-block: clamp(5rem, 10vw, 10rem); }
+.profile-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(3rem, 8vw, 8rem); align-items: center; }
+.profile-hero h1, .profile-page h2 { font-family: var(--font-display); letter-spacing: -.055em; line-height: .98; }
+.profile-hero h1 { max-width: 900px; margin: 1.5rem 0 2.5rem; font-size: clamp(4rem, 8vw, 8rem); }
+.profile-hero h1 em { color: var(--blue-deep); }
+.profile-hero p:not(.eyebrow) { max-width: 650px; font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.6; }
+.profile-hero .profile-lede { font-size: clamp(1.35rem, 2.5vw, 2.2rem) !important; font-weight: 700; line-height: 1.3 !important; }
+.profile-hero-links, .profile-social-links, .profile-project-links { display: flex; flex-wrap: wrap; gap: 1rem 2rem; }
+.profile-hero-links { margin-top: 2.5rem; }
+.profile-page article a { text-decoration: underline; text-underline-offset: .25em; }
+.profile-hero-links a, .profile-social-links a, .profile-project-links a { font-weight: 750; }
+.profile-portrait { min-height: 400px; aspect-ratio: 4 / 5; border-radius: var(--radius-lg); overflow: hidden; background: var(--paper-deep); }
+.profile-portrait img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.profile-story, .profile-expertise, .profile-career, .profile-projects, .profile-footer { padding-block: clamp(5rem, 9vw, 9rem); }
+.profile-section-grid { display: grid; grid-template-columns: minmax(130px, 2fr) minmax(0, 10fr); gap: clamp(2rem, 5vw, 5rem); }
+.profile-page h2 { max-width: 950px; margin: 0 0 clamp(2.5rem, 5vw, 5rem); font-size: clamp(3rem, 5.5vw, 5.5rem); }
+.profile-story, .profile-footer { color: var(--white); }
+.profile-prose-block { max-width: 750px; margin-top: 2.5rem; }
+.profile-prose-block p { font-size: clamp(1rem, 1.45vw, 1.2rem); line-height: 1.7; }
+.profile-story-beat { color: var(--yellow); font-family: var(--font-display); font-size: clamp(1.6rem, 2.5vw, 2.5rem) !important; line-height: 1.1 !important; }
+.profile-section-intro { max-width: 730px; font-size: clamp(1.1rem, 1.7vw, 1.45rem); line-height: 1.5; }
+.profile-expertise-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 3rem; margin-top: 4rem; }
+.profile-expertise-list div { border-top: 1px solid var(--line); padding-top: 1.5rem; }
+.profile-expertise-list h3, .profile-project-item h3 { margin: 0; font-family: var(--font-display); font-size: clamp(1.7rem, 2.5vw, 2.6rem); letter-spacing: -.035em; }
+.profile-expertise-list p, .profile-project-item p { max-width: 480px; line-height: 1.6; }
+.profile-career-list, .profile-project-list { border-top: 1px solid var(--line); }
+.profile-career-item, .profile-project-item { display: grid; grid-template-columns: 1.2fr 2fr 4fr; gap: 2rem; padding-block: 2.5rem; border-bottom: 1px solid var(--line); }
+.profile-career-item > span, .profile-company, .profile-project-item > div:first-child p { font-size: .8rem; font-weight: 700; }
+.profile-career-item h3 { margin: 0; font-family: var(--font-display); font-size: clamp(1.6rem, 2.5vw, 2.5rem); line-height: 1; }
+.profile-career-item p { line-height: 1.6; }
+.profile-career-headline { margin-top: 0; font-weight: 750; }
+.profile-project-item { grid-template-columns: 2fr 3fr 1.5fr; }
+.profile-project-links { align-content: start; gap: .5rem; }
+.profile-footer p:not(.eyebrow) { max-width: 650px; line-height: 1.6; }
+.profile-social-links { margin-block: 2.5rem 4rem; }
+.profile-home-link { display: inline-block; }
+@media (max-width: 900px) {
+  .profile-hero-grid { grid-template-columns: 1fr; }
+  .profile-portrait { width: min(100%, 440px); }
+  .profile-career-item, .profile-project-item { grid-template-columns: 1fr 2fr; }
+  .profile-career-item > div:last-child, .profile-project-links { grid-column: 2; }
+}
+@media (max-width: 720px) {
+  .profile-section-grid, .profile-expertise-list, .profile-career-item, .profile-project-item { grid-template-columns: 1fr; }
+  .profile-section-grid { gap: 2rem; }
+  .profile-career-item > div:last-child, .profile-project-links { grid-column: auto; }
+  .profile-hero { padding-block: 4.5rem; }
+  .profile-portrait { min-height: 0; }
+}
