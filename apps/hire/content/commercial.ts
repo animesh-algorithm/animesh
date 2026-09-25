@@ -116,18 +116,14 @@ export const faqs = [
   validateContent(faqSchema, {
     question: "Are these fixed prices?",
     answer:
-      "Ship a Page starts at $500 and Build a Product starts at $2,000 USD. I quote project work after reviewing scope. The Monthly Retainer is $2,000 USD per month.",
+      "Ship a Page starts at $500 and Build a Product starts at $2,000 USD. I quote project work after reviewing scope. The Monthly Retainer is $1,500 USD per month.",
   }),
   validateContent(faqSchema, {
     question: "What kinds of problems are a strong fit?",
     answer:
       "Product and MVP builds, AI and workflow automation, and internal tools or integrations—especially when important work has outgrown spreadsheets and handoffs.",
   }),
-  validateContent(faqSchema, {
-    question: "How current is the availability information?",
-    answer:
-      "No. Ask me about current availability; any status shown is maintained manually.",
-  }),
+
   validateContent(faqSchema, {
     question: "How do I book a call?",
     answer:
