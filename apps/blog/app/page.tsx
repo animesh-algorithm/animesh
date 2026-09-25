@@ -2,6 +2,18 @@ import type { Metadata } from "next";
 import { BlogIndex } from "@/components/index";
 import { getPublicPosts, fixtureMode } from "@/lib/content";
 export const dynamic = "force-dynamic";
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://www.animesh.cc/#person",
+  name: "Animesh Sharma",
+  url: "https://www.animesh.cc",
+  sameAs: [
+    "https://www.linkedin.com/in/animeshsharma42",
+    "https://github.com/animesh-algorithm",
+    "https://x.com/animesh_algo",
+  ],
+};
 export async function generateMetadata({
   searchParams,
 }: {
@@ -31,6 +43,9 @@ export default async function Home({
     );
   return (
     <>
+      {!q && !tag && !fixtureMode() && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(person).replace(/</g, "\\u003c") }} />
+      )}
       {fixtureMode() && (
         <p className="fixture-banner">
           Development inspection snapshot · live Notion is not connected
