@@ -54,6 +54,7 @@ export default async function PostPage({
     dateModified: post.updatedAt,
     author: {
       "@type": "Person",
+      "@id": "https://www.animesh.cc/#person",
       name: "Animesh Sharma",
       url: "https://www.animesh.cc",
     },
