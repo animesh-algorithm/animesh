@@ -5,8 +5,7 @@ import { usePathname } from "next/navigation";
 
 export function MotionDirector() {
   const pathname = usePathname();
-  const isWorkPage = pathname === "/work";
-  const isHomePage = pathname === "/";
+
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [nextTarget, setNextTarget] = useState<string | null>(null);
 
@@ -17,25 +16,37 @@ export function MotionDirector() {
 
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const floatingMediaSelector = ".visafile-product-image__window, .gradly-product-images__window, .gradly-immigration-illustration__window, .gradly-links__window, .gradly-phone, .claims-phone";
-    const selector = "[data-reveal], main.privacy-page, main > section, main > .hero, main > div, main article, main ol > li, .v2-home-service-list li, .v2-about-grid > div, .v2-page-tail, .v2-contact-options";
+    // Reveal the content block itself. A tall section or project article can
+    // enter the viewport long before its illustration or copy does.
+    const selector = "[data-reveal], main.privacy-page, main > .hero, main > section:not(:has([data-reveal])), main > div:not(:has([data-reveal])), main article:not(:has([data-reveal])), .project-story > :not([data-reveal]), main ol > li, .v2-home-service-list li, .v2-about-grid > div, .v2-page-tail, .v2-contact-options";
     const reveal = (element: Element) => {
       element.classList.remove("motion-pending");
       element.classList.add("motion-visible");
-      observer?.unobserve(element);
+    };
+    const updateReveal = (element: Element) => {
+      if (preference.matches || element.matches(":focus-within")) {
+        reveal(element);
+        return;
+      }
+      const bounds = element.getBoundingClientRect();
+      if (bounds.bottom > window.innerHeight * 0.1 && bounds.top < window.innerHeight * 0.6) {
+        reveal(element);
+      } else if (
+        bounds.bottom <= 0 ||
+        bounds.top >= window.innerHeight ||
+        !element.classList.contains("motion-visible")
+      ) {
+        element.classList.remove("motion-visible");
+        element.classList.add("motion-pending");
+      }
     };
     const observer = typeof IntersectionObserver === "undefined" ? null : new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) reveal(entry.target);
-      });
+      entries.forEach((entry) => updateReveal(entry.target));
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.01 });
     const scan = () => {
       document.querySelectorAll(selector).forEach((element) => {
         if (element.classList.contains("motion-visible") || element.classList.contains("motion-pending")) return;
-        if (preference.matches || element.getBoundingClientRect().top < window.innerHeight * 0.98) {
-          element.classList.add("motion-visible");
-          return;
-        }
-        element.classList.add("motion-pending");
+        updateReveal(element);
         observer?.observe(element);
       });
     };
@@ -55,36 +66,20 @@ export function MotionDirector() {
         const range = document.documentElement.scrollHeight - window.innerHeight;
         root.style.setProperty("--hire-scroll-progress", String(range > 0 ? Math.min(1, window.scrollY / range) : 1));
         const atBottom = range > 0 && range - window.scrollY <= 96;
-        setShowScrollTop(isWorkPage || isHomePage ? atBottom : window.scrollY > 500);
-        if (isWorkPage || isHomePage) {
-          const projects = Array.from(document.querySelectorAll<HTMLElement>(".work-section .project-story"));
-          const contact = document.getElementById("work-contact");
-          if (atBottom) {
-            setNextTarget(null);
-          } else if (isHomePage) {
-            const targetIds = ["work", ...projects.map((project) => project.id), "services", "pricing", "fit", "faq", "book", "about", "inquiry"];
-            const targets = targetIds.map((id) => document.getElementById(id)).filter((target): target is HTMLElement => target !== null);
-            const next = targets.find((target) => target.getBoundingClientRect().top > window.innerHeight * 0.5);
-            setNextTarget(next?.id ?? null);
-          } else if (contact && contact.getBoundingClientRect().top <= window.innerHeight * 0.55) {
-            setNextTarget(null);
-          } else if (projects.length) {
-            let currentIndex = 0;
-            projects.forEach((project, index) => {
-              if (project.getBoundingClientRect().top <= window.innerHeight * 0.5) currentIndex = index;
-            });
-            setNextTarget(projects[currentIndex + 1]?.id ?? "work-contact");
-          }
-        }
+        setShowScrollTop(atBottom);
+        const main = document.getElementById("main-content");
+        const targets = main ? Array.from(main.querySelectorAll<HTMLElement>("section, article, main > div, main > .hero")).filter((target) => {
+          return target.getBoundingClientRect().height > 80 && !(target.matches("main > div") && target.querySelector("section, article"));
+        }) : [];
+        const next = targets.find((target) => target.getBoundingClientRect().top > window.innerHeight * 0.55);
+        setNextTarget(atBottom ? null : next?.id || (next ? "__next" : null));
         if (!preference.matches) document.querySelectorAll<HTMLElement>(floatingMediaSelector).forEach((element) => {
           const frame = element.parentElement?.getBoundingClientRect();
           if (!frame || frame.bottom < 0 || frame.top > window.innerHeight) return;
           const progress = Math.max(0, Math.min(1, (window.innerHeight - frame.top) / (window.innerHeight + frame.height)));
           element.style.setProperty("--showcase-scroll-shift", `${((progress - 0.5) * 16).toFixed(2)}px`);
         });
-        document.querySelectorAll(".motion-pending").forEach((element) => {
-          if (element.getBoundingClientRect().top < window.innerHeight * 0.98) reveal(element);
-        });
+        document.querySelectorAll(".motion-pending, .motion-visible").forEach(updateReveal);
       });
     };
     const mutations = new MutationObserver(() => {
@@ -114,24 +109,28 @@ export function MotionDirector() {
       root.classList.remove("is-tab-hidden");
       root.style.removeProperty("--hire-scroll-progress");
     };
-  }, [isHomePage, isWorkPage]);
+  }, [pathname]);
 
   return <>
     <div className="hire-scroll-progress" aria-hidden="true" />
-    {(isWorkPage || isHomePage) && !showScrollTop && nextTarget && <a
+    {!showScrollTop && nextTarget && <button
       className="hire-scroll-top hire-scroll-next"
-      href={`#${nextTarget}`}
-      aria-label={nextTarget === "work-contact" || nextTarget === "inquiry" ? "Scroll to contact" : isHomePage ? "Scroll to next section" : "Scroll to next project"}
+      type="button"
+      aria-label="Scroll to next section"
+      onClick={() => {
+        const main = document.getElementById("main-content");
+        const targets = main ? Array.from(main.querySelectorAll<HTMLElement>("section, article, main > div, main > .hero")).filter((target) => target.getBoundingClientRect().height > 80 && !(target.matches("main > div") && target.querySelector("section, article"))) : [];
+        const next = targets.find((target) => target.getBoundingClientRect().top > window.innerHeight * 0.55);
+        if (next) window.scrollTo({ top: window.scrollY + next.getBoundingClientRect().top, behavior: "instant" });
+      }}
     >
-      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 20 20" fill="none">
-        <path d="M10 4v12m0 0-5-5m5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    </a>}
+      <svg aria-hidden="true" width="26" height="26" viewBox="0 0 20 20" fill="none"><path d="M10 4v12m0 0-5-5m5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+    </button>}
     {showScrollTop && <button
-      className={`hire-scroll-top${isWorkPage || isHomePage ? " hire-scroll-up" : ""}`}
+      className="hire-scroll-top hire-scroll-up"
       type="button"
       aria-label="Scroll to top"
-      onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" })}
+      onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
     >
       <svg aria-hidden="true" width="26" height="26" viewBox="0 0 20 20" fill="none">
         <path d="M10 16V4m0 0-5 5m5-5 5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

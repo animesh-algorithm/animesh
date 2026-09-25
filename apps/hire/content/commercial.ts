@@ -110,6 +110,6 @@ export const faqs = [
   }),
   validateContent(faqSchema, {
     question: "How do I book a call?",
-    answer: "Use the Cal.com booking panel when the public event link is configured. Until then, send a call request by email or share the rough brief through the inquiry form.",
+    answer: "Choose a time in the calendar on this page or on Contact. If the calendar is unavailable, request a call by email or send a brief.",
   }),
 ] as const;

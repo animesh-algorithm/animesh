@@ -30,7 +30,7 @@ export function MobileNav({ navigation, bookingHref, bookingConfigured, availabi
         const href = pathname === "/" ? ({ "/": "#main-content", "/work": "#work", "/services": "#services", "/pricing": "#pricing", "/about": "#about", "/contact": "#inquiry" } as Record<string, string>)[item.href] ?? item.href : item.href;
         return <Link href={href} key={item.href} aria-current={pathname === item.href ? "page" : undefined} onClick={() => { if (detailsRef.current) detailsRef.current.open = false; }}><span>{item.label}</span></Link>;
       })}
-      <a href={bookingHref} rel={bookingConfigured ? "noreferrer" : undefined} target={bookingConfigured ? "_blank" : undefined}><span>{bookingConfigured ? "Book a call" : "Request a call"}</span></a>
+      <a href={bookingHref}><span>{bookingConfigured ? "Book a call" : "Request a call"}</span></a>
     </nav>
   </details>;
 }

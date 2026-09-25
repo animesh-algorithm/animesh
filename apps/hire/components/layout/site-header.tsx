@@ -26,15 +26,7 @@ export function SiteHeader() {
           <p className="sidebar-intro">Product Engineer for startups.</p>
           <div className="sidebar-actions">
             <p className="sidebar-actions__label">HAVE SOMETHING TO BUILD?</p>
-            <a
-              className="button sidebar-action"
-              data-analytics-event="booking_clicked"
-              data-analytics-placement="sidebar"
-              data-analytics-category="calendar"
-              href={booking.href}
-              rel={booking.configured ? "noreferrer" : undefined}
-              target={booking.configured ? "_blank" : undefined}
-            >
+            <a className="button sidebar-action" href={booking.href} data-analytics-event="booking_clicked" data-analytics-placement="sidebar" data-analytics-category="calendar">
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
@@ -51,7 +43,7 @@ export function SiteHeader() {
                 {booking.configured ? "Book a call" : "Request a call"}
               </span>
             </a>
-            <Link className="sidebar-message" href="/contact">
+            <Link className="sidebar-message" href="/contact#inquiry">
               <svg
                 aria-hidden="true"
                 viewBox="0 0 24 24"
@@ -87,17 +79,6 @@ export function SiteHeader() {
             </p> */}
           </div>
           <div className="mobile-header-actions">
-            <a
-              className="mobile-booking"
-              data-analytics-event="booking_clicked"
-              data-analytics-placement="mobile_header"
-              data-analytics-category="calendar"
-              href={booking.href}
-              rel={booking.configured ? "noreferrer" : undefined}
-              target={booking.configured ? "_blank" : undefined}
-            >
-              {booking.configured ? "Book a call" : "Request a call"}
-            </a>
             <MobileNav
               navigation={site.navigation}
               bookingHref={booking.href}

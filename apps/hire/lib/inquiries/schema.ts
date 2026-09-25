@@ -5,8 +5,8 @@ export const inquirySchema = z.object({
   email: z.string().trim().email("Enter a valid work email.").max(254),
   company: z.string().trim().min(2, "Please enter your company or team.").max(120),
   summary: z.string().trim().min(20, "Give me a little more context (at least 20 characters).").max(3000),
-  budget: z.string().trim().min(1, "Choose an approximate budget.").max(80),
-  timing: z.string().trim().min(1, "Choose a desired start window.").max(80),
+  budget: z.string().trim().min(1, "Enter an approximate budget.").max(80),
+  timing: z.string().trim().min(1, "Enter a desired timeline.").max(80),
   website: z.string().max(200, "Submission rejected."),
   startedAt: z.number().int().positive(),
 });

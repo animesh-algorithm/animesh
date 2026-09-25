@@ -71,7 +71,7 @@ export default function MvpDevelopmentPage() {
             <h1 id="mvp-title">From idea to first product.</h1>
             <p className="mvp-hero__lead">Have a product idea but no technical team? I help you define the first useful version, build it, and get it into people’s hands.</p>
             <div className="hero-actions">
-              <a className="button" href={booking.href} rel={booking.configured ? "noreferrer" : undefined} target={booking.configured ? "_blank" : undefined}>{booking.configured ? "Book a call" : "Request a call"}</a>
+              <a className="button" href={booking.href}>{booking.configured ? "Book a call" : "Request a call"}</a>
               <Link className="text-link" href="/contact">Send a brief →</Link>
             </div>
           </div>
@@ -116,7 +116,7 @@ export default function MvpDevelopmentPage() {
       </section>
 
       <section className="mvp-close" aria-labelledby="mvp-close-title">
-        <div className="site-shell"><p className="section-kicker">Your first version</p><h2 id="mvp-close-title">Tell me what you want to make possible.</h2><p>Bring the rough idea. We can work out the right first scope together.</p><div className="hero-actions"><a className="button button--light" href={booking.href} rel={booking.configured ? "noreferrer" : undefined} target={booking.configured ? "_blank" : undefined}>{booking.configured ? "Book a call" : "Request a call"}</a><Link className="text-link" href="/contact">Send a brief →</Link></div></div>
+        <div className="site-shell"><p className="section-kicker">Your first version</p><h2 id="mvp-close-title">Tell me what you want to make possible.</h2><p>Bring the rough idea. We can work out the right first scope together.</p><div className="hero-actions"><a className="button button--light" href={booking.href}>{booking.configured ? "Book a call" : "Request a call"}</a><Link className="text-link" href="/contact">Send a brief →</Link></div></div>
       </section>
     </main>
   );

@@ -67,22 +67,36 @@ export function InquiryForm({ email }: InquiryFormProps) {
 
   return (
     <form data-private onChange={() => { if (!engaged.current) { engaged.current = true; track("inquiry_started", { placement: "inquiry" }); } }} className="inquiry-form" onSubmit={submit} noValidate>
-      <div className="form-row">
-        <div className="field-group"><label>Name<input aria-describedby={errors.name ? "name-error" : undefined} aria-invalid={Boolean(errors.name)} autoComplete="name" name="name" required /></label>{fieldError("name")}</div>
-        <div className="field-group"><label>Work email<input aria-describedby={errors.email ? "email-error" : undefined} aria-invalid={Boolean(errors.email)} autoComplete="email" name="email" required type="email" /></label>{fieldError("email")}</div>
+      <div className="inquiry-form__heading">
+        <span className="inquiry-form__mark" aria-hidden="true"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M5 16h21m-8-8 8 8-8 8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
+        <div><p className="inquiry-form__eyebrow">Project brief</p><p>Nothing polished needed. A few details are enough to begin.</p></div>
       </div>
-      <div className="field-group"><label>Company or team<input aria-describedby={errors.company ? "company-error" : undefined} aria-invalid={Boolean(errors.company)} autoComplete="organization" name="company" required /></label>{fieldError("company")}</div>
-      <div className="field-group"><label>What needs to be built or fixed?<textarea aria-describedby={errors.summary ? "summary-error" : undefined} aria-invalid={Boolean(errors.summary)} name="summary" required rows={6} /></label>{fieldError("summary")}</div>
-      <div className="form-row">
-        <div className="field-group"><label>Approximate budget<select aria-describedby={errors.budget ? "budget-error" : undefined} aria-invalid={Boolean(errors.budget)} defaultValue="" name="budget" required><option disabled value="">Choose a range</option><option>Under $2,500</option><option>$2,500–$8,000</option><option>$8,000–$20,000</option><option>$20,000+</option><option>Not sure yet</option></select></label>{fieldError("budget")}</div>
-        <div className="field-group"><label>Desired timing<select aria-describedby={errors.timing ? "timing-error" : undefined} aria-invalid={Boolean(errors.timing)} defaultValue="" name="timing" required><option disabled value="">Choose a window</option><option>As soon as possible</option><option>Within 1–2 months</option><option>Within 3–6 months</option><option>Just exploring</option></select></label>{fieldError("timing")}</div>
+      <div className="inquiry-form__body">
+        <div className="inquiry-form__group">
+          <p className="inquiry-form__group-title"><span>01</span> About you</p>
+          <div className="form-row">
+            <div className="field-group"><label>Name<input aria-describedby={errors.name ? "name-error" : undefined} aria-invalid={Boolean(errors.name)} autoComplete="name" name="name" placeholder="Your name" required /></label>{fieldError("name")}</div>
+            <div className="field-group"><label>Work email<input aria-describedby={errors.email ? "email-error" : undefined} aria-invalid={Boolean(errors.email)} autoComplete="email" name="email" placeholder="you@company.com" required type="email" /></label>{fieldError("email")}</div>
+          </div>
+          <div className="field-group"><label>Company or team<input aria-describedby={errors.company ? "company-error" : undefined} aria-invalid={Boolean(errors.company)} autoComplete="organization" name="company" placeholder="Who are you building this with?" required /></label>{fieldError("company")}</div>
+        </div>
+        <div className="inquiry-form__group">
+          <p className="inquiry-form__group-title"><span>02</span> The project</p>
+          <div className="field-group"><label>What needs to be built or fixed?<textarea aria-describedby={errors.summary ? "summary-error" : undefined} aria-invalid={Boolean(errors.summary)} name="summary" placeholder="Tell me what's happening now and what you'd like to change…" required rows={6} /></label>{fieldError("summary")}</div>
+          <div className="form-row">
+            <div className="field-group"><label>Approximate budget<input aria-describedby={errors.budget ? "budget-error" : undefined} aria-invalid={Boolean(errors.budget)} maxLength={80} name="budget" placeholder="e.g. Around $5,000 or not sure yet" required type="text" /></label>{fieldError("budget")}</div>
+            <div className="field-group"><label>Desired timeline<input aria-describedby={errors.timing ? "timing-error" : undefined} aria-invalid={Boolean(errors.timing)} maxLength={80} name="timing" placeholder="e.g. Within 2 months or flexible" required type="text" /></label>{fieldError("timing")}</div>
+          </div>
+        </div>
       </div>
       <label className="honeypot" aria-hidden="true">Website<input autoComplete="off" name="website" tabIndex={-1} /></label>
-      <div className="form-submit">
-        <button className="button" disabled={status.state === "sending"} type="submit">{status.state === "sending" ? "Sending…" : "Send the brief"}</button>
-        <p>Or email <a data-analytics-event="contact_link_clicked" data-analytics-placement="inquiry" data-analytics-category="email" href={`mailto:${email}`}>{email}</a></p>
+      <div className="inquiry-form__footer">
+        <div className="form-submit">
+          <button className="button" disabled={status.state === "sending"} type="submit"><span>{status.state === "sending" ? "Sending…" : "Send the brief"}</span><svg aria-hidden="true" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 10h13m-5-5 5 5-5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg></button>
+          <p>Prefer email? <a data-analytics-event="contact_link_clicked" data-analytics-placement="inquiry" data-analytics-category="email" href={`mailto:${email}`}>{email}</a></p>
+        </div>
+        <p className={`form-status form-status--${status.state}`} aria-live="polite" role="status">{status.message}</p>
       </div>
-      <p className={`form-status form-status--${status.state}`} aria-live="polite" role="status">{status.message}</p>
     </form>
   );
 }

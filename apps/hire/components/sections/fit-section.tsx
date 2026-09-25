@@ -1,15 +1,7 @@
 import { comparisonRows, faqs } from "@/content/commercial";
-import { site } from "@/content/site";
-import { CalBooking } from "@/components/booking/cal-booking";
 import { FaqAccordion } from "@/components/faq/faq-accordion";
 
-interface FitSectionProps {
-  bookingHref: string;
-  bookingConfigured: boolean;
-  bookingEmbedHref: string | null;
-}
-
-export function FitSection({ bookingHref, bookingConfigured, bookingEmbedHref }: FitSectionProps) {
+export function FitSection() {
   return (
     <section className="fit-section" aria-labelledby="fit-title">
       <div className="fit-comparison-stage" id="fit">
@@ -33,10 +25,6 @@ export function FitSection({ bookingHref, bookingConfigured, bookingEmbedHref }:
           <div className="faq-heading" data-reveal><p className="section-kicker">FAQ</p><h2>Good questions.<br /><em>Straight answers.</em></h2></div>
           <FaqAccordion items={faqs} />
         </div>
-      </div>
-
-      <div className="booking-stage" id="book">
-        {bookingConfigured && bookingEmbedHref ? <div className="booking-stage__calendar"><CalBooking embedHref={bookingEmbedHref} externalHref={bookingHref} /></div> : <div className="site-shell booking-fallback" data-reveal><p className="section-kicker">Start with a conversation</p><h2>Book a call.</h2><p>Bring the rough version. I’ll help identify the right starting point.</p><a className="button" href={bookingHref}>Request a call</a><a href={`mailto:${site.email}`}>{site.email}</a></div>}
       </div>
     </section>
   );

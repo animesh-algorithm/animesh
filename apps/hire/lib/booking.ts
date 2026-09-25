@@ -20,7 +20,7 @@ export function getBookingDestination() {
     const embedUrl = new URL(calUrl);
     embedUrl.searchParams.set("embed", "true");
     embedUrl.searchParams.set("theme", "light");
-    return { configured: true as const, href: calUrl.toString(), embedHref: embedUrl.toString() };
+    return { configured: true as const, href: "/contact", embedHref: embedUrl.toString() };
   }
 
   return {

@@ -182,7 +182,7 @@ four-step timeline.
 Use three vertically structured engagement panels with strong typographic prices,
 one clearly emphasized core engagement, fit cues, and a separate fit comparison.
 The pricing cards fit together in a desktop viewport and give the scope lists
-room to breathe. The page then moves to comparison, FAQ, and booking. Keep
+room to breathe. The page then moves to comparison and FAQ. Keep
 Animesh's own prices, scope boundaries, voice, and visual
 identity rather than importing another studio's claims or plan details.
 
@@ -191,15 +191,17 @@ identity rather than importing another studio's claims or plan details.
 Follow pricing with a six-row fit comparison on a quiet white surface. Give
 the comparison its own viewport and place the FAQ in the next viewport. On
 phones, present the comparison as compact labeled rows without horizontal
-scrolling. Give the full-width booking calendar, About, and Contact their own
-viewport stops, with the down-scroll control visiting each in order. The persistent availability control should remain
-visible at every scroll position and connect directly to the booking path. When
-a public Cal.com event URL is configured, show a simple heading and the schedule
-across the booking viewport on Home and Pricing, with an external-calendar link.
-When it is not configured, show the direct-email call request and email fallback.
-Alternate the drafting grid through these viewport stops: the comparison has a
-solid surface, FAQ reveals the grid, booking uses a solid surface, About reveals
-the grid again, and Contact returns to a solid surface.
+scrolling. Give About and Contact their own viewport stops, with the down-scroll
+control visiting each in order. Place the full-width booking calendar on Home
+after About and before the inquiry form, and lead Contact with the same booking
+experience. Place a direct path to the inquiry form beside the introduction.
+Keep both booking and brief headings at the site section-heading scale, and fit
+each section into a viewport. On narrow or short screens, let the form section
+scroll internally so its controls stay readable and reachable.
+When the calendar is not configured, show a direct-email call request. Alternate
+the drafting grid through these viewport stops: the comparison has a solid
+surface, FAQ reveals the grid, About reveals the grid, and Contact uses a solid
+surface.
 
 ### Availability and inquiry
 
@@ -257,7 +259,7 @@ uses a capture of the public site's header and hero inside a Mac-style window
 on a drafting grid. Home
 previews work, services, engagement shapes, direct working style, FAQ, and contact
 so mobile visitors can evaluate the offer without opening the menu. The compact
-header keeps booking visible beside an icon-only navigation disclosure.
+header uses an icon-only navigation disclosure, with booking available in its menu.
 Paper sections use a faint, static drafting grid in the page background to
 extend the wireframe language beyond Work media. Colored chapters cover the grid
 so the page retains its editorial rhythm and readable copy.

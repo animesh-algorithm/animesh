@@ -56,7 +56,7 @@ verified sender are supplied.
 
 - Add a persistent, continuously pulsing availability control with an explicit
   manual-data label elsewhere on the page.
-- Add an optional Cal.com event embed, external-calendar link, and direct-email fallback.
+- Add an optional Cal.com event embed and direct-email fallback.
 - Expand every project diagram into a distinct animated workflow visual.
 - Rework pricing into scannable engagement panels with a principles strip.
 - Add a situational fit comparison and source-constrained FAQ.

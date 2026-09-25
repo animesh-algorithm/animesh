@@ -111,10 +111,11 @@ is live or calendar-backed.
 
 Verified public event URL: `https://cal.com/meet-animesh/30min`
 
-- Provide a persistent call-booking entry point.
+- Provide the calendar on Home and Contact. Keep the inquiry form below it as
+  the secondary contact path on both pages.
 - Use `NEXT_PUBLIC_BOOKING_URL` only for a real public `cal.com` event URL.
-- When configured, show the Cal.com schedule in-page and retain a link that opens
-  the same event in a new tab.
+- When configured, show the Cal.com schedule in-page as the primary contact action.
+  Keep the inquiry form accessible as the secondary action.
 - Until then, open an honest direct-email call request and keep the inquiry form
   available. Do not show invented time slots or imply calendar synchronization.
 
