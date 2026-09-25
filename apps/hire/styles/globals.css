@@ -2857,7 +2857,7 @@ main > section {
   .gradly-links__metrics span { overflow: hidden; text-overflow: ellipsis; }
   .gradly-links__map-scale small { display: none; }
 }
-@media (max-width: 70rem) {
+@media (max-width: 60rem) {
   .project-story--gradly-links { grid-template-columns: minmax(0, 1fr); }
   .project-story--gradly-links .project-copy { order: 0; }
   .project-story--gradly-links .gradly-links { width: 100%; max-width: 42rem; justify-self: center; }
@@ -4043,11 +4043,12 @@ main > div.motion-visible > h2,
 }
 
 /* Pricing offers: aligned editorial panels with one ink-led product build. */
+.pricing-header { margin-bottom: clamp(2.5rem, 5vw, 4.5rem); }
 .pricing-grid { gap: clamp(0.75rem, 1.5vw, 1.25rem); }
 .pricing-card,
 .pricing-card:nth-child(3) {
   min-height: 0;
-  padding: clamp(1.25rem, 2vw, 2rem);
+  padding: clamp(1.5rem, 2.4vw, 2.25rem);
   border-radius: 1.8rem 2.4rem 1.7rem 2.2rem;
   box-shadow: none;
 }
@@ -4055,50 +4056,99 @@ main > div.motion-visible > h2,
 .pricing-card--featured:hover { transform: none; box-shadow: 0.35rem 0.35rem 0 var(--color-coral); }
 .pricing-card__topline { color: var(--color-muted-ink); }
 .pricing-card--featured .pricing-card__topline { color: #c9c7c1; }
-.pricing-card :is(h2, h3) { margin: 1.25rem 0 0.7rem; line-height: 1.08; }
-.pricing-card .price { margin-bottom: 1.2rem; font-size: clamp(2.25rem, 3.1vw, 3.4rem); }
+.pricing-card :is(h2, h3) { margin: 0 0 0.65rem; line-height: 1.08; }
+.pricing-card .price { margin-bottom: 1.2rem; font-size: clamp(2.15rem, 2.8vw, 3.1rem); }
 .pricing-card .price small { font-size: 0.35em; letter-spacing: 0; }
-.pricing-promise { margin: 0 0 0.5rem; font-size: 1.05rem; font-weight: 800; line-height: 1.35; }
-.pricing-audience { min-height: 5.5rem; margin: 0 0 1.5rem; color: var(--color-muted-ink); font-size: 0.9rem; line-height: 1.5; }
-.pricing-card--featured .pricing-audience { color: #d0cec9; }
-.pricing-card .pricing-scope-list { gap: 0.8rem; margin: 0 0 2rem; padding-top: 1.35rem; border-top: 1px solid currentColor; }
-.pricing-card .pricing-scope-list li { grid-template-columns: 1.2rem minmax(0, 1fr); font-size: 0.9rem; line-height: 1.35; }
-.pricing-card .pricing-scope-list svg { width: 1.1rem; height: 1.1rem; margin-top: 0.1rem; padding: 0; border: 0; border-radius: 0; color: var(--color-coral); background: none; stroke-width: 2.5; }
+.pricing-promise { margin: 0 0 0.8rem; font-size: 0.88rem; font-weight: 700; line-height: 1.35; }
+.pricing-card--featured .pricing-promise { color: #e5e3dd; }
+.pricing-audience { margin: 0 0 0.8rem; color: var(--color-muted-ink); font-size: 0.82rem; line-height: 1.4; }
+.pricing-card--featured .pricing-audience { color: #c9c7c1; }
+.pricing-card .pricing-scope-list { gap: 0.55rem; margin: 0 0 1.2rem; padding-top: 1rem; border-top: 1px solid currentColor; }
+.pricing-card .pricing-scope-list li { grid-template-columns: 1rem minmax(0, 1fr); gap: 0.5rem; font-size: 0.82rem; line-height: 1.3; }
+.pricing-card .pricing-scope-list svg { width: 0.95rem; height: 0.95rem; margin-top: 0.1rem; padding: 0; border: 0; border-radius: 0; color: var(--color-coral); background: none; stroke-width: 2.5; }
 .pricing-card--featured .pricing-scope-list svg { color: var(--color-butter); }
 .pricing-card .button { justify-content: space-between; width: 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .pricing-card.motion-visible {
+    animation: hire-reveal var(--motion-slow) var(--ease-out) backwards,
+      pricing-card-float 6s ease-in-out infinite;
+  }
+  .pricing-card.motion-visible:nth-child(2) { animation-delay: 0s, -2s; }
+  .pricing-card.motion-visible:nth-child(3) { animation-delay: 0s, -4s; }
+  .pricing-card.motion-visible:is(:hover, :focus-within) { animation-play-state: running, paused; }
+}
+@keyframes pricing-card-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -7px; }
+}
+.pricing-booking-dialog {
+  width: min(58rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 2px solid var(--color-ink);
+  border-radius: 1rem;
+  background: var(--color-white);
+  color: var(--color-ink);
+  box-shadow: 0.5rem 0.5rem 0 var(--color-coral);
+}
+.pricing-booking-dialog::backdrop { background: rgb(24 23 22 / 72%); }
+.pricing-booking-dialog__content { padding: clamp(1rem, 3vw, 2rem); }
+.pricing-booking-dialog__header { display: flex; justify-content: space-between; gap: 1rem; }
+.pricing-booking-dialog__header h2 { margin: 0.25rem 0 0.5rem; }
+.pricing-booking-dialog__header p:last-child { margin: 0 0 1rem; }
+.pricing-booking-dialog__close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: var(--color-white);
+  color: var(--color-ink);
+  cursor: pointer;
+}
+.pricing-booking-dialog__close svg { fill: none; stroke: currentColor; stroke-width: 2; }
+.pricing-booking-dialog__close:focus-visible,
+.pricing-booking-dialog__links a:focus-visible { outline: 3px solid var(--color-coral); outline-offset: 3px; }
+.pricing-booking-dialog iframe { display: block; width: 100%; height: min(38rem, 58dvh); border: 0; }
+.pricing-booking-dialog__links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: 0.75rem; }
+.pricing-booking-dialog__links a { color: inherit; }
 @media (max-width: 56rem) {
   .pricing-card { min-height: 0; }
-  .pricing-audience { min-height: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pricing-card, .pricing-card:hover { transition: none; transform: none; }
 }
-@media (max-width: 70rem) {
+@media (max-width: 60rem) {
   .pricing-grid { grid-template-columns: 1fr; }
   .pricing-card { min-height: 0; }
-  .pricing-audience { min-height: 0; }
 }
 
-/* Keep the three desktop offers and their actions visible together. */
-@media (min-width: 70.01rem) {
-  .pricing-section { padding-block: clamp(1.25rem, 3vh, 2rem); }
-  .pricing-header { margin-bottom: clamp(0.8rem, 2vh, 1.25rem); }
-  .pricing-header :is(h1, h2) { font-size: clamp(2rem, 3.1vw, 2.8rem); }
-  .pricing-grid { gap: 0.75rem; }
+/* Let each offer breathe while retaining the three-column comparison. */
+@media (min-width: 60.01rem) {
+  .pricing-section { padding-block: clamp(1.5rem, 3vh, 2.5rem); }
+  .pricing-header { margin-bottom: clamp(2rem, 3vw, 2.5rem); }
+  .pricing-grid { gap: clamp(1rem, 1.8vw, 1.5rem); }
   .pricing-card,
   .pricing-card:nth-child(3) {
-    min-height: min(40rem, calc(100svh - 13.75rem));
-    padding: clamp(1.1rem, 1.5vw, 1.4rem);
+    padding: clamp(1.5rem, 2.2vw, 2.25rem);
   }
-  .pricing-card__topline { padding-bottom: 0; font-size: 0.58rem; }
-  .pricing-card :is(h2, h3) { margin: 0.9rem 0 0.45rem; font-size: clamp(1.25rem, 1.7vw, 1.6rem); }
-  .pricing-card .price { margin-bottom: 0.85rem; font-size: clamp(2rem, 2.5vw, 2.6rem); }
-  .pricing-promise { margin-bottom: 0.4rem; font-size: 0.98rem; line-height: 1.3; }
-  .pricing-audience { min-height: 0; margin-bottom: 0.9rem; font-size: 0.83rem; line-height: 1.4; }
-  .pricing-card .pricing-scope-list { gap: 0.55rem; margin-bottom: 1.2rem; padding-top: 0.9rem; }
-  .pricing-card .pricing-scope-list li { grid-template-columns: 1rem minmax(0, 1fr); gap: 0.5rem; font-size: 0.84rem; line-height: 1.3; }
-  .pricing-card .pricing-scope-list svg { width: 0.9rem; height: 0.9rem; margin-top: 0.1rem; }
-  .pricing-card .button { min-height: 2.8rem; padding-block: 0.65rem; }
+  .pricing-card .pricing-scope-list { margin-bottom: 1.2rem; }
+}
+@media (min-width: 60.01rem) and (max-width: 70rem) {
+  .pricing-audience { display: none; }
+  .pricing-section { padding-block: 1.25rem; }
+  .pricing-header { margin-bottom: 1.5rem; }
+  .pricing-card,
+  .pricing-card:nth-child(3) { padding: 1.25rem; }
+  .pricing-card :is(h2, h3) { font-size: 1.45rem; }
+  .pricing-card .price { margin-bottom: 0.85rem; font-size: 2.5rem; }
+  .pricing-promise { margin-bottom: 0.6rem; }
+  .pricing-card .pricing-scope-list { gap: 0.36rem; padding-top: 0.8rem; }
+  .pricing-card .pricing-scope-list li { font-size: 0.78rem; }
 }
 
 .contact-booking {

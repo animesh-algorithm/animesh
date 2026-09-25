@@ -2,21 +2,21 @@ import Image from "next/image";
 
 const surfaces = [
   {
-    label: "Insurance plans",
+    label: "insurance.gradly.us",
     src: "/images/gradly-insurance-hero.png",
     alt: "Gradly insurance website with its header, insurance hero, university search, and member app preview",
     width: 2880,
     height: 2080,
   },
   {
-    label: "Member app",
+    label: "app.gradly.us",
     src: "/images/gradly-member.jpg",
     alt: "Gradly member app tools for finding providers, filing claims, waiver help, and renewals",
     width: 1400,
     height: 800,
   },
   {
-    label: "Internal dashboard",
+    label: "dashboard.gradly.us",
     src: "/images/gradly-operations-concept.png",
     alt: "Illustrative Gradly operations dashboard concept with example positive metrics and rising charts; figures are fictional",
     width: 1672,

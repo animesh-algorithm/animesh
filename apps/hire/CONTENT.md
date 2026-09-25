@@ -282,6 +282,9 @@ $1,500 per month, in USD. The supplied offer copy and scope lists replace the
 earlier provisional engagement examples above for public pricing. Final scope
 and quote are agreed per inquiry; the starting prices are not fixed quotes.
 
+The Monthly Retainer is now a fixed $2,000 USD per month. The two project
+offers remain starting prices, with final quotes agreed after scoping.
+
 The sidebar's "05 project stories" counts the five documented projects here;
 it does not claim a lifetime number of products shipped. "Scoped together"
 avoids publishing an unconfirmed timeline.

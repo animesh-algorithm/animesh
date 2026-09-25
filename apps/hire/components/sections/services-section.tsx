@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { services } from "@/content/services";
 
 function ProcessCurve({ direction }: { direction: "loose" | "ordered" }) {
@@ -59,12 +58,6 @@ export function ServicesSection({ home = false }: { home?: boolean }) {
                 {home ? <h3>{service.name}</h3> : <h2>{service.name}</h2>}
                 {/* <p className="service-question">{service.question}</p> */}
                 <p>{service.description}</p>
-                <Link
-                  className="service-detail-link"
-                  href={`/services/${service.slug}`}
-                >
-                  Explore {service.name} →
-                </Link>
               </div>
             </li>
           ))}
