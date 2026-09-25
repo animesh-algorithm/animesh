@@ -1,4 +1,5 @@
 import { experiments, projects } from "@/content/projects";
+import Link from "next/link";
 import { VisaFileProductImage } from "@/components/visuals/visafile-product-image";
 import { GradlyMobileVisual } from "@/components/visuals/gradly-mobile-visual";
 import { GradlyProductImages } from "@/components/visuals/gradly-product-images";
@@ -42,7 +43,7 @@ export function WorkSection({ home = false }: { home?: boolean }) {
               <div className="project-index">
                 {index < projects.length ? `0${index + 1}` : `Experiment 0${index - projects.length + 1}`} / {project.name}
               </div>
-              <h2>{project.title}</h2>
+              <h2><Link href={`/work/${project.slug}`}>{project.title}</Link></h2>
               <p className="project-summary">{project.summary}</p>
               {project.outcome ? (
                 <div className="project-outcome">

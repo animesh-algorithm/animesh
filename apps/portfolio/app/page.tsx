@@ -27,8 +27,13 @@ import {
   workCopy,
 } from "@/content/profile";
 import { connection } from "next/server";
+import type { Metadata } from "next";
 
-export const metadata = { alternates: { canonical: "/" } };
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: { type: "website", siteName: "Animesh Sharma", title: "Animesh Sharma — Engineering, AI & automation", description: "Animesh Sharma is a product engineer building AI products, full-stack software, and automation. Explore selected projects and the thinking behind them.", url: "/" },
+  twitter: { card: "summary_large_image", title: "Animesh Sharma — Engineering, AI & automation", description: "Animesh Sharma is a product engineer building AI products, full-stack software, and automation. Explore selected projects and the thinking behind them.", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Animesh Sharma — I figure things out. Then I build them." }] },
+};
 
 function randomOption<const Options extends readonly string[]>(
   options: Options,
@@ -60,19 +65,27 @@ export default async function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: JSON.stringify([{
             "@context": "https://schema.org",
             "@type": "Person",
-            "@id": "https://www.animesh.cc/#person",
+            "@id": "https://www.animesh.cc/about#person",
             name: "Animesh Sharma",
-            url: "https://www.animesh.cc",
+            url: "https://www.animesh.cc/about",
+            jobTitle: "Product Engineer",
             sameAs: [
               profile.links.linkedin,
               profile.links.github,
               profile.links.twitter,
             ],
             description: "Engineer, product person, and automation builder.",
-          }).replace(/</g, "\\u003c"),
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "@id": "https://www.animesh.cc/#website",
+            name: "Animesh Sharma",
+            url: "https://www.animesh.cc/",
+          }]).replace(/</g, "\\u003c"),
         }}
       />
       <SiteHeader />
@@ -140,6 +153,7 @@ export default async function Home() {
               title={visaFile.title}
               description={visaFile.description}
               meta={visaFile.meta}
+              credit="Built by Animesh Sharma"
               tone={visaFile.tone}
               featured={visaFile.featured}
             >
@@ -153,6 +167,7 @@ export default async function Home() {
                 title={concierge.title}
                 description={concierge.description}
                 meta={concierge.meta}
+                credit="Product and engineering at Gradly · Animesh Sharma"
                 tone={concierge.tone}
               >
                 <StudioVisual />
@@ -164,6 +179,7 @@ export default async function Home() {
                 title={gradlyLinks.title}
                 description={gradlyLinks.description}
                 meta={gradlyLinks.meta}
+                credit="Built at Gradly by Animesh Sharma"
                 tone={gradlyLinks.tone}
               >
                 <DataVisual />
@@ -182,6 +198,7 @@ export default async function Home() {
               }
               description={claims.description}
               meta={claims.meta}
+              credit="Product and engineering at Gradly · Animesh Sharma"
               tone={claims.tone}
             >
               <ClaimsVisual />
@@ -234,11 +251,11 @@ export default async function Home() {
                 data-analytics-event="resume_clicked"
                 data-analytics-placement="about"
                 data-analytics-category="resume"
-                href="/resume.pdf"
+                href="/resume"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                View résumé <span>PDF</span> <ArrowUpRight />
+                View résumé <ArrowUpRight />
               </a>
             </div>
           </div>
@@ -438,7 +455,7 @@ export default async function Home() {
             </AskAnimeshLink>
           </div>
           <div className="footer-bottom">
-            <span>© {new Date().getFullYear()} Animesh Sharma</span>
+            <span>© {new Date().getFullYear()} Animesh Sharma · Personal website</span>
             <div>
               <a href="https://blog.animesh.cc">Blog</a>
               <a href="/privacy">Privacy</a>

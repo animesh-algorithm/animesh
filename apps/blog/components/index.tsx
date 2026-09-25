@@ -11,6 +11,8 @@ export function PostList({ posts }: { posts: Post[] }) {
           {p.thumbnail && <PostThumbnail id={p.id} slug={p.slug} title={p.title} />}
           <div className="post-row-copy">
           <p className="post-meta">
+            <span>By Animesh Sharma</span>
+            <span aria-hidden="true">·</span>
             <time dateTime={p.createdAt}>{displayDate(p.createdAt)}</time>
             <span aria-hidden="true">·</span>
             {p.readingMinutes} min read

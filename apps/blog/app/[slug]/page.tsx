@@ -19,7 +19,7 @@ export async function generateMetadata({
     robots: fixtureMode() ? { index: false, follow: false } : undefined,
     openGraph: {
       type: "article",
-      title: p.title,
+      title: `${p.title} — Animesh Sharma`,
       description: excerpt(p.description, 160),
       url: `/${p.slug}`,
       publishedTime: p.createdAt,
@@ -30,7 +30,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: p.title,
+      title: `${p.title} — Animesh Sharma`,
       description: excerpt(p.description, 160),
       images: p.thumbnail ? [mediaPath(p.id, "thumbnail")] : ["/opengraph-image"],
     },
@@ -54,9 +54,9 @@ export default async function PostPage({
     dateModified: post.updatedAt,
     author: {
       "@type": "Person",
-      "@id": "https://www.animesh.cc/#person",
+      "@id": "https://www.animesh.cc/about#person",
       name: "Animesh Sharma",
-      url: "https://www.animesh.cc",
+      url: "https://www.animesh.cc/about",
     },
     image: `${ORIGIN}${post.thumbnail ? mediaPath(post.id, "thumbnail") : "/opengraph-image"}`,
     url: `${ORIGIN}/${post.slug}`,

@@ -38,7 +38,7 @@ export function SiteHeader({ home = true }: { home?: boolean }) {
           {navItems.map((item) => (
             <a href={home || !item.href.startsWith("#") ? item.href : `/${item.href}`} key={item.href}>{item.label}</a>
           ))}
-          <a data-analytics-event="resume_clicked" data-analytics-placement="header" data-analytics-category="resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>
+          <a data-analytics-event="resume_clicked" data-analytics-placement="header" data-analytics-category="resume" href="/resume">Résumé</a>
         </nav>
         <div className="header-actions">
           <AskAnimeshLink className="header-ask">
@@ -64,7 +64,7 @@ export function SiteHeader({ home = true }: { home?: boolean }) {
             {navItems.map((item) => (
               <a href={home || !item.href.startsWith("#") ? item.href : `/${item.href}`} key={item.href} onClick={closeMenu}>{item.label}</a>
             ))}
-            <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" onClick={closeMenu}>Résumé</a>
+            <a href="/resume" onClick={closeMenu}>Résumé</a>
           </nav>
           <div className="mobile-menu-actions">
             <AskAnimeshLink className="mobile-menu-ask" onClick={closeMenu}>

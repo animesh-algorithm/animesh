@@ -609,6 +609,13 @@ button {
   color: var(--ink-soft);
   white-space: normal;
 }
+.project-credit {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.4;
+}
 .project-pair {
   display: grid;
   grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);

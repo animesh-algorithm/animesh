@@ -87,7 +87,7 @@ export const profile = {
     linkedin: "https://www.linkedin.com/in/animeshsharma42",
     github: "https://github.com/animesh-algorithm",
     twitter: "https://x.com/animesh_algo",
-    resume: "/resume.pdf",
+    resume: "/resume",
   },
   worksAcross: ["Engineering", "Product", "Operations"],
   strengths: ["Ambiguity", "Automation", "Getting things shipped"],

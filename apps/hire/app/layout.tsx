@@ -20,21 +20,8 @@ export const metadata: Metadata = {
   },
   description: homepageDescription,
   applicationName: site.name,
-  authors: [{ name: site.person }],
+  authors: [{ name: site.person, url: "https://www.animesh.cc/about" }],
   creator: site.person,
-  openGraph: {
-    type: "website",
-    siteName: site.name,
-    url: "/",
-    title: `${site.name} — Product studio for useful software`,
-    description: homepageDescription,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${site.name} — Product studio for useful software`,
-    description: homepageDescription,
-    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Hire Animesh — From messy to shipped." }],
-  },
   icons: { icon: "/favicon.svg" },
 };
 

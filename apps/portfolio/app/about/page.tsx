@@ -19,8 +19,9 @@ export default function AboutPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
         "@context": "https://schema.org",
         "@type": "Person",
-        "@id": "https://www.animesh.cc/#person",
+        "@id": "https://www.animesh.cc/about#person",
         name: profile.name,
+        description: "Product engineer working across software, AI, and automation.",
         url: "https://www.animesh.cc/about",
         jobTitle: "Product Engineer",
         sameAs: [profile.links.linkedin, profile.links.github, profile.links.twitter],
@@ -95,7 +96,7 @@ export default function AboutPage() {
           <div className="shell profile-section-grid">
             <p className="eyebrow">04 / SELECTED WORK</p>
             <div>
-              <h2 id="profile-projects-title">A few things I’ve built.</h2>
+              <h2 id="profile-projects-title">A few things I’ve built and helped ship.</h2>
               <div className="profile-project-list">
                 {[...projects, ...experiments].map((project) => (
                   <div className="profile-project-item" key={project.id}>
@@ -114,7 +115,7 @@ export default function AboutPage() {
             <p className="eyebrow">05 / ELSEWHERE</p>
             <div>
               <h2>Find me around the web.</h2>
-              <p>For the longer version, read my writing or résumé. For a conversation, email me or find me on a professional profile.</p>
+              <p>This is the personal website of Animesh Sharma. For the longer version, read my writing or résumé. For a conversation, email me or find me on a professional profile.</p>
               <div className="profile-social-links">
                 <a href={profile.links.linkedin}>LinkedIn</a>
                 <a href={profile.links.github}>GitHub</a>

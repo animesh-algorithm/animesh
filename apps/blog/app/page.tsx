@@ -2,18 +2,26 @@ import type { Metadata } from "next";
 import { BlogIndex } from "@/components/index";
 import { getPublicPosts, fixtureMode } from "@/lib/content";
 export const dynamic = "force-dynamic";
-const person = {
+const structuredData = [{
   "@context": "https://schema.org",
   "@type": "Person",
-  "@id": "https://www.animesh.cc/#person",
+  "@id": "https://www.animesh.cc/about#person",
   name: "Animesh Sharma",
-  url: "https://www.animesh.cc",
+  url: "https://www.animesh.cc/about",
+  jobTitle: "Product Engineer",
+  description: "Product engineer working across software, AI, and automation.",
   sameAs: [
     "https://www.linkedin.com/in/animeshsharma42",
     "https://github.com/animesh-algorithm",
     "https://x.com/animesh_algo",
   ],
-};
+}, {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://blog.animesh.cc/#website",
+  name: "Animesh",
+  url: "https://blog.animesh.cc/",
+}];
 export async function generateMetadata({
   searchParams,
 }: {
@@ -22,6 +30,8 @@ export async function generateMetadata({
   const { q, tag } = await searchParams;
   return {
     alternates: { canonical: "/" },
+    openGraph: { type: "website", siteName: "Animesh", title: "Animesh — Notes & rabbit holes", description: "Read Animesh Sharma's notes on building software, exploring ideas, and understanding how things work. Browse articles, experiments, and reflections from his writing archive.", url: "/" },
+    twitter: { card: "summary_large_image", title: "Animesh — Notes & rabbit holes", description: "Read Animesh Sharma's notes on building software, exploring ideas, and understanding how things work. Browse articles, experiments, and reflections from his writing archive.", images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Animesh — Notes & rabbit holes." }] },
     robots:
       q || tag || fixtureMode() ? { index: false, follow: true } : undefined,
   };
@@ -44,7 +54,7 @@ export default async function Home({
   return (
     <>
       {!q && !tag && !fixtureMode() && (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(person).replace(/</g, "\\u003c") }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
       )}
       {fixtureMode() && (
         <p className="fixture-banner">

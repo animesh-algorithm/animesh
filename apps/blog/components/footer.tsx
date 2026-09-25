@@ -23,7 +23,7 @@ export async function SiteFooter() {
           <Link className="footer-brand" id="footer-brand" href="/">
             animesh <SparkIcon className="brand-icon" />
           </Link>
-          <p>A notebook with the occasional rabbit hole.</p>
+          <p>The writing archive of Animesh Sharma. A notebook with the occasional rabbit hole.</p>
           <small>© {new Date().getFullYear()} Animesh Sharma</small>
         </section>
 

@@ -5,9 +5,10 @@ export const metadata = { title: "About", description: "How Animesh Sharma works
 const person = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "@id": "https://www.animesh.cc/#person",
+  "@id": "https://www.animesh.cc/about#person",
   name: "Animesh Sharma",
-  url: "https://www.animesh.cc",
+  url: "https://www.animesh.cc/about",
+  jobTitle: "Product Engineer",
   sameAs: [
     "https://www.linkedin.com/in/animeshsharma42",
     "https://github.com/animesh-algorithm",

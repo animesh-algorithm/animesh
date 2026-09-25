@@ -108,6 +108,7 @@ it("produces escaped RSS with original dates and published-only membership", () 
   expect(feed).toContain("Hello &lt;script&gt;");
   expect(feed).toContain("&amp; notes");
   expect(feed).toContain("Wed, 01 Feb 2023");
+  expect(feed).toContain("<dc:creator>Animesh Sharma</dc:creator>");
   expect(feed).not.toContain("/draft");
 });
 it("contains seven inspected, unique source articles without signed URLs", () => {

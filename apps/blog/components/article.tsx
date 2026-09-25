@@ -51,7 +51,7 @@ export function Article({
           </ul>
           <h1>{post.title}</h1>
           <p className="post-meta">
-            Animesh Sharma <span aria-hidden="true">·</span>
+            By Animesh Sharma <span aria-hidden="true">·</span>
             <time dateTime={post.createdAt}>{displayDate(post.createdAt)}</time>
             <span aria-hidden="true">·</span>
             {post.readingMinutes} min read
@@ -73,7 +73,7 @@ export function Article({
           <div className="article-end">
             <SparkIcon className="article-end-icon" />
             <p>Thanks for reading.</p>
-            <Link href="https://www.animesh.cc">
+            <Link href="https://www.animesh.cc/about">
               More about Animesh <ArrowUpRightIcon />
             </Link>
           </div>

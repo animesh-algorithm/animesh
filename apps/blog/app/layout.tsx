@@ -9,19 +9,19 @@ import "./globals.css";
 const homepageDescription = "Read Animesh Sharma's notes on building software, exploring ideas, and understanding how things work. Browse articles, experiments, and reflections from his writing archive.";
 export const metadata: Metadata = {
   verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
-  twitter: { card: "summary_large_image", title: "Animesh — Notes & rabbit holes", description: homepageDescription, images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Animesh — Notes & rabbit holes." }] },
   metadataBase: new URL(ORIGIN),
+  authors: [{ name: "Animesh Sharma", url: "https://www.animesh.cc/about" }],
+  creator: "Animesh Sharma",
   robots:
     process.env.VERCEL_ENV === "preview"
       ? { index: false, follow: false }
       : undefined,
   title: {
     default: "Animesh — Notes & rabbit holes",
-    template: "%s · Animesh",
+    template: "%s — Animesh Sharma",
   },
   description: homepageDescription,
   alternates: { types: { "application/rss+xml": "/rss.xml" } },
-  openGraph: { type: "website", siteName: "Animesh", title: "Animesh — Notes & rabbit holes", description: homepageDescription, url: "/" },
 };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

@@ -11,12 +11,13 @@ type ProjectShowcaseProps = {
   title: React.ReactNode;
   description: string;
   meta: string;
+  credit: string;
   tone: "coral" | "violet" | "blue" | "yellow";
   featured?: boolean;
   children: React.ReactNode;
 };
 
-export function ProjectShowcase({ label, linkLabel, links, title, description, meta, tone, featured, children }: ProjectShowcaseProps) {
+export function ProjectShowcase({ label, linkLabel, links, title, description, meta, credit, tone, featured, children }: ProjectShowcaseProps) {
   const project = ({ VisaFile: "visafile", "AI Insurance Concierge": "concierge", "Gradly Links": "gradly-links", "AI Claims Adjudication": "claims" } as Record<string, string>)[linkLabel];
   const primaryLink = links?.[0];
   const visual = (
@@ -66,6 +67,7 @@ export function ProjectShowcase({ label, linkLabel, links, title, description, m
             </div>
           ) : null}
           <span className="project-meta">{meta}</span>
+          <span className="project-credit">{credit}</span>
         </div>
       </div>
     </article>
