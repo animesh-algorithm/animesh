@@ -29,7 +29,7 @@ export function MotionDirector() {
         return;
       }
       const bounds = element.getBoundingClientRect();
-      if (bounds.bottom > window.innerHeight * 0.1 && bounds.top < window.innerHeight * 0.6) {
+      if (bounds.bottom > window.innerHeight * 0.1 && bounds.top < window.innerHeight * 0.9) {
         reveal(element);
       } else if (
         bounds.bottom <= 0 ||
