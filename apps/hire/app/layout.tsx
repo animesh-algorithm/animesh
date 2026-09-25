@@ -8,6 +8,8 @@ import { MotionDirector } from "@/components/motion/motion-director";
 import { site } from "@/content/site";
 import "@/styles/globals.css";
 
+const homepageDescription = "Animesh Sharma works with founders to turn product ideas and messy workflows into shipped software. Explore his work, services, pricing, and ways to start a project.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://hire.animesh.cc"),
   verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
@@ -16,7 +18,7 @@ export const metadata: Metadata = {
     default: `${site.name} — Product studio for useful software`,
     template: `%s — ${site.name}`,
   },
-  description: site.hero.support,
+  description: homepageDescription,
   applicationName: site.name,
   authors: [{ name: site.person }],
   creator: site.person,
@@ -25,12 +27,12 @@ export const metadata: Metadata = {
     siteName: site.name,
     url: "/",
     title: `${site.name} — Product studio for useful software`,
-    description: site.hero.support,
+    description: homepageDescription,
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} — Product studio for useful software`,
-    description: site.hero.support,
+    description: homepageDescription,
     images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "Hire Animesh — From messy to shipped." }],
   },
   icons: { icon: "/favicon.svg" },
