@@ -85,7 +85,8 @@ export default async function Home() {
         <h1 id="hero-title">
           <span className="hero-line">I figure things out.</span> <br />
           <span className="hero-line">
-            Then I <em>build</em> them.
+            Then I <br className="hero-mobile-break" />
+            <em>build</em> them.
           </span>
         </h1>
         <div className="hero-bottom">
@@ -343,6 +344,15 @@ export default async function Home() {
                 <strong>{item}</strong>
               </li>
             ))}
+            <li>
+              <span>0{profile.current.length + 1}</span>
+              <strong>
+                Building for founders at{" "}
+                <a href="https://hire.animesh.cc" target="_blank" rel="noopener noreferrer">
+                  <span>Hire Animesh</span> <ArrowUpRight />
+                </a>
+              </strong>
+            </li>
           </ul>
         </div>
       </section>
@@ -377,6 +387,20 @@ export default async function Home() {
                 </span>
               </a>
             ))}
+            <a
+              className="note-row note-row-all"
+              href="https://blog.animesh.cc"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="note-index">All</span>
+              <h3>The rest of the notebook.</h3>
+              <p>More thoughts on building, learning, and figuring things out.</p>
+              <span className="note-time">Explore the blog</span>
+              <span className="note-arrow">
+                <ArrowUpRight />
+              </span>
+            </a>
           </div>
         </div>
       </section>
@@ -386,7 +410,7 @@ export default async function Home() {
         id="contact"
       >
         <div className="shell contact-inner">
-          <p className="eyebrow">06 / Say hello</p>
+          <p className="eyebrow">06 / Work together</p>
           <h2>
             Got a hard problem?
             <br />
@@ -397,13 +421,15 @@ export default async function Home() {
             </em>
           </h2>
           <a
-            className="contact-button"
+            className="ask-cta-button contact-button"
             data-analytics-event="contact_link_clicked"
             data-analytics-placement="footer"
-            data-analytics-category="email"
-            href={`mailto:${profile.email}`}
+            data-analytics-category="hire"
+            href="https://hire.animesh.cc"
+            target="_blank"
+            rel="noopener noreferrer"
           >
-            {profile.email} <ArrowUpRight />
+            Explore working together <ArrowUpRight />
           </a>
           <div className="footer-ask-cta">
             <p>Still have questions?</p>

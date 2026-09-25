@@ -94,7 +94,6 @@ export const profile = {
   current: [
     "Automating work that has no business being manual",
     "AI that works outside the demo",
-    "VisaFile — scratching another itch",
   ],
 } as const;
 

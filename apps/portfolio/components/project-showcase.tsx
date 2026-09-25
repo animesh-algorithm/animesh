@@ -65,8 +65,8 @@ export function ProjectShowcase({ label, linkLabel, links, title, description, m
               ))}
             </div>
           ) : null}
+          <span className="project-meta">{meta}</span>
         </div>
-        <span className="project-meta">{meta}</span>
       </div>
     </article>
   );

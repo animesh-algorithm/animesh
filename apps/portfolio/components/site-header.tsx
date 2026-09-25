@@ -44,8 +44,8 @@ export function SiteHeader() {
           <AskAnimeshLink className="header-ask">
             <ChatBubble /> Ask Animesh
           </AskAnimeshLink>
-          <a className="header-contact" data-analytics-event="contact_link_clicked" data-analytics-placement="header" href="#contact">
-            Say hello <ArrowUpRight />
+          <a className="header-contact" data-analytics-event="contact_link_clicked" data-analytics-placement="header" data-analytics-category="hire" href="https://hire.animesh.cc" target="_blank" rel="noopener noreferrer">
+            Work with me <ArrowUpRight />
           </a>
           <button
             className="mobile-menu-toggle"
@@ -70,7 +70,7 @@ export function SiteHeader() {
             <AskAnimeshLink className="mobile-menu-ask" onClick={closeMenu}>
               <ChatBubble /> Ask Animesh
             </AskAnimeshLink>
-            <a href="#contact" onClick={closeMenu}>Say hello <ArrowUpRight /></a>
+            <a href="https://hire.animesh.cc" target="_blank" rel="noopener noreferrer" onClick={closeMenu}>Work with me <ArrowUpRight /></a>
           </div>
         </div>
       </div>

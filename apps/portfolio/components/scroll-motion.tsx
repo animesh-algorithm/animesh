@@ -61,6 +61,7 @@ export function ScrollMotion() {
       const animations: Animation[] = [];
       const projects = Array.from(document.querySelectorAll<HTMLElement>(".project"));
       const experiments = document.querySelector<HTMLElement>(".experiments-shelf");
+      const workAsk = document.querySelector<HTMLElement>(".work-ask-cta");
       const experimentRows = Array.from(document.querySelectorAll<HTMLElement>(".experiment-row"));
       const chapters = Array.from(document.querySelectorAll<HTMLElement>(".chapter"));
       const hero = document.querySelector<HTMLElement>(".hero");
@@ -74,6 +75,7 @@ export function ScrollMotion() {
 
       const revealGroups: Array<{ selector: string; kind: RevealKind; duration: number }> = [
         { selector: ".section-heading", kind: "heading", duration: motion.duration.section },
+        { selector: ".experiments-heading", kind: "heading", duration: motion.duration.section },
         { selector: ".project", kind: "project", duration: motion.duration.project },
         { selector: ".about-copy, .about-side, .now-copy", kind: "copy", duration: motion.duration.section },
         { selector: ".experiment-row, .experience-row, .note-row, .now-card li", kind: "row", duration: motion.duration.row },
@@ -154,10 +156,17 @@ export function ScrollMotion() {
           const progress = viewportProgress(experiments, viewportHeight);
           experiments.style.setProperty("--sortify-record-turn", `${progress * -8}deg`);
         }
+        if (workAsk) {
+          const progress = viewportProgress(workAsk, viewportHeight);
+          workAsk.style.setProperty("--work-ask-scroll-y", `${(0.5 - progress) * 32}px`);
+        }
         experimentRows.forEach((row, index) => {
+          const rect = row.getBoundingClientRect();
+          if (rect.bottom < -120 || rect.top > viewportHeight + 120) return;
           const progress = viewportProgress(row, viewportHeight);
           const centered = progress - 0.5;
-          const depth = centered * (index % 2 === 0 ? -24 : 24);
+          const depth = centered * (index % 2 === 0 ? -48 : 48);
+          row.style.setProperty("--experiment-visual-y", `${centered * -32}px`);
           row.style.setProperty("--experiment-layer-y", `${depth}px`);
           row.style.setProperty("--experiment-layer-far-y", `${depth * -0.56}px`);
           row.style.setProperty("--experiment-layer-mid-y", `${depth * -0.28}px`);
@@ -205,7 +214,8 @@ export function ScrollMotion() {
           .forEach((property) => hero?.style.removeProperty(property));
         projects.forEach((project) => ["--scene-shift", "--scene-tilt", "--copy-shift"].forEach((property) => project.style.removeProperty(property)));
         experiments?.style.removeProperty("--sortify-record-turn");
-        experimentRows.forEach((row) => ["--experiment-layer-y", "--experiment-layer-far-y", "--experiment-layer-mid-y", "--experiment-layer-close-y", "--experiment-grid-x"].forEach((property) => row.style.removeProperty(property)));
+        workAsk?.style.removeProperty("--work-ask-scroll-y");
+        experimentRows.forEach((row) => ["--experiment-visual-y", "--experiment-layer-y", "--experiment-layer-far-y", "--experiment-layer-mid-y", "--experiment-layer-close-y", "--experiment-grid-x"].forEach((property) => row.style.removeProperty(property)));
         chapters.forEach((chapter) => chapter.style.removeProperty("--chapter-progress"));
         ["--about-turn", "--about-shift", "--about-side-shift"].forEach((property) => about?.style.removeProperty(property));
         experience?.style.removeProperty("--experience-shift");
