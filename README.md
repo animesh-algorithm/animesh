@@ -40,3 +40,7 @@ Keep environment files inside the application that owns them; never create a roo
 Vercel environment values and scopes remain attached to each existing project. Do not copy values between projects or commit local environment files.
 
 Links and Admin use one dedicated Supabase project, with distinct database privileges. Start from their app-local `.env.example` files. See [provisioning and rollout](apps/admin/docs/deployment.md) for Google OAuth, migrations, owner configuration, restricted runtime credentials, backups and preview checks. Missing configuration denies private access. Production deployment and DNS activation are a separate launch step.
+
+## About the creator
+
+Created by [Animesh Sharma](https://animesh.cc). For product design and development work, visit [Hire Animesh](https://hire.animesh.cc).
