@@ -29,6 +29,8 @@ pnpm --filter animesh-portfolio knowledge:check
 
 `pnpm dev` starts Portfolio at `http://localhost:3000`, Hire at `http://localhost:3001`, Links at `http://localhost:3002`, Admin at `http://localhost:3003`, and Blog at `http://localhost:3004`.
 
+To run one app from the workspace root, use its package name as a filter. For example, `pnpm --filter hire-animesh dev` starts only Hire.
+
 ## Environment ownership
 
 Keep environment files inside the application that owns them; never create a root environment file.
