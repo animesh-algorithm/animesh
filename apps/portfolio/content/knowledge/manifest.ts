@@ -36,11 +36,11 @@ export const knowledgeManifest: readonly KnowledgeSource[] = [
     title: "Public résumé",
     category: "resume",
     sourceUrl: "/resume.pdf",
-    updatedAt: "2026-09-16",
+    updatedAt: "2026-09-27",
     visibility: "public",
     file: "resume.md",
     sourcePdf: "public/resume.pdf",
     sourcePdfSha256:
-      "adc009d781128879736b0a47e4d9622545124c4d1f4a01fea231e574a57ffa65",
+      "5d8cd6a0ac77f86c7674c477d77efa0da3b5d42dcfdd51661411fc455ca92444",
   },
 ];
