@@ -109,7 +109,7 @@ export const projects = [
     featured: true,
     links: [
       {
-        href: "https://youtu.be/IomQnHifsFU",
+        href: "https://youtu.be/sQGvsXneqL4",
         label: "Watch demo",
         icon: "demo",
       },

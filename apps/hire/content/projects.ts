@@ -16,7 +16,7 @@ export const projects = [
     accent: "cobalt",
     outcome: "Reduced DS-160 processing  from 2 hours to 5 minutes.",
     links: [
-      { label: "Watch demo", href: "https://visafile-phi.vercel.app/#demo" },
+      { label: "Watch demo", href: "https://youtu.be/sQGvsXneqL4" },
       {
         label: "View on GitHub",
         href: "https://github.com/animesh-algorithm/visafile",

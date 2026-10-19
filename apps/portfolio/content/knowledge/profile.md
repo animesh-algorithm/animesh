@@ -1,6 +1,6 @@
 # Animesh public profile
 
-Animesh Sharma is based in Madhya Pradesh, India. He works across Engineering, Product, Operations. He describes himself as engineer, product person, automation obsessive, and problem solver.
+Animesh Sharma is based in India. He works across Engineering, Product, Operations. He describes himself as engineer, product person, automation obsessive, and problem solver.
 
 I’m at my best when the problem is messy.
 
@@ -32,7 +32,6 @@ Now you have my attention.
 
 - Automating work that has no business being manual
 - AI that works outside the demo
-- VisaFile — scratching another itch
 
 ## Public contact
 

@@ -7,7 +7,7 @@ The DS-160 can take hours of form-filling. VisaFile turns your answers into an a
 Focus: Automation · Product · Engineering.
 
 Public links:
-- Watch demo: https://youtu.be/IomQnHifsFU
+- Watch demo: https://youtu.be/sQGvsXneqL4
 - GitHub: https://github.com/animesh-algorithm/visafile
 
 ## AI Insurance Concierge
@@ -40,7 +40,7 @@ Public links:
 
 Reads the musical traits of your saved songs to spot patterns and draft playlists. You review, tweak, and approve every one before it reaches Spotify.
 
-Focus: Machine Learning · Automation · Spotify API.
+Focus: Machine Learning · Automation · Product.
 
 Public links:
 - Try Sortify: https://sortifi.vercel.app/
@@ -50,7 +50,7 @@ Public links:
 
 Turns an Instagram export into a private, searchable library. It finds related captions, tags, and notes on your device, then suggests collections you can shape yourself.
 
-Focus: On-device AI · Semantic Search · Privacy.
+Focus: On-device AI · Semantic Search · Product.
 
 Public links:
 - Try Crate: https://crate-nu-lilac.vercel.app/
@@ -58,32 +58,24 @@ Public links:
 
 # Public website experience summary
 
-## Now — Chief of Staff · Gradly
+## Now — Chief of Staff · Gradly Inc.
 
-I kept picking up problems until my job title had to catch up.
+The problems got bigger. So did the scope.
 
-Today, the problems are bigger than the code. I work across company strategy, product, engineering, partnerships, operations, and whatever else refuses to fit neatly into a department.
+I work across strategy, product, engineering, partnerships, and operations — leading a 10-person cross-functional team while staying close to the product.
+## 2023 — 25 — Technical Lead · Gradly Inc.
 
-I lead a 10-person cross-functional team while staying close enough to the product to know where the bodies are buried.
-## 2023 — 25 — Software Engineer → Product Lead · Gradly
+I started building products. Then I started building the team.
 
-I joined to build software. Somewhere along the way, I started building the team too.
+Owned products from problem to production across AI, claims, payments, mobile, and carrier integrations.
 
-I owned products from problem to production: customer-facing experiences, internal tools, AI systems, claims and payments infrastructure, mobile apps, and carrier integrations.
+Grew engineering from 1 to 5–6 people, interviewed 30+, hired 8, and integrated 5 insurance carriers.
+## 2021 — 23 — Founding Engineer · Gradly Inc.
 
-Engineering went from a one-person operation to a 5–6 person team. I interviewed 30+ people, hired 8, built EDI infrastructure for 2 insurance partners, and integrated 5 carrier partners.
+A few scripts turned into the foundation.
 
-Turns out, shipping through a team is a very different sport from shipping alone.
-## 2021 — 23 — Founding Engineer · Gradly
+Joined as the only engineer and went from automating manual work to building the backend, internal systems, insurance integrations, and an early AI prototype.
 
-The job was supposed to be a few scripts. I got carried away.
-
-I came in as the only engineer, automating manual work that shouldn't have been manual in the first place.
-
-Then came the backend. Insurance integrations. Internal systems. An early AI prototype. One problem kept revealing another.
-
-What started with a few scripts became part of the foundation for a platform that would go on to serve 10,000+ members across 25+ U.S. universities.
-
-Eventually, I wasn't automating around the business anymore.
+That foundation grew into a platform serving 10,000+ members across 25+ U.S. universities.
 
 I was building the machinery it ran on.
