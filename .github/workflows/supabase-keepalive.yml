@@ -1,0 +1,35 @@
+name: Supabase keepalive
+
+on:
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+jobs:
+  database-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Query the database through Links without recording a click
+        shell: bash
+        run: |
+          set -euo pipefail
+          # HEAD invokes resolve_link under links_runtime but never record_click.
+          # A valid, random unknown slug exercises PostgreSQL without reading data
+          # into the response. Do not follow redirects or use --fail: 404 is healthy.
+          probe="supabase-keepalive-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}-${RANDOM}"
+          status=$(curl --silent --show-error --head \
+            --output /dev/null --write-out '%{http_code}' \
+            --connect-timeout 10 --max-time 30 \
+            --retry 3 --retry-delay 15 --retry-max-time 150 \
+            "https://link.animesh.cc/${probe}")
+          case "$status" in
+            404|410|302) echo "Database lookup succeeded (HTTP ${status})." ;;
+            *) echo "::error::Links database lookup failed (HTTP ${status}). Restore the Supabase project if paused, then rerun this workflow."; exit 1 ;;
+          esac

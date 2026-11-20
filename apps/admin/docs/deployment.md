@@ -1,4 +1,24 @@
 # Provisioning and rollout
+
+## Free-plan inactivity checks
+
+The repository's `Supabase keepalive` GitHub Actions workflow runs every six hours
+and can also be run manually. It sends an uncached HEAD request with a valid random
+slug to the production Links app. This executes `public.resolve_link` using the
+existing restricted `links_runtime` role, without recording clicks, changing data,
+or giving GitHub database credentials. An unknown slug returns 404 after the
+database query; database failures return 503 and fail the workflow.
+
+This reduces inactivity pauses on Supabase Free; it does not guarantee uptime or
+restore an already-paused project. Restore that project in the Supabase dashboard,
+then rerun the workflow. Keep GitHub Actions enabled and investigate failed runs.
+GitHub can delay scheduled runs and disables schedules in public repositories
+after 60 days without repository activity; re-enable the workflow if that happens.
+For Supabase's guarantee against inactivity pauses, use a paid plan:
+https://supabase.com/docs/guides/platform/free-project-pausing .
+
+## Initial setup
+
 1. Create a dedicated Supabase project, isolated from existing products. Enable Google OAuth only; disable password/email and other providers. Configure Google consent/OAuth credentials privately; Google callback is https://PROJECT.supabase.co/auth/v1/callback. Supabase allowed app redirect URLs are https://admin.animesh.cc/auth/callback and http://localhost:3003/auth/callback (add exact isolated preview callbacks as needed). Set Site URL to the Admin origin.
 2. Apply supabase/migrations/0001_links.sql as the database administrator. To bootstrap the owner UUID, configure the permitted email and other Admin values with OWNER_USER_ID temporarily set to a nonmatching placeholder UUID (00000000-0000-0000-0000-000000000000). Attempt Google sign-in: Supabase creates the Auth user, but Admin denies access and signs out. Read that user's actual UUID in the Supabase Auth dashboard, replace the placeholder, and restart Admin. Privately insert singleton owner configuration using a parameterized SQL client: insert into private.owner_config(singleton,user_id,email) values(true,$1,$2) on conflict(singleton) do update set user_id=excluded.user_id,email=excluded.email. Never commit the values. Until this and app owner config are set, access is denied.
 3. Set a strong random LOGIN password on links_runtime through a parameterized administrator connection. Put its Supabase transaction-pooler connection string only in Links DATABASE_URL (user links_runtime.PROJECT_REF, port 6543, TLS). It can execute only resolve_link and record_click; no table reads or link management. Use a stable random >=32-character CLICK_HASH_SECRET; rotation resets unique-visitor continuity. No service-role key belongs in either app.
